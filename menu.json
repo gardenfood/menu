@@ -114,6 +114,13 @@
       "name": "تغليفات (Take away)",
       "image": "./images/c_orig_1784389225509_138.jpg",
       "thumb": "./images/c_thumb_1784389225509_138.jpg"
+    },
+    {
+      "id": "c_1784390283194",
+      "items": [],
+      "name": "الملابس (Uniform)",
+      "image": "./images/c_orig_1784390284163_121.jpg",
+      "thumb": "./images/c_thumb_1784390284163_121.jpg"
     }
   ]
 }
