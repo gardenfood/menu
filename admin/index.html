@@ -21,7 +21,8 @@
         #loginScreen { position: fixed; inset: 0; background: var(--surface); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
         .login-box { width: 100%; max-width: 400px; }
         .login-box input { width: 100%; padding: 18px; border-radius: var(--radius-md); border: 2px solid #eee; font-size: 1rem; text-align: left; direction: ltr; margin: 20px 0; outline: none; }
-        .btn-primary { background: var(--primary); color: white; width: 100%; padding: 16px; border: none; border-radius: var(--radius-md); font-weight: 900; font-size: 1.1rem; cursor: pointer; box-shadow: 0 8px 20px rgba(12, 161, 67, 0.2); transition: var(--transition); margin-top:10px;}
+        .btn-primary { background: var(--primary); color: white; width: 100%; padding: 16px; border: none; border-radius: var(--radius-md); font-weight: 900; font-size: 1.1rem; cursor: pointer; box-shadow: 0 8px 20px rgba(12, 161, 67, 0.2); transition: var(--transition); margin-top:10px; display: flex; justify-content: center; align-items: center; gap: 10px;}
+        .btn-primary:active { transform: scale(0.98); }
         
         .save-all-banner { position: fixed; top: 15px; left: 15px; right: 15px; background: var(--text-dark); color: #fff; padding: 16px; border-radius: 20px; font-weight: 900; font-size: 1.1rem; text-align: center; cursor: pointer; z-index: 900; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transform: translateY(-150%); transition: transform 0.4s; border: 2px solid #333; }
         .save-all-banner.visible { transform: translateY(0); }
@@ -80,7 +81,7 @@
         /* شجرة التصدير PDF */
         .export-tree { background: #fff; border-radius: var(--radius-md); padding: 15px; margin-bottom: 20px; border: 1px solid #eee;}
         .tree-item { margin: 8px 0; font-weight: 700; display: flex; align-items: center; gap: 10px;}
-        .tree-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--primary); }
+        .tree-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer; }
     </style>
 </head>
 <body>
@@ -103,13 +104,11 @@
         </div>
     </div>
 
-    <!-- واجهة إدارة الأقسام/الأقسام الفرعية/المنتجات المدمجة -->
     <div id="view-structure" class="view active">
         <div id="structureList"></div>
         <button class="fab" id="structureFab" onclick="openAddDialog()">+</button>
     </div>
 
-    <!-- واجهة الإعدادات -->
     <div id="view-settings" class="view">
         <div class="card" style="flex-direction: column; align-items: stretch; gap: 0;">
             <div class="section-title">✨ الهوية والأرقام</div>
@@ -136,12 +135,15 @@
         </div>
     </div>
 
-    <!-- واجهة تصدير الـ PDF -->
+    <!-- واجهة تصدير الـ PDF عالية الدقة -->
     <div id="view-export" class="view">
         <h3 style="margin-bottom: 15px;">حدد المنتجات لاستخراج قائمة الأسعار:</h3>
         <div class="tree-item"><input type="checkbox" id="selectAllExport" onchange="toggleAllExport(this)"> <b style="color:var(--primary)">تحديد الكل</b></div>
         <div id="exportTreeContainer" class="export-tree"></div>
-        <button class="btn-primary" onclick="exportPDF()">استخراج PDF 🖨️</button>
+        <button class="btn-primary" id="btnExportPDF" onclick="exportHighResPDF()">
+            <span id="btnExportText">استخراج PDF (دقة عالية) 🖨️</span>
+            <div id="pdfSpinner" class="spinner" style="width:20px; height:20px; border-width:3px; margin:0; display:none; border-top-color:white;"></div>
+        </button>
     </div>
 
     <div class="bottom-nav">
@@ -152,7 +154,6 @@
 
     <div class="sheet-overlay" id="sheetOverlay" onclick="closeSheets()"></div>
 
-    <!-- نافذة المنتج -->
     <div class="bottom-sheet" id="productSheet">
         <div class="sheet-header"><h2 id="pSheetTitle">إضافة منتج</h2><button class="close-sheet" onclick="closeSheets()">✕</button></div>
         <div class="input-group"><label>اسم المنتج</label><input type="text" id="pName"></div>
@@ -176,7 +177,6 @@
         <button class="btn-primary" onclick="applyProductChange()">تأكيد وإضافة ✔️</button>
     </div>
 
-    <!-- نافذة الأقسام (رئيسية أو فرعية) -->
     <div class="bottom-sheet" id="categorySheet">
         <div class="sheet-header"><h2 id="cSheetTitle">إضافة قسم</h2><button class="close-sheet" onclick="closeSheets()">✕</button></div>
         <div class="input-group"><label>الاسم</label><input type="text" id="cName"></div>
@@ -188,7 +188,6 @@
         <button class="btn-primary" onclick="applyCategoryChange()">تأكيد وإضافة ✔️</button>
     </div>
 
-    <!-- نافذة القص -->
     <div class="crop-modal" id="cropModal">
         <div class="crop-area"><img id="cropperImage" style="max-width: 100%;"></div>
         <div class="crop-actions">
@@ -197,14 +196,17 @@
         </div>
     </div>
 
+    <!-- الوعاء المخفي الذي سيبني داخله جدول الـ PDF -->
+    <div id="hiddenPdfContainer" style="display:none;"></div>
+
     <script>
-        const REPO = 'gardenfood/menu'; // المسار الجديد الصحيح بناءً على الصورة
+        const REPO = 'gardenfood/menu';
         let PAT = localStorage.getItem('gh_pat'), menuData = { categories: [] }, appSettings = {};
         
         let tempUploads = { product: null, category: null, settings: null, audio: null };
         let cropperInstance = null; let currentCropType = null;
         
-        let adminLevel = 'main'; // 'main', 'sub', 'items'
+        let adminLevel = 'main';
         let currentAdminCatId = null;
         let currentAdminSubId = null;
         let editId = null;
@@ -528,45 +530,87 @@
         function toggleAllExport(el) { document.querySelectorAll('.export-tree input[type="checkbox"]').forEach(cb => cb.checked = el.checked); }
         function toggleGroup(el, targetId) { document.querySelectorAll(`#${targetId} input[type="checkbox"]`).forEach(cb => cb.checked = el.checked); }
 
-        function exportPDF() {
+        function exportHighResPDF() {
             const checkedItems = document.querySelectorAll('.exp-item:checked');
             if(checkedItems.length === 0) return alert('يرجى تحديد منتج واحد على الأقل لاستخراجه في القائمة.');
+
+            // تشغيل مؤشر التحميل وإخفاء النص
+            const btnText = document.getElementById('btnExportText');
+            const spinner = document.getElementById('pdfSpinner');
+            btnText.style.display = 'none';
+            spinner.style.display = 'block';
 
             let tableRows = '';
             let currentSection = '';
 
+            // بناء أسطر الجدول الوهمي
             checkedItems.forEach(cb => {
                 let section = cb.dataset.section;
                 if(section !== currentSection) {
-                    tableRows += `<tr style="background-color: var(--primary-light);"><td colspan="2" style="padding: 10px; font-weight: 900; color: var(--primary-dark); border-bottom: 2px solid var(--primary);">${section}</td></tr>`;
+                    tableRows += `<tr class="category-row"><td colspan="2">${section}</td></tr>`;
                     currentSection = section;
                 }
                 tableRows += `<tr>
-                    <td style="padding: 10px; border-bottom: 1px solid #eee; width:30%; font-weight:bold; color:var(--primary);">${cb.dataset.price} ${cb.dataset.cur}</td>
-                    <td style="padding: 10px; border-bottom: 1px solid #eee; width:70%; font-weight:bold;">${cb.dataset.name}</td>
+                    <td style="font-weight: bold; width: 75%;">${cb.dataset.name}</td>
+                    <td class="price-cell">${cb.dataset.price} ${cb.dataset.cur}</td>
                 </tr>`;
             });
 
-            const html = `
-            <div style="font-family: 'Tajawal', sans-serif; direction: rtl; text-align: right; padding: 20px; background: #fff; width: 100%;">
-                <div style="text-align:center; margin-bottom: 25px; border-bottom: 3px solid #0ca143; padding-bottom: 15px;">
-                    <h1 style="color: #0ca143; font-size: 26px; margin:0; font-weight: 900;">${appSettings.store_name || 'قائمة الأسعار'}</h1>
-                    <p style="color: #666; font-size: 14px; margin:5px 0;">تاريخ الإصدار: ${new Date().toLocaleDateString('ar-EG')}</p>
+            // بناء هيكل الـ HTML النهائي للطباعة شامل لستايل التصدير عالي الدقة
+            const htmlToPrint = `
+            <div style="font-family: 'Tajawal', sans-serif; direction: rtl; text-align: right; padding: 20px; background: #fff; width: 100%; max-width:800px; margin:0 auto;">
+                <style>
+                    table { width: 100%; border-collapse: collapse; font-size: 1.1rem; }
+                    th, td { padding: 15px; text-align: right; border-bottom: 1px solid #e5e7eb; }
+                    th { background-color: var(--primary); color: white; font-weight: 900; font-size: 1.2rem; }
+                    tr { page-break-inside: avoid; } /* خاصية منع قطع السطر */
+                    .category-row { background-color: var(--primary-light); }
+                    .category-row td { color: var(--primary-dark); font-weight: 900; font-size: 1.3rem; border-bottom: 2px solid var(--primary); padding-top: 25px; }
+                    .price-cell { font-weight: 900; color: var(--primary); width: 25%; direction: ltr; text-align: right; }
+                </style>
+                <div style="text-align:center; margin-bottom: 25px; border-bottom: 4px solid var(--primary); padding-bottom: 15px;">
+                    <h1 style="color: var(--primary); font-size: 28px; margin:0; font-weight: 900;">${appSettings.store_name || 'قائمة الأسعار'}</h1>
+                    <p style="color: #555; font-size: 14px; margin:5px 0; font-weight:700;">تاريخ الإصدار: ${new Date().toLocaleDateString('ar-EG')}</p>
                 </div>
-                <table style="width: 100%; border-collapse: collapse; text-align: right; font-size: 14px;">
+                <table>
                     <thead>
-                        <tr style="background-color: #0ca143; color: white;">
-                            <th style="padding: 12px;">السعر</th>
-                            <th style="padding: 12px;">الصنف</th>
+                        <tr>
+                            <th style="width: 75%;">الصنف</th>
+                            <th style="width: 25%;">السعر</th>
                         </tr>
                     </thead>
                     <tbody>${tableRows}</tbody>
                 </table>
             </div>`;
 
-            const el = document.createElement('div'); el.innerHTML = html;
-            const opt = { margin: 10, filename: 'Prices-List.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } };
-            html2pdf().set(opt).from(el).save();
+            // وضع الكود داخل الحاوية المخفية ليقوم html2pdf بقراءته
+            const hiddenContainer = document.getElementById('hiddenPdfContainer');
+            hiddenContainer.innerHTML = htmlToPrint;
+            hiddenContainer.style.display = 'block';
+
+            // إعدادات تصدير الـ PDF الاحترافية (A4، دقة عالية جداً)
+            const opt = {
+                margin:       15,
+                filename:     'Prices-List.pdf',
+                image:        { type: 'jpeg', quality: 1 },
+                html2canvas:  { scale: 4, useCORS: true, letterRendering: true }, // Scale 4 للحصول على دقة فائقة
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak:    { mode: ['css', 'legacy'] }
+            };
+
+            // بدء التصدير
+            html2pdf().set(opt).from(hiddenContainer).save().then(() => {
+                // بعد الانتهاء، إخفاء مؤشر التحميل وإرجاع النص
+                hiddenContainer.style.display = 'none';
+                hiddenContainer.innerHTML = '';
+                btnText.style.display = 'inline';
+                spinner.style.display = 'none';
+            }).catch(err => {
+                alert("حدث خطأ أثناء التصدير.");
+                hiddenContainer.style.display = 'none';
+                btnText.style.display = 'inline';
+                spinner.style.display = 'none';
+            });
         }
 
         async function saveAllChanges() {
