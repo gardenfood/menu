@@ -78,7 +78,6 @@
         .crop-btn.confirm { background: var(--primary); color: white; }
         .crop-btn.cancel { background: #444; color: white; }
 
-        /* شجرة التصدير PDF */
         .export-tree { background: #fff; border-radius: var(--radius-md); padding: 15px; margin-bottom: 20px; border: 1px solid #eee;}
         .tree-item { margin: 8px 0; font-weight: 700; display: flex; align-items: center; gap: 10px;}
         .tree-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer; }
@@ -197,7 +196,7 @@
     </div>
 
     <!-- الوعاء المخفي الذي سيبني داخله جدول الـ PDF -->
-    <div id="hiddenPdfContainer"></div>
+    <div id="hiddenPdfContainer" style="display:none;"></div>
 
     <script>
         const REPO = 'gardenfood/menu';
@@ -542,65 +541,72 @@
             let tableRows = '';
             let currentSection = '';
 
+            // تم إدراج التنسيقات (الستايل) مباشرة داخل الأسطر لضمان توافقها 100% مع الجوال
             checkedItems.forEach(cb => {
                 let section = cb.dataset.section;
                 if(section !== currentSection) {
-                    tableRows += `<tr class="category-row"><td colspan="2">${section}</td></tr>`;
+                    tableRows += `
+                    <tr style="background-color: #e6f9ed; page-break-inside: avoid;">
+                        <td colspan="2" style="color: #097d33; font-weight: 900; font-size: 1.4rem; border-bottom: 2px solid #0ca143; padding: 15px; text-align: right;">${section}</td>
+                    </tr>`;
                     currentSection = section;
                 }
-                tableRows += `<tr>
-                    <td style="font-weight: bold; width: 75%;">${cb.dataset.name}</td>
-                    <td class="price-cell">${cb.dataset.price} ${cb.dataset.cur}</td>
+                tableRows += `
+                <tr style="page-break-inside: avoid;">
+                    <td style="font-weight: bold; width: 75%; padding: 15px; border-bottom: 1px solid #e5e7eb; font-size: 1.2rem; text-align: right;">${cb.dataset.name}</td>
+                    <td style="font-weight: 900; color: #0ca143; width: 25%; direction: ltr; text-align: right; padding: 15px; border-bottom: 1px solid #e5e7eb; font-size: 1.2rem;">${cb.dataset.price} ${cb.dataset.cur}</td>
                 </tr>`;
             });
 
+            // حاوية العرض الثابت 794 بكسل (عرض ورقة A4 الدقيق) لضمان عدم ضغطها على شاشة الهاتف
             const htmlToPrint = `
-            <div id="pdf-content-wrapper" style="font-family: 'Tajawal', sans-serif; direction: rtl; text-align: right; padding: 40px; background: #fff; width: 800px; box-sizing: border-box;">
-                <style>
-                    #pdf-content-wrapper table { width: 100%; border-collapse: collapse; font-size: 1.2rem; }
-                    #pdf-content-wrapper th, #pdf-content-wrapper td { padding: 15px; text-align: right; border-bottom: 1px solid #e5e7eb; }
-                    #pdf-content-wrapper th { background-color: var(--primary); color: white; font-weight: 900; font-size: 1.3rem; }
-                    #pdf-content-wrapper tr { page-break-inside: avoid; } 
-                    #pdf-content-wrapper .category-row { background-color: var(--primary-light); }
-                    #pdf-content-wrapper .category-row td { color: var(--primary-dark); font-weight: 900; font-size: 1.4rem; border-bottom: 2px solid var(--primary); padding-top: 25px; }
-                    #pdf-content-wrapper .price-cell { font-weight: 900; color: var(--primary); width: 25%; direction: ltr; text-align: right; }
-                </style>
-                <div style="text-align:center; margin-bottom: 30px; border-bottom: 4px solid var(--primary); padding-bottom: 15px;">
-                    <h1 style="color: var(--primary); font-size: 32px; margin:0; font-weight: 900;">${appSettings.store_name || 'قائمة الأسعار'}</h1>
+            <div style="font-family: 'Tajawal', sans-serif; direction: rtl; text-align: right; padding: 20px; background: #fff; width: 794px; margin: 0 auto; box-sizing: border-box;">
+                <div style="text-align:center; margin-bottom: 30px; border-bottom: 4px solid #0ca143; padding-bottom: 15px;">
+                    <h1 style="color: #0ca143; font-size: 32px; margin:0; font-weight: 900;">${appSettings.store_name || 'قائمة الأسعار'}</h1>
                     <p style="color: #555; font-size: 16px; margin:5px 0; font-weight:700;">تاريخ الإصدار: ${new Date().toLocaleDateString('ar-EG')}</p>
                 </div>
-                <table>
+                <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
                     <thead>
                         <tr>
-                            <th style="width: 75%;">الصنف</th>
-                            <th style="width: 25%;">السعر</th>
+                            <th style="background-color: #0ca143; color: white; font-weight: 900; font-size: 1.3rem; padding: 15px; text-align: right; width: 75%;">الصنف</th>
+                            <th style="background-color: #0ca143; color: white; font-weight: 900; font-size: 1.3rem; padding: 15px; text-align: right; width: 25%;">السعر</th>
                         </tr>
                     </thead>
                     <tbody>${tableRows}</tbody>
                 </table>
             </div>`;
 
+            // تثبيت الحاوية في أعلى الصفحة وتغطيتها لضمان أن مكتبة التحويل تراها كاملة
             const hiddenContainer = document.getElementById('hiddenPdfContainer');
             hiddenContainer.innerHTML = htmlToPrint;
-            hiddenContainer.style.cssText = 'position: absolute; left: -9999px; top: 0; width: 800px; display: block;';
+            hiddenContainer.style.cssText = 'position: absolute; top: 0; left: 0; width: 794px; z-index: -9999; opacity: 0; pointer-events: none; background: white; overflow: visible;';
 
+            // إعدادات تصدير الـ PDF النهائية والمدعومة للجوال
             const opt = {
-                margin:       15,
+                margin:       10, // هوامش 10 ملم
                 filename:     'Prices-List.pdf',
                 image:        { type: 'jpeg', quality: 1 },
-                html2canvas:  { scale: 4, useCORS: true, letterRendering: true, windowWidth: 800 }, 
+                html2canvas:  { 
+                    scale: 2, 
+                    useCORS: true, 
+                    windowWidth: 794, 
+                    width: 794,
+                    scrollY: 0,
+                    scrollX: 0
+                }, 
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
                 pagebreak:    { mode: ['css', 'legacy'] }
             };
 
             html2pdf().set(opt).from(hiddenContainer).save().then(() => {
-                hiddenContainer.style.display = 'none';
+                hiddenContainer.style.cssText = 'display: none;';
                 hiddenContainer.innerHTML = '';
                 btnText.style.display = 'inline';
                 spinner.style.display = 'none';
             }).catch(err => {
                 alert("حدث خطأ أثناء التصدير.");
-                hiddenContainer.style.display = 'none';
+                hiddenContainer.style.cssText = 'display: none;';
+                hiddenContainer.innerHTML = '';
                 btnText.style.display = 'inline';
                 spinner.style.display = 'none';
             });
