@@ -7,6 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
     <style>
         :root { --primary: #0ca143; --primary-light: #e6f9ed; --bg: #f4f7f6; --surface: #ffffff; --text-dark: #111827; --text-muted: #6b7280; --danger: #ef4444; --warning: #f59e0b; --info: #3b82f6; --radius-lg: 24px; --radius-md: 16px; --transition: all 0.3s ease; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -19,14 +21,16 @@
         #loginScreen { position: fixed; inset: 0; background: var(--surface); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
         .login-box { width: 100%; max-width: 400px; }
         .login-box input { width: 100%; padding: 18px; border-radius: var(--radius-md); border: 2px solid #eee; font-size: 1rem; text-align: left; direction: ltr; margin: 20px 0; outline: none; }
-        .btn-primary { background: var(--primary); color: white; width: 100%; padding: 16px; border: none; border-radius: var(--radius-md); font-weight: 900; font-size: 1.1rem; cursor: pointer; box-shadow: 0 8px 20px rgba(12, 161, 67, 0.2); transition: var(--transition); }
+        .btn-primary { background: var(--primary); color: white; width: 100%; padding: 16px; border: none; border-radius: var(--radius-md); font-weight: 900; font-size: 1.1rem; cursor: pointer; box-shadow: 0 8px 20px rgba(12, 161, 67, 0.2); transition: var(--transition); margin-top:10px;}
         
         .save-all-banner { position: fixed; top: 15px; left: 15px; right: 15px; background: var(--text-dark); color: #fff; padding: 16px; border-radius: 20px; font-weight: 900; font-size: 1.1rem; text-align: center; cursor: pointer; z-index: 900; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transform: translateY(-150%); transition: transform 0.4s; border: 2px solid #333; }
         .save-all-banner.visible { transform: translateY(0); }
 
         .app-header { background: var(--surface); padding: 25px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.03); position: sticky; top: 0; z-index: 100; border-bottom-left-radius: var(--radius-lg); border-bottom-right-radius: var(--radius-lg); }
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); display: flex; justify-content: space-around; padding: 15px 10px 25px 10px; box-shadow: 0 -10px 30px rgba(0,0,0,0.05); border-top-left-radius: 30px; border-top-right-radius: 30px; z-index: 100; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 5px; color: var(--text-muted); cursor: pointer; width: 33%; font-weight: 800; font-size: 0.9rem; }
+        .app-header-back { background: var(--primary-light); color: var(--primary); border: none; padding: 8px 15px; border-radius: 50px; font-weight: 900; font-size: 0.9rem; cursor: pointer; display: none;}
+        
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); display: flex; justify-content: space-around; padding: 15px 5px 25px 5px; box-shadow: 0 -10px 30px rgba(0,0,0,0.05); border-top-left-radius: 30px; border-top-right-radius: 30px; z-index: 100; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 5px; color: var(--text-muted); cursor: pointer; width: 25%; font-weight: 800; font-size: 0.85rem; }
         .nav-item.active { color: var(--primary); transform: translateY(-5px); }
         .view { display: none; padding: 20px; animation: fadeIn 0.3s; }
         .view.active { display: block; }
@@ -44,6 +48,7 @@
         .action-btn.delete { color: var(--danger); background: #fee2e2; }
         .action-btn.edit { color: var(--info); background: #e0f2fe; }
         .action-btn.move { color: var(--text-dark); background: #f3f4f6; }
+        .action-btn.dive { background: var(--primary-light); color: var(--primary); width: 100%; border-radius: 12px; font-family: 'Tajawal'; font-weight: 900; font-size: 0.9rem;}
 
         .fab { position: fixed; bottom: 100px; right: 20px; background: var(--primary); color: white; width: 65px; height: 65px; border-radius: 22px; font-size: 2rem; display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 25px rgba(12, 161, 67, 0.4); border: none; z-index: 99; cursor: pointer; }
 
@@ -71,6 +76,11 @@
         .crop-btn { flex: 1; padding: 15px; border: none; border-radius: 12px; font-weight: bold; font-size: 1.1rem; cursor: pointer; font-family: 'Tajawal'; }
         .crop-btn.confirm { background: var(--primary); color: white; }
         .crop-btn.cancel { background: #444; color: white; }
+
+        /* شجرة التصدير PDF */
+        .export-tree { background: #fff; border-radius: var(--radius-md); padding: 15px; margin-bottom: 20px; border: 1px solid #eee;}
+        .tree-item { margin: 8px 0; font-weight: 700; display: flex; align-items: center; gap: 10px;}
+        .tree-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--primary); }
     </style>
 </head>
 <body>
@@ -86,21 +96,22 @@
         </div>
     </div>
 
-    <div class="app-header"><h1 id="headerTitle">المنتجات 🍔</h1></div>
-
-    <div id="view-products" class="view active">
-        <div id="productsList"></div>
-        <button class="fab" onclick="openProductSheet()">+</button>
+    <div class="app-header">
+        <div style="display:flex; align-items:center; gap:15px;">
+            <button class="app-header-back" id="adminBackBtn" onclick="goBackAdminLevel()">رجوع</button>
+            <h1 id="headerTitle">الأقسام 🗂️</h1>
+        </div>
     </div>
 
-    <div id="view-categories" class="view">
-        <div id="categoriesList"></div>
-        <button class="fab" onclick="openCategorySheet()">+</button>
+    <!-- واجهة إدارة الأقسام/الأقسام الفرعية/المنتجات المدمجة -->
+    <div id="view-structure" class="view active">
+        <div id="structureList"></div>
+        <button class="fab" id="structureFab" onclick="openAddDialog()">+</button>
     </div>
 
+    <!-- واجهة الإعدادات -->
     <div id="view-settings" class="view">
         <div class="card" style="flex-direction: column; align-items: stretch; gap: 0;">
-            
             <div class="section-title">✨ الهوية والأرقام</div>
             <label style="font-weight:800; margin-bottom:10px; display:block;">شعار المطعم (اللوغو)</label>
             <div class="image-upload-box">
@@ -112,32 +123,36 @@
             <div class="input-group"><label>اسم المطعم</label><input type="text" id="sName" oninput="updateSetting('store_name', this.value)"></div>
             <div class="input-group"><label>الوصف أسفل الاسم</label><input type="text" id="sDesc" oninput="updateSetting('store_desc', this.value)"></div>
             <div class="input-group"><label>الوصف التسويقي (الاحترافي)</label><textarea id="sHero" rows="3" oninput="updateSetting('hero_subtitle', this.value)"></textarea></div>
-            <div class="input-group"><label>رابط فيسبوك (اتركه فارغاً لإخفائه)</label><input type="text" id="sFb" oninput="updateSetting('facebook_url', this.value)"></div>
-            <div class="input-group"><label>رابط انستغرام (اتركه فارغاً لإخفائه)</label><input type="text" id="sInsta" oninput="updateSetting('instagram_url', this.value)"></div>
-            
             <div class="input-group"><label>رقم الواتساب (بدون +)</label><input type="text" id="sWhatsApp" oninput="updateSetting('whatsapp_number', this.value)"></div>
             <div class="input-group"><label>رسالة الواتساب التلقائية</label><textarea id="sMsg" rows="2" oninput="updateSetting('whatsapp_template', this.value)"></textarea></div>
             <div class="input-group"><label>العملة الافتراضية للجميع</label><input type="text" id="sCurrency" oninput="updateSetting('currency', this.value)"></div>
-
+            
             <div class="section-title">🎵 المؤثرات الصوتية</div>
             <div class="image-upload-box">
                 <input type="file" accept="audio/*" onchange="handleAudioSelection(event)">
-                <div style="font-size: 2.5rem; margin-bottom: 10px;">🔊</div>
-                <div style="font-weight:800;">تغيير صوت النقر على الأزرار</div>
+                <div style="font-size: 2.5rem; margin-bottom: 10px;">🔊</div><div style="font-weight:800;">تغيير صوت النقر</div>
                 <audio id="sAudioPreview" controls style="display:none; width:100%; margin-top:15px; border-radius: 50px; z-index: 5; position: relative;"></audio>
             </div>
-
         </div>
     </div>
 
+    <!-- واجهة تصدير الـ PDF -->
+    <div id="view-export" class="view">
+        <h3 style="margin-bottom: 15px;">حدد المنتجات لاستخراج قائمة الأسعار:</h3>
+        <div class="tree-item"><input type="checkbox" id="selectAllExport" onchange="toggleAllExport(this)"> <b style="color:var(--primary)">تحديد الكل</b></div>
+        <div id="exportTreeContainer" class="export-tree"></div>
+        <button class="btn-primary" onclick="exportPDF()">استخراج PDF 🖨️</button>
+    </div>
+
     <div class="bottom-nav">
-        <div class="nav-item active" onclick="switchTab('products', 'المنتجات 🍔', this)"><span>🍔</span><span>المنتجات</span></div>
-        <div class="nav-item" onclick="switchTab('categories', 'الأقسام 🗂️', this)"><span>🗂️</span><span>الأقسام</span></div>
+        <div class="nav-item active" onclick="switchTab('structure', 'الأقسام والمنتجات 🗂️', this)"><span>🗂️</span><span>المحتوى</span></div>
+        <div class="nav-item" onclick="switchTab('export', 'تصدير الأسعار 🖨️', this); buildExportTree();"><span>🖨️</span><span>تصدير PDF</span></div>
         <div class="nav-item" onclick="switchTab('settings', 'الإعدادات ⚙️', this)"><span>⚙️</span><span>الإعدادات</span></div>
     </div>
 
     <div class="sheet-overlay" id="sheetOverlay" onclick="closeSheets()"></div>
 
+    <!-- نافذة المنتج -->
     <div class="bottom-sheet" id="productSheet">
         <div class="sheet-header"><h2 id="pSheetTitle">إضافة منتج</h2><button class="close-sheet" onclick="closeSheets()">✕</button></div>
         <div class="input-group"><label>اسم المنتج</label><input type="text" id="pName"></div>
@@ -153,8 +168,6 @@
                 </select>
             </div>
         </div>
-
-        <div class="input-group"><label>القسم</label><select id="pCategory"></select></div>
         <div class="image-upload-box">
             <input type="file" id="pImage" accept="image/*" onchange="openCropper(event, 'product')">
             <div style="font-size: 2.5rem; margin-bottom: 10px;">📸</div><div style="font-weight:800;">تغيير الصورة</div>
@@ -163,9 +176,10 @@
         <button class="btn-primary" onclick="applyProductChange()">تأكيد وإضافة ✔️</button>
     </div>
 
+    <!-- نافذة الأقسام (رئيسية أو فرعية) -->
     <div class="bottom-sheet" id="categorySheet">
         <div class="sheet-header"><h2 id="cSheetTitle">إضافة قسم</h2><button class="close-sheet" onclick="closeSheets()">✕</button></div>
-        <div class="input-group"><label>اسم القسم</label><input type="text" id="cName"></div>
+        <div class="input-group"><label>الاسم</label><input type="text" id="cName"></div>
         <div class="image-upload-box">
             <input type="file" id="cImage" accept="image/*" onchange="openCropper(event, 'category')">
             <div style="font-size: 2.5rem; margin-bottom: 10px;">📸</div><div style="font-weight:800;">تغيير الصورة</div>
@@ -174,6 +188,7 @@
         <button class="btn-primary" onclick="applyCategoryChange()">تأكيد وإضافة ✔️</button>
     </div>
 
+    <!-- نافذة القص -->
     <div class="crop-modal" id="cropModal">
         <div class="crop-area"><img id="cropperImage" style="max-width: 100%;"></div>
         <div class="crop-actions">
@@ -183,13 +198,17 @@
     </div>
 
     <script>
-       const REPO = 'gardenfood/menu';
+        const REPO = 'gardenfood/gardenfood.github.io'; // مسارك الجديد
         let PAT = localStorage.getItem('gh_pat'), menuData = { categories: [] }, appSettings = {};
-        let editId = null, editOldCatId = null, currentImgPath = null, currentThumbPath = null; 
         
-        // أضفنا "audio" لكي نرفع ملف الصوت مع الاعدادات
         let tempUploads = { product: null, category: null, settings: null, audio: null };
-        let cropperInstance = null; let currentCropType = null; let originalFileName = "";
+        let cropperInstance = null; let currentCropType = null;
+        
+        // نظام التوجيه المعمق للإدارة (لأجل الأقسام الفرعية)
+        let adminLevel = 'main'; // 'main', 'sub', 'items'
+        let currentAdminCatId = null;
+        let currentAdminSubId = null;
+        let editId = null;
 
         function utoa(str) { return btoa(unescape(encodeURIComponent(str))); }
         function atou(str) { return decodeURIComponent(escape(atob(str))); }
@@ -223,7 +242,7 @@
                 const sData = await ghApi('settings.json'); appSettings = JSON.parse(atou(sData.content));
                 populateSettingsUI();
                 const mData = await ghApi('menu.json'); menuData = JSON.parse(atou(mData.content));
-                renderCategories(); renderProducts();
+                renderStructureLevel();
             } catch (e) { alert("خطأ:\n" + e.message); }
             document.getElementById('loader').style.display = 'none';
         }
@@ -232,24 +251,26 @@
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById(`view-${tabId}`).classList.add('active'); element.classList.add('active');
-            document.getElementById('headerTitle').innerText = title; window.scrollTo(0, 0);
+            
+            if (tabId === 'structure') {
+                adminLevel = 'main'; currentAdminCatId = null; currentAdminSubId = null;
+                renderStructureLevel();
+            } else {
+                document.getElementById('headerTitle').innerText = title;
+                document.getElementById('adminBackBtn').style.display = 'none';
+            }
+            window.scrollTo(0, 0);
         }
 
         function closeSheets() { document.querySelectorAll('.bottom-sheet').forEach(s => s.classList.remove('active')); document.getElementById('sheetOverlay').classList.remove('active'); }
 
-        // ================= Settings =================
+        // ================= الإعدادات والصور =================
         function populateSettingsUI() {
-            const map = { sName:'store_name', sDesc:'store_desc', sHero:'hero_subtitle', sFb:'facebook_url', sInsta:'instagram_url', sWhatsApp:'whatsapp_number', sMsg:'whatsapp_template', sCurrency:'currency' };
+            const map = { sName:'store_name', sDesc:'store_desc', sHero:'hero_subtitle', sWhatsApp:'whatsapp_number', sMsg:'whatsapp_template', sCurrency:'currency' };
             for(let id in map) if(document.getElementById(id)) document.getElementById(id).value = appSettings[map[id]] || '';
-            
             if(appSettings.logo) { document.getElementById('sLogoPreview').src = getImgSrc(appSettings.logo); document.getElementById('sLogoPreview').style.display = 'inline-block'; }
-            
-            if(appSettings.click_sound) {
-                document.getElementById('sAudioPreview').src = getImgSrc(appSettings.click_sound);
-                document.getElementById('sAudioPreview').style.display = 'block';
-            }
+            if(appSettings.click_sound) { document.getElementById('sAudioPreview').src = getImgSrc(appSettings.click_sound); document.getElementById('sAudioPreview').style.display = 'block'; }
         }
-        
         function updateSetting(k, v) { appSettings[k] = v; markUnsaved(); }
         
         function handleLogoSelection(e) {
@@ -260,22 +281,18 @@
                 appSettings.logo = ev.target.result; markUnsaved();
             }; r.readAsDataURL(file);
         }
-
         function handleAudioSelection(e) {
             const file = e.target.files[0]; if(!file) return;
             const r = new FileReader(); r.onload = function(ev) {
-                document.getElementById('sAudioPreview').src = ev.target.result;
-                document.getElementById('sAudioPreview').style.display = 'block';
+                document.getElementById('sAudioPreview').src = ev.target.result; document.getElementById('sAudioPreview').style.display = 'block';
                 tempUploads.audio = { base64: ev.target.result.split(',')[1], ext: file.name.split('.').pop() };
-                appSettings.click_sound = ev.target.result; 
-                markUnsaved();
+                appSettings.click_sound = ev.target.result; markUnsaved();
             }; r.readAsDataURL(file);
         }
 
-        // ================= Cropper Logic =================
         function openCropper(event, type) {
             const file = event.target.files[0]; if(!file) return;
-            currentCropType = type; originalFileName = file.name;
+            currentCropType = type;
             const reader = new FileReader();
             reader.onload = function(e) {
                 document.getElementById('cropperImage').src = e.target.result;
@@ -285,151 +302,283 @@
             }; reader.readAsDataURL(file);
             event.target.value = '';
         }
-
         function cancelCrop() { document.getElementById('cropModal').style.display = 'none'; if(cropperInstance) cropperInstance.destroy(); }
-
         function confirmCrop() {
             if(!cropperInstance) return;
-            const thumbCanvas = cropperInstance.getCroppedCanvas({ width: 360, height: 360 });
-            const thumbDataUrl = thumbCanvas.toDataURL('image/jpeg', 0.8);
+            const thumbDataUrl = cropperInstance.getCroppedCanvas({ width: 360, height: 360 }).toDataURL('image/jpeg', 0.8);
             const rawImg = document.getElementById('cropperImage');
-            const maxDimension = 600;
             let finalW = rawImg.naturalWidth, finalH = rawImg.naturalHeight;
-            if(finalW > maxDimension || finalH > maxDimension) {
-                if(finalW > finalH) { finalH = Math.floor(finalH * (maxDimension/finalW)); finalW = maxDimension; } 
-                else { finalW = Math.floor(finalW * (maxDimension/finalH)); finalH = maxDimension; }
-            }
+            if(finalW > 600 || finalH > 600) { if(finalW > finalH) { finalH = Math.floor(finalH * (600/finalW)); finalW = 600; } else { finalW = Math.floor(finalW * (600/finalH)); finalH = 600; } }
             const tmpCanvas = document.createElement('canvas'); tmpCanvas.width = finalW; tmpCanvas.height = finalH;
             tmpCanvas.getContext('2d').drawImage(rawImg, 0, 0, finalW, finalH);
             const origDataUrl = tmpCanvas.toDataURL('image/jpeg', 0.8);
 
             const uploadObj = { thumbBase64: thumbDataUrl.split(',')[1], origBase64: origDataUrl.split(',')[1], thumbFull: thumbDataUrl, origFull: origDataUrl, ext: 'jpg' };
-
-            if(currentCropType === 'product') {
-                tempUploads.product = uploadObj;
-                document.getElementById('pPreview').src = thumbDataUrl; document.getElementById('pPreview').style.display = 'inline-block';
-            } else {
-                tempUploads.category = uploadObj;
-                document.getElementById('cPreview').src = thumbDataUrl; document.getElementById('cPreview').style.display = 'inline-block';
-            }
+            if(currentCropType === 'product') { tempUploads.product = uploadObj; document.getElementById('pPreview').src = thumbDataUrl; document.getElementById('pPreview').style.display = 'inline-block'; } 
+            else { tempUploads.category = uploadObj; document.getElementById('cPreview').src = thumbDataUrl; document.getElementById('cPreview').style.display = 'inline-block'; }
             cancelCrop();
         }
 
-        // ================= ترتيب الأقسام والمنتجات =================
-        function moveCategory(index, direction) {
-            const temp = menuData.categories[index];
-            menuData.categories[index] = menuData.categories[index + direction];
-            menuData.categories[index + direction] = temp;
-            markUnsaved(); renderCategories(); renderProducts();
-        }
-
-        function moveProduct(catId, index, direction) {
-            const cat = menuData.categories.find(c => c.id === catId);
-            const temp = cat.items[index];
-            cat.items[index] = cat.items[index + direction];
-            cat.items[index + direction] = temp;
-            markUnsaved(); renderProducts();
-        }
-
-        // ================= Categories & Products Rendering =================
-        function renderCategories() {
-            const list = document.getElementById('categoriesList'); list.innerHTML = '';
-            menuData.categories.forEach((cat, index) => {
-                list.innerHTML += `<div class="card"><img src="${getImgSrc(cat.thumb || cat.image)}"><div class="card-info"><h3>${cat.name}</h3></div>
-                <div class="actions-group">
-                    <div class="actions-row">
-                        <button class="action-btn move" onclick="moveCategory(${index}, -1)" ${index===0?'disabled style="opacity:0.3"':''}>⬆️</button>
-                        <button class="action-btn move" onclick="moveCategory(${index}, 1)" ${index===menuData.categories.length-1?'disabled style="opacity:0.3"':''}>⬇️</button>
-                    </div>
-                    <div class="actions-row">
-                        <button class="action-btn edit" onclick="openCategorySheet('${cat.id}')">✏️</button>
-                        <button class="action-btn delete" onclick="deleteCategory('${cat.id}')">🗑️</button>
-                    </div>
-                </div></div>`;
-            });
-        }
-        function renderProducts() {
-            const list = document.getElementById('productsList'); list.innerHTML = '';
-            menuData.categories.forEach(cat => {
-                (cat.items || []).forEach((item, index) => {
-                    let cur = item.currency || appSettings.currency || '';
-                    list.innerHTML += `<div class="card"><img src="${getImgSrc(item.thumb || item.image)}"><div class="card-info"><h3>${item.name}</h3><p>${item.price} ${cur}</p></div>
+        // ================= التصفح والتعديل الهرمي (الأقسام > فرعية > منتجات) =================
+        function renderStructureLevel() {
+            const list = document.getElementById('structureList'); list.innerHTML = '';
+            
+            if (adminLevel === 'main') {
+                document.getElementById('headerTitle').innerText = 'الأقسام الرئيسية 🗂️';
+                document.getElementById('adminBackBtn').style.display = 'none';
+                menuData.categories.forEach((cat, idx) => {
+                    list.innerHTML += `<div class="card"><img src="${getImgSrc(cat.thumb || cat.image)}"><div class="card-info"><h3>${cat.name}</h3></div>
                     <div class="actions-group">
-                        <div class="actions-row">
-                            <button class="action-btn move" onclick="moveProduct('${cat.id}', ${index}, -1)" ${index===0?'disabled style="opacity:0.3"':''}>⬆️</button>
-                            <button class="action-btn move" onclick="moveProduct('${cat.id}', ${index}, 1)" ${index===cat.items.length-1?'disabled style="opacity:0.3"':''}>⬇️</button>
-                        </div>
-                        <div class="actions-row">
-                            <button class="action-btn edit" onclick="openProductSheet('${cat.id}', '${item.id}')">✏️</button>
-                            <button class="action-btn delete" onclick="deleteItem('${cat.id}', '${item.id}')">🗑️</button>
-                        </div>
+                        <div class="actions-row"><button class="action-btn edit" onclick="openCategorySheet('${cat.id}')">✏️</button><button class="action-btn delete" onclick="deleteCategory('${cat.id}')">🗑️</button></div>
+                        <button class="action-btn dive" onclick="goAdminSubLevel('${cat.id}')">إدارة المحتوى 📂</button>
                     </div></div>`;
                 });
-            });
+            } else if (adminLevel === 'sub') {
+                const cat = menuData.categories.find(c => c.id === currentAdminCatId);
+                document.getElementById('headerTitle').innerText = cat.name;
+                document.getElementById('adminBackBtn').style.display = 'block';
+                
+                // عرض الأقسام الفرعية
+                if(cat.subcategories) {
+                    cat.subcategories.forEach((sub, idx) => {
+                        list.innerHTML += `<div class="card"><img src="${getImgSrc(sub.thumb || sub.image)}"><div class="card-info"><h3>${sub.name} <span style="font-size:0.8em; color:var(--primary)">(قسم فرعي)</span></h3></div>
+                        <div class="actions-group">
+                            <div class="actions-row"><button class="action-btn edit" onclick="openCategorySheet('${cat.id}', '${sub.id}')">✏️</button><button class="action-btn delete" onclick="deleteCategory('${cat.id}', '${sub.id}')">🗑️</button></div>
+                            <button class="action-btn dive" onclick="goAdminItemsLevel('${cat.id}', '${sub.id}')">إدارة المنتجات 🍔</button>
+                        </div></div>`;
+                    });
+                }
+                // عرض المنتجات المباشرة في القسم الرئيسي
+                if(cat.items) {
+                    cat.items.forEach((item, idx) => {
+                        let cur = item.currency || appSettings.currency || '';
+                        list.innerHTML += `<div class="card"><img src="${getImgSrc(item.thumb || item.image)}"><div class="card-info"><h3>${item.name}</h3><p>${item.price} ${cur}</p></div>
+                        <div class="actions-group"><div class="actions-row"><button class="action-btn edit" onclick="openProductSheet('${cat.id}', null, '${item.id}')">✏️</button><button class="action-btn delete" onclick="deleteItem('${cat.id}', null, '${item.id}')">🗑️</button></div></div></div>`;
+                    });
+                }
+            } else if (adminLevel === 'items') {
+                const cat = menuData.categories.find(c => c.id === currentAdminCatId);
+                const sub = cat.subcategories.find(s => s.id === currentAdminSubId);
+                document.getElementById('headerTitle').innerText = sub.name;
+                document.getElementById('adminBackBtn').style.display = 'block';
+
+                if(sub.items) {
+                    sub.items.forEach((item, idx) => {
+                        let cur = item.currency || appSettings.currency || '';
+                        list.innerHTML += `<div class="card"><img src="${getImgSrc(item.thumb || item.image)}"><div class="card-info"><h3>${item.name}</h3><p>${item.price} ${cur}</p></div>
+                        <div class="actions-group"><div class="actions-row"><button class="action-btn edit" onclick="openProductSheet('${cat.id}', '${sub.id}', '${item.id}')">✏️</button><button class="action-btn delete" onclick="deleteItem('${cat.id}', '${sub.id}', '${item.id}')">🗑️</button></div></div></div>`;
+                    });
+                }
+            }
         }
 
-        function openCategorySheet(id = null) {
-            editId = id; tempUploads.category = null; document.getElementById('cSheetTitle').innerText = id ? 'تعديل القسم' : 'إضافة قسم';
-            if(id) {
-                const cat = menuData.categories.find(c => c.id === id);
-                document.getElementById('cName').value = cat.name; currentImgPath = cat.image; currentThumbPath = cat.thumb;
-                document.getElementById('cPreview').src = getImgSrc(cat.thumb || cat.image); document.getElementById('cPreview').style.display = 'inline-block';
-            } else { document.getElementById('cName').value = ''; currentImgPath = null; currentThumbPath = null; document.getElementById('cPreview').style.display = 'none'; }
+        function goAdminSubLevel(catId) { adminLevel = 'sub'; currentAdminCatId = catId; renderStructureLevel(); }
+        function goAdminItemsLevel(catId, subId) { adminLevel = 'items'; currentAdminCatId = catId; currentAdminSubId = subId; renderStructureLevel(); }
+        function goBackAdminLevel() {
+            if (adminLevel === 'items') adminLevel = 'sub'; else if (adminLevel === 'sub') adminLevel = 'main';
+            renderStructureLevel();
+        }
+
+        // فتح نافذة الإضافة بناءً على المستوى الحالي
+        function openAddDialog() {
+            if (adminLevel === 'main') openCategorySheet(); 
+            else if (adminLevel === 'sub') {
+                // نسأله: بدك تضيف قسم فرعي ولا منتج مباشر؟ (أو ببساطة نفتح نافذة قسم ونضيف زرين)
+                // للتبسيط: سنفتح نافذة قسم فرعي، وإذا أراد إضافة منتج سنعطيه زر للتبديل، أو نصمم نافذة سريعة.
+                const choice = confirm("هل تريد إضافة (قسم فرعي) داخل هذا القسم؟\n\nاضغط 'موافق' لإضافة قسم فرعي.\nاضغط 'إلغاء' لإضافة منتج مباشرة هنا.");
+                if(choice) openCategorySheet(currentAdminCatId); else openProductSheet(currentAdminCatId, null);
+            } 
+            else if (adminLevel === 'items') openProductSheet(currentAdminCatId, currentAdminSubId);
+        }
+
+        // --- دوال القسم ---
+        let editCatType = 'main'; // main or sub
+        let editCatParentId = null;
+
+        function openCategorySheet(parentId = null, subId = null) {
+            tempUploads.category = null;
+            document.getElementById('cName').value = ''; document.getElementById('cPreview').style.display = 'none';
+
+            if (!parentId) { // إضافة أو تعديل رئيسي
+                editCatType = 'main'; editId = null; editCatParentId = null;
+                document.getElementById('cSheetTitle').innerText = 'إضافة قسم رئيسي';
+            } else if (parentId && !subId && adminLevel === 'main') { // تعديل رئيسي
+                editCatType = 'main'; editId = parentId; editCatParentId = null;
+                document.getElementById('cSheetTitle').innerText = 'تعديل قسم رئيسي';
+                const cat = menuData.categories.find(c => c.id === parentId);
+                document.getElementById('cName').value = cat.name;
+                if(cat.image) { document.getElementById('cPreview').src = getImgSrc(cat.thumb || cat.image); document.getElementById('cPreview').style.display = 'inline-block'; }
+            } else if (parentId && !subId && adminLevel === 'sub') { // إضافة فرعي
+                editCatType = 'sub'; editId = null; editCatParentId = parentId;
+                document.getElementById('cSheetTitle').innerText = 'إضافة قسم فرعي';
+            } else if (parentId && subId) { // تعديل فرعي
+                editCatType = 'sub'; editId = subId; editCatParentId = parentId;
+                document.getElementById('cSheetTitle').innerText = 'تعديل قسم فرعي';
+                const cat = menuData.categories.find(c => c.id === parentId);
+                const sub = cat.subcategories.find(s => s.id === subId);
+                document.getElementById('cName').value = sub.name;
+                if(sub.image) { document.getElementById('cPreview').src = getImgSrc(sub.thumb || sub.image); document.getElementById('cPreview').style.display = 'inline-block'; }
+            }
+            
             document.getElementById('sheetOverlay').classList.add('active'); document.getElementById('categorySheet').classList.add('active');
         }
 
         function applyCategoryChange() {
             const name = document.getElementById('cName').value;
-            if(!name || (!tempUploads.category && !editId && !currentImgPath)) return alert("الاسم والصورة مطلوبان");
-            let catObj = editId ? menuData.categories.find(c => c.id === editId) : { id: `c_${Date.now()}`, items: [] };
-            catObj.name = name;
+            if(!name || (!tempUploads.category && !editId)) return alert("الاسم والصورة مطلوبان");
             
-            if(tempUploads.category) {
-                catObj.tempBase64Orig = tempUploads.category.origBase64; catObj.tempBase64Thumb = tempUploads.category.thumbBase64; catObj.tempExt = tempUploads.category.ext;
-                catObj.image = tempUploads.category.origFull; catObj.thumb = tempUploads.category.thumbFull;
+            let targetObj;
+            if (editCatType === 'main') {
+                if(editId) targetObj = menuData.categories.find(c => c.id === editId);
+                else { targetObj = { id: `c_${Date.now()}`, subcategories: [], items: [] }; menuData.categories.push(targetObj); }
+            } else {
+                let parentCat = menuData.categories.find(c => c.id === editCatParentId);
+                if(!parentCat.subcategories) parentCat.subcategories = [];
+                if(editId) targetObj = parentCat.subcategories.find(s => s.id === editId);
+                else { targetObj = { id: `sub_${Date.now()}`, items: [] }; parentCat.subcategories.push(targetObj); }
             }
-            if(!editId) menuData.categories.push(catObj);
-            markUnsaved(); renderCategories(); renderProducts(); closeSheets();
+
+            targetObj.name = name;
+            if(tempUploads.category) {
+                targetObj.tempBase64Orig = tempUploads.category.origBase64; targetObj.tempBase64Thumb = tempUploads.category.thumbBase64; targetObj.tempExt = tempUploads.category.ext;
+                targetObj.image = tempUploads.category.origFull; targetObj.thumb = tempUploads.category.thumbFull;
+            }
+            markUnsaved(); renderStructureLevel(); closeSheets();
         }
 
-        function openProductSheet(catId = null, itemId = null) {
-            editId = itemId; editOldCatId = catId; tempUploads.product = null;
-            document.getElementById('pCategory').innerHTML = menuData.categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+        // --- دوال المنتجات ---
+        let editProdCatId = null;
+        let editProdSubId = null;
+
+        function openProductSheet(catId, subId, itemId = null) {
+            editId = itemId; editProdCatId = catId; editProdSubId = subId; tempUploads.product = null;
+            document.getElementById('pSheetTitle').innerText = itemId ? 'تعديل المنتج' : 'إضافة منتج';
+            document.getElementById('pName').value = ''; document.getElementById('pDesc').value = ''; document.getElementById('pPrice').value = '';
+            document.getElementById('pPreview').style.display = 'none'; document.getElementById('pCurrency').value = appSettings.currency || 'ل.س';
+
             if(itemId) {
-                const cat = menuData.categories.find(c => c.id === catId); const item = cat.items.find(i => i.id === itemId);
+                const cat = menuData.categories.find(c => c.id === catId);
+                let itemArray = cat.items || [];
+                if (subId) itemArray = cat.subcategories.find(s => s.id === subId).items || [];
+                const item = itemArray.find(i => i.id === itemId);
+                
                 document.getElementById('pName').value = item.name; document.getElementById('pDesc').value = item.description || '';
-                document.getElementById('pPrice').value = item.price; document.getElementById('pCategory').value = catId;
-                document.getElementById('pCurrency').value = item.currency || appSettings.currency || 'ل.س';
-                document.getElementById('pPreview').src = getImgSrc(item.thumb || item.image); document.getElementById('pPreview').style.display = 'inline-block';
-            } else {
-                document.getElementById('pName').value = ''; document.getElementById('pDesc').value = ''; document.getElementById('pPrice').value = '';
-                document.getElementById('pCurrency').value = appSettings.currency || 'ل.س';
-                document.getElementById('pPreview').style.display = 'none';
+                document.getElementById('pPrice').value = item.price; document.getElementById('pCurrency').value = item.currency || appSettings.currency || 'ل.س';
+                if(item.image) { document.getElementById('pPreview').src = getImgSrc(item.thumb || item.image); document.getElementById('pPreview').style.display = 'inline-block'; }
             }
             document.getElementById('sheetOverlay').classList.add('active'); document.getElementById('productSheet').classList.add('active');
         }
 
         function applyProductChange() {
-            const name = document.getElementById('pName').value, desc = document.getElementById('pDesc').value, price = document.getElementById('pPrice').value, currency = document.getElementById('pCurrency').value, newCatId = document.getElementById('pCategory').value;
+            const name = document.getElementById('pName').value, desc = document.getElementById('pDesc').value, price = document.getElementById('pPrice').value, currency = document.getElementById('pCurrency').value;
             if(!name || !price) return alert("أكمل البيانات");
+            
+            const cat = menuData.categories.find(c => c.id === editProdCatId);
+            let itemArrayObj = cat;
+            if (editProdSubId) itemArrayObj = cat.subcategories.find(s => s.id === editProdSubId);
+            if(!itemArrayObj.items) itemArrayObj.items = [];
+
             let itemObj;
-            if(editId) {
-                if(editOldCatId !== newCatId) {
-                    const oldCat = menuData.categories.find(c => c.id === editOldCatId); itemObj = oldCat.items.find(i => i.id === editId);
-                    oldCat.items = oldCat.items.filter(i => i.id !== editId); menuData.categories.find(c => c.id === newCatId).items.push(itemObj);
-                } else itemObj = menuData.categories.find(c => c.id === newCatId).items.find(i => i.id === editId);
-            } else { itemObj = { id: `i_${Date.now()}` }; menuData.categories.find(c => c.id === newCatId).items.push(itemObj); }
+            if(editId) itemObj = itemArrayObj.items.find(i => i.id === editId);
+            else { itemObj = { id: `i_${Date.now()}` }; itemArrayObj.items.push(itemObj); }
 
             itemObj.name = name; itemObj.description = desc; itemObj.price = price; itemObj.currency = currency;
             if(tempUploads.product) {
                 itemObj.tempBase64Orig = tempUploads.product.origBase64; itemObj.tempBase64Thumb = tempUploads.product.thumbBase64; itemObj.tempExt = tempUploads.product.ext;
                 itemObj.image = tempUploads.product.origFull; itemObj.thumb = tempUploads.product.thumbFull;
             }
-            markUnsaved(); renderProducts(); closeSheets();
+            markUnsaved(); renderStructureLevel(); closeSheets();
         }
 
-        function deleteCategory(id) { if(confirm("سيتم الحذف نهائياً")) { menuData.categories = menuData.categories.filter(c => c.id !== id); markUnsaved(); renderCategories(); renderProducts(); } }
-        function deleteItem(catId, itemId) { if(confirm("تأكيد الحذف؟")) { const cat = menuData.categories.find(c => c.id === catId); cat.items = cat.items.filter(i => i.id !== itemId); markUnsaved(); renderProducts(); } }
+        function deleteCategory(catId, subId = null) { 
+            if(!confirm("سيتم الحذف نهائياً")) return; 
+            if(subId) {
+                let cat = menuData.categories.find(c => c.id === catId);
+                cat.subcategories = cat.subcategories.filter(s => s.id !== subId);
+            } else { menuData.categories = menuData.categories.filter(c => c.id !== catId); }
+            markUnsaved(); renderStructureLevel(); 
+        }
+        
+        function deleteItem(catId, subId, itemId) { 
+            if(!confirm("تأكيد الحذف؟")) return; 
+            const cat = menuData.categories.find(c => c.id === catId); 
+            if(subId) { let sub = cat.subcategories.find(s => s.id === subId); sub.items = sub.items.filter(i => i.id !== itemId); }
+            else { cat.items = cat.items.filter(i => i.id !== itemId); }
+            markUnsaved(); renderStructureLevel(); 
+        }
+
+        // ================= تصدير الأسعار PDF =================
+        function buildExportTree() {
+            const container = document.getElementById('exportTreeContainer');
+            let html = '';
+            menuData.categories.forEach(cat => {
+                html += `<div class="tree-item"><input type="checkbox" class="exp-cat" onchange="toggleGroup(this, 'c_${cat.id}')"> <span style="font-size:1.1rem; color:var(--primary-dark)">📁 ${cat.name}</span></div><div id="c_${cat.id}">`;
+                if(cat.subcategories) {
+                    cat.subcategories.forEach(sub => {
+                        html += `<div class="tree-item" style="margin-right:25px;"><input type="checkbox" class="exp-sub" onchange="toggleGroup(this, 's_${sub.id}')"> <span>📂 ${sub.name}</span></div><div id="s_${sub.id}">`;
+                        if(sub.items) {
+                            sub.items.forEach(item => {
+                                let cur = item.currency || appSettings.currency || '';
+                                html += `<div class="tree-item" style="margin-right:50px;"><input type="checkbox" class="exp-item" data-name="${item.name}" data-price="${item.price}" data-cur="${cur}" data-section="${cat.name} - ${sub.name}"> <span>📄 ${item.name} (${item.price} ${cur})</span></div>`;
+                            });
+                        }
+                        html += `</div>`;
+                    });
+                }
+                if(cat.items) {
+                    cat.items.forEach(item => {
+                        let cur = item.currency || appSettings.currency || '';
+                        html += `<div class="tree-item" style="margin-right:25px;"><input type="checkbox" class="exp-item" data-name="${item.name}" data-price="${item.price}" data-cur="${cur}" data-section="${cat.name}"> <span>📄 ${item.name} (${item.price} ${cur})</span></div>`;
+                    });
+                }
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function toggleAllExport(el) { document.querySelectorAll('.export-tree input[type="checkbox"]').forEach(cb => cb.checked = el.checked); }
+        function toggleGroup(el, targetId) { document.querySelectorAll(`#${targetId} input[type="checkbox"]`).forEach(cb => cb.checked = el.checked); }
+
+        function exportPDF() {
+            const checkedItems = document.querySelectorAll('.exp-item:checked');
+            if(checkedItems.length === 0) return alert('يرجى تحديد منتج واحد على الأقل لاستخراجه في القائمة.');
+
+            let tableRows = '';
+            let currentSection = '';
+
+            checkedItems.forEach(cb => {
+                let section = cb.dataset.section;
+                if(section !== currentSection) {
+                    tableRows += `<tr style="background-color: var(--primary-light);"><td colspan="2" style="padding: 10px; font-weight: 900; color: var(--primary-dark); border-bottom: 2px solid var(--primary);">${section}</td></tr>`;
+                    currentSection = section;
+                }
+                tableRows += `<tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #eee; width:30%; font-weight:bold; color:var(--primary);">${cb.dataset.price} ${cb.dataset.cur}</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #eee; width:70%; font-weight:bold;">${cb.dataset.name}</td>
+                </tr>`;
+            });
+
+            const html = `
+            <div style="font-family: 'Tajawal', sans-serif; direction: rtl; text-align: right; padding: 20px; background: #fff; width: 100%;">
+                <div style="text-align:center; margin-bottom: 25px; border-bottom: 3px solid #0ca143; padding-bottom: 15px;">
+                    <h1 style="color: #0ca143; font-size: 26px; margin:0; font-weight: 900;">${appSettings.store_name || 'قائمة الأسعار'}</h1>
+                    <p style="color: #666; font-size: 14px; margin:5px 0;">تاريخ الإصدار: ${new Date().toLocaleDateString('ar-EG')}</p>
+                </div>
+                <table style="width: 100%; border-collapse: collapse; text-align: right; font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #0ca143; color: white;">
+                            <th style="padding: 12px;">السعر</th>
+                            <th style="padding: 12px;">الصنف</th>
+                        </tr>
+                    </thead>
+                    <tbody>${tableRows}</tbody>
+                </table>
+            </div>`;
+
+            const el = document.createElement('div'); el.innerHTML = html;
+            const opt = { margin: 10, filename: 'Prices-List.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } };
+            html2pdf().set(opt).from(el).save();
+        }
 
         // ================= Bulk Save =================
         async function saveAllChanges() {
@@ -440,37 +589,54 @@
                     await ghApi(path, 'PUT', { message: 'Update Logo', content: tempUploads.settings.base64 });
                     appSettings.logo = `./${path}`; tempUploads.settings = null;
                 }
-
-                // رفع ملف الصوت
                 if (tempUploads.audio) {
                     const path = `images/sound_${Date.now()}.${tempUploads.audio.ext}`;
                     await ghApi(path, 'PUT', { message: 'Update Click Sound', content: tempUploads.audio.base64 });
                     appSettings.click_sound = `./${path}`; tempUploads.audio = null;
                 }
 
+                // دالة مساعدة لرفع الصور المكدسة في أي مصفوفة لتجنب تكرار الكود
+                async function uploadItemsImages(itemsArray) {
+                    if(!itemsArray) return;
+                    for (let item of itemsArray) {
+                        if (item.tempBase64Orig) {
+                            const rnd = Math.floor(Math.random()*1000);
+                            const pOrig = `images/orig_${Date.now()}_${rnd}.${item.tempExt}`;
+                            const pThumb = `images/thumb_${Date.now()}_${rnd}.${item.tempExt}`;
+                            await ghApi(pOrig, 'PUT', { message: 'Upload Orig', content: item.tempBase64Orig });
+                            await ghApi(pThumb, 'PUT', { message: 'Upload Thumb', content: item.tempBase64Thumb });
+                            item.image = `./${pOrig}`; item.thumb = `./${pThumb}`;
+                            delete item.tempBase64Orig; delete item.tempBase64Thumb; delete item.tempExt;
+                        }
+                    }
+                }
+
+                // رفع صور الأقسام والفرعية والمنتجات
                 for (let cat of menuData.categories) {
                     if (cat.tempBase64Orig) {
                         const rnd = Math.floor(Math.random()*1000);
-                        const pOrig = `images/c_orig_${Date.now()}_${rnd}.${cat.tempExt}`;
-                        const pThumb = `images/c_thumb_${Date.now()}_${rnd}.${cat.tempExt}`;
+                        const pOrig = `images/orig_${Date.now()}_${rnd}.${cat.tempExt}`;
+                        const pThumb = `images/thumb_${Date.now()}_${rnd}.${cat.tempExt}`;
                         await ghApi(pOrig, 'PUT', { message: 'Upload Orig', content: cat.tempBase64Orig });
                         await ghApi(pThumb, 'PUT', { message: 'Upload Thumb', content: cat.tempBase64Thumb });
                         cat.image = `./${pOrig}`; cat.thumb = `./${pThumb}`;
                         delete cat.tempBase64Orig; delete cat.tempBase64Thumb; delete cat.tempExt;
                     }
-                    if (cat.items) {
-                        for (let item of cat.items) {
-                            if (item.tempBase64Orig) {
+                    if(cat.subcategories) {
+                        for(let sub of cat.subcategories) {
+                            if (sub.tempBase64Orig) {
                                 const rnd = Math.floor(Math.random()*1000);
-                                const pOrig = `images/i_orig_${Date.now()}_${rnd}.${item.tempExt}`;
-                                const pThumb = `images/i_thumb_${Date.now()}_${rnd}.${item.tempExt}`;
-                                await ghApi(pOrig, 'PUT', { message: 'Upload Orig', content: item.tempBase64Orig });
-                                await ghApi(pThumb, 'PUT', { message: 'Upload Thumb', content: item.tempBase64Thumb });
-                                item.image = `./${pOrig}`; item.thumb = `./${pThumb}`;
-                                delete item.tempBase64Orig; delete item.tempBase64Thumb; delete item.tempExt;
+                                const pOrig = `images/orig_${Date.now()}_${rnd}.${sub.tempExt}`;
+                                const pThumb = `images/thumb_${Date.now()}_${rnd}.${sub.tempExt}`;
+                                await ghApi(pOrig, 'PUT', { message: 'Upload Orig', content: sub.tempBase64Orig });
+                                await ghApi(pThumb, 'PUT', { message: 'Upload Thumb', content: sub.tempBase64Thumb });
+                                sub.image = `./${pOrig}`; sub.thumb = `./${pThumb}`;
+                                delete sub.tempBase64Orig; delete sub.tempBase64Thumb; delete sub.tempExt;
                             }
+                            await uploadItemsImages(sub.items);
                         }
                     }
+                    await uploadItemsImages(cat.items);
                 }
 
                 const liveSettings = await ghApi('settings.json');
