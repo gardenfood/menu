@@ -79,6 +79,13 @@
       "name": "مفرزات",
       "image": "./images/c_orig_1784387041650_792.jpg",
       "thumb": "./images/c_thumb_1784387041650_792.jpg"
+    },
+    {
+      "id": "c_1784387139836",
+      "items": [],
+      "name": "مواد جافة (dry store)",
+      "image": "./images/c_orig_1784387141187_711.jpg",
+      "thumb": "./images/c_thumb_1784387141187_711.jpg"
     }
   ]
 }
