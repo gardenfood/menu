@@ -72,6 +72,13 @@
       "name": "حليب ومشتقاته",
       "image": "./images/c_orig_1784387010688_860.jpg",
       "thumb": "./images/c_thumb_1784387010688_860.jpg"
+    },
+    {
+      "id": "c_1784387039698",
+      "items": [],
+      "name": "مفرزات",
+      "image": "./images/c_orig_1784387041650_792.jpg",
+      "thumb": "./images/c_thumb_1784387041650_792.jpg"
     }
   ]
 }
