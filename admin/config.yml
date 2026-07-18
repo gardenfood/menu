@@ -1,0 +1,62 @@
+backend:
+  name: git-gateway
+  repo: majdmereee/menu-test
+  branch: main
+  identity_url: https://auth.decapbridge.com/sites/0794f97d-26ce-425f-a989-e65ae53ce86d
+  gateway_url: https://gateway.decapbridge.com
+
+locale: 'ar'
+
+media_folder: "images"
+public_folder: "images"
+
+collections:
+  - name: "settings"
+    label: "إعدادات التطبيق والنصوص"
+    files:
+      - file: "settings.json"
+        label: "الإعدادات العامة"
+        name: "general"
+        fields:
+          - { label: "شعار الموقع", name: "logo", widget: "image" }
+          - { label: "اسم المطعم", name: "store_name", widget: "string" }
+          - { label: "الوصف تحت الاسم", name: "store_desc", widget: "string" }
+          - { label: "الوصف التسويقي (الاحترافي)", name: "hero_subtitle", widget: "text", default: "شركة متخصصة بتلبية احتياجات المطاعم والفنادق والكافيه بأفضل سعر وأفضل جودة" }
+          - { label: "رابط فيسبوك", name: "facebook_url", widget: "string", required: false }
+          - { label: "رابط انستغرام", name: "instagram_url", widget: "string", required: false }
+          - { label: "رقم الواتساب (بدون +)", name: "whatsapp_number", widget: "string" }
+          - { label: "رسالة الواتساب", name: "whatsapp_template", widget: "text" }
+          - { label: "العملة الافتراضية", name: "currency", widget: "string" }
+          - { label: "صوت النقر (اختياري - mp3 أو wav)", name: "click_sound", widget: "file", required: false }
+          - { label: "الجملة الترحيبية (فوق الأقسام)", name: "ui_greeting", widget: "string", default: "ماذا تود أن تطلب؟ 😋" }
+          - { label: "كلمة (زر الرجوع)", name: "ui_back", widget: "string", default: "رجوع" }
+          - { label: "كلمة (السلة) في الزر العائم", name: "ui_cart_word", widget: "string", default: "السلة" }
+          - { label: "عنوان نافذة السلة", name: "ui_cart_title", widget: "string", default: "طلباتك 🍔" }
+          - { label: "زر (إضافة للسلة)", name: "ui_add_btn", widget: "string", default: "إضافة +" }
+          - { label: "زر (إتمام الطلب)", name: "ui_checkout_btn", widget: "string", default: "إرسال الطلب 💬" }
+
+  - name: "menu"
+    label: "إدارة المنيو"
+    files:
+      - file: "menu.json"
+        label: "الأقسام والأصناف"
+        name: "categories_list"
+        fields:
+          - label: "الأقسام"
+            name: "categories"
+            widget: "list"
+            fields:
+              - { label: "معرف القسم", name: "id", widget: "string" }
+              - { label: "اسم القسم", name: "name", widget: "string" }
+              - { label: "صورة القسم", name: "image", widget: "image" }
+              - { label: "الصورة المصغرة (المربعة)", name: "thumb", widget: "image", required: false }
+              - label: "الأصناف"
+                name: "items"
+                widget: "list"
+                fields:
+                  - { label: "المعرف", name: "id", widget: "string" }
+                  - { label: "اسم الصنف", name: "name", widget: "string" }
+                  - { label: "السعر", name: "price", widget: "string" }
+                  - { label: "عملة الصنف", name: "currency", widget: "select", options: ["ل.س", "$"], default: "ل.س" }
+                  - { label: "صورة الصنف الأصلية", name: "image", widget: "image" }
+                  - { label: "صورة الصنف المصغرة", name: "thumb", widget: "image", required: false }
