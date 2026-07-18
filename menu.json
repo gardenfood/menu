@@ -51,6 +51,15 @@
           "image": "./images/i_orig_1784327170403_765.jpg",
           "thumb": "./images/i_thumb_1784327170403_765.jpg",
           "currency": "$"
+        },
+        {
+          "id": "i_1784337783283",
+          "name": "عو",
+          "description": "تثتيا",
+          "price": "5",
+          "currency": "ل.س",
+          "image": "./images/i_orig_1784337787828_502.jpg",
+          "thumb": "./images/i_thumb_1784337787828_502.jpg"
         }
       ]
     }
