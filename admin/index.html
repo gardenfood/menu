@@ -7,7 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- مكتبة التصدير إلى إكسل -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     
     <style>
         :root { --primary: #0ca143; --primary-light: #e6f9ed; --bg: #f4f7f6; --surface: #ffffff; --text-dark: #111827; --text-muted: #6b7280; --danger: #ef4444; --warning: #f59e0b; --info: #3b82f6; --radius-lg: 24px; --radius-md: 16px; --transition: all 0.3s ease; }
@@ -78,7 +79,7 @@
         .crop-btn.confirm { background: var(--primary); color: white; }
         .crop-btn.cancel { background: #444; color: white; }
 
-        /* شجرة التصدير PDF */
+        /* شجرة التصدير */
         .export-tree { background: #fff; border-radius: var(--radius-md); padding: 15px; margin-bottom: 20px; border: 1px solid #eee;}
         .tree-item { margin: 8px 0; font-weight: 700; display: flex; align-items: center; gap: 10px;}
         .tree-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer; }
@@ -135,20 +136,20 @@
         </div>
     </div>
 
-    <!-- واجهة تصدير الـ PDF عالية الدقة -->
+    <!-- واجهة تصدير الـ Excel -->
     <div id="view-export" class="view">
         <h3 style="margin-bottom: 15px;">حدد المنتجات لاستخراج قائمة الأسعار:</h3>
         <div class="tree-item"><input type="checkbox" id="selectAllExport" onchange="toggleAllExport(this)"> <b style="color:var(--primary)">تحديد الكل</b></div>
         <div id="exportTreeContainer" class="export-tree"></div>
-        <button class="btn-primary" id="btnExportPDF" onclick="exportHighResPDF()">
-            <span id="btnExportText">استخراج PDF (دقة عالية) 🖨️</span>
-            <div id="pdfSpinner" class="spinner" style="width:20px; height:20px; border-width:3px; margin:0; display:none; border-top-color:white;"></div>
+        <button class="btn-primary" id="btnExportExcel" onclick="exportExcel()">
+            <span id="btnExportText">استخراج الإكسل (Excel) 📊</span>
+            <div id="excelSpinner" class="spinner" style="width:20px; height:20px; border-width:3px; margin:0; display:none; border-top-color:white;"></div>
         </button>
     </div>
 
     <div class="bottom-nav">
         <div class="nav-item active" onclick="switchTab('structure', 'الأقسام والمنتجات 🗂️', this)"><span>🗂️</span><span>المحتوى</span></div>
-        <div class="nav-item" onclick="switchTab('export', 'تصدير الأسعار 🖨️', this); buildExportTree();"><span>🖨️</span><span>تصدير PDF</span></div>
+        <div class="nav-item" onclick="switchTab('export', 'تصدير الأسعار 📊', this); buildExportTree();"><span>📊</span><span>تصدير إكسل</span></div>
         <div class="nav-item" onclick="switchTab('settings', 'الإعدادات ⚙️', this)"><span>⚙️</span><span>الإعدادات</span></div>
     </div>
 
@@ -195,9 +196,6 @@
             <button class="crop-btn confirm" onclick="confirmCrop()">تأكيد القص</button>
         </div>
     </div>
-
-    <!-- الوعاء المخفي الذي سيبني داخله جدول الـ PDF -->
-    <div id="hiddenPdfContainer"></div>
 
     <script>
         const REPO = 'gardenfood/menu';
@@ -530,88 +528,50 @@
         function toggleAllExport(el) { document.querySelectorAll('.export-tree input[type="checkbox"]').forEach(cb => cb.checked = el.checked); }
         function toggleGroup(el, targetId) { document.querySelectorAll(`#${targetId} input[type="checkbox"]`).forEach(cb => cb.checked = el.checked); }
 
-        function exportHighResPDF() {
+        // الوظيفة الجديدة لاستخراج ملف الإكسل بدلاً من الـ PDF
+        function exportExcel() {
             const checkedItems = document.querySelectorAll('.exp-item:checked');
             if(checkedItems.length === 0) return alert('يرجى تحديد منتج واحد على الأقل لاستخراجه في القائمة.');
 
             const btnText = document.getElementById('btnExportText');
-            const spinner = document.getElementById('pdfSpinner');
+            const spinner = document.getElementById('excelSpinner');
             btnText.style.display = 'none';
             spinner.style.display = 'block';
 
-            let tableRows = '';
-            let currentSection = '';
+            try {
+                // 1. تحضير وتجهيز البيانات
+                let excelData = [];
+                checkedItems.forEach(cb => {
+                    excelData.push({
+                        "القسم": cb.dataset.section,
+                        "الصنف": cb.dataset.name,
+                        "السعر": Number(cb.dataset.price) || cb.dataset.price, // حاول تحويله لرقم لسهولة الحساب في الإكسل
+                        "العملة": cb.dataset.cur
+                    });
+                });
 
-            checkedItems.forEach(cb => {
-                let section = cb.dataset.section;
-                if(section !== currentSection) {
-                    tableRows += `<tr class="category-row"><td colspan="2">${section}</td></tr>`;
-                    currentSection = section;
-                }
-                // إضافة span مع dir="ltr" للسعر لضمان عدم انعكاس الأرقام والعملة
-                tableRows += `<tr>
-                    <td style="font-weight: 700; width: 75%;">${cb.dataset.name}</td>
-                    <td class="price-cell"><span dir="ltr">${cb.dataset.price} ${cb.dataset.cur}</span></td>
-                </tr>`;
-            });
+                // 2. إنشاء ورقة العمل (Worksheet)
+                const ws = XLSX.utils.json_to_sheet(excelData);
+                
+                // تحديد اتجاه الورقة من اليمين لليسار (RTL) ليتناسب مع اللغة العربية
+                if(!ws['!dir']) ws['!dir'] = 'rtl';
 
-            // تحسين تنسيق الـ HTML ليتناسب بسلاسة مع مقاسات الطباعة
-            const htmlToPrint = `
-            <div id="pdf-content-wrapper" style="font-family: 'Tajawal', sans-serif; direction: rtl; text-align: right; padding: 20px; background: #fff; width: 100%; box-sizing: border-box;">
-                <style>
-                    #pdf-content-wrapper table { width: 100%; border-collapse: collapse; font-size: 1.1rem; }
-                    #pdf-content-wrapper th, #pdf-content-wrapper td { padding: 12px; text-align: right; border-bottom: 1px solid #e5e7eb; }
-                    #pdf-content-wrapper th { background-color: var(--primary); color: white; font-weight: 900; font-size: 1.2rem; }
-                    #pdf-content-wrapper tr { page-break-inside: avoid; } 
-                    #pdf-content-wrapper .category-row { background-color: var(--primary-light); }
-                    #pdf-content-wrapper .category-row td { color: var(--primary); font-weight: 900; font-size: 1.3rem; border-bottom: 2px solid var(--primary); padding-top: 20px; }
-                    #pdf-content-wrapper .price-cell { font-weight: 900; color: var(--primary); width: 25%; text-align: left; }
-                </style>
-                <div style="text-align:center; margin-bottom: 25px; border-bottom: 3px solid var(--primary); padding-bottom: 15px;">
-                    <h1 style="color: var(--primary); font-size: 32px; margin:0; font-weight: 900;">${appSettings.store_name || 'قائمة الأسعار'}</h1>
-                    <p style="color: #555; font-size: 14px; margin:8px 0; font-weight:700;">تاريخ الإصدار: <span dir="ltr">${new Date().toLocaleDateString('ar-EG')}</span></p>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th style="width: 75%;">الصنف</th>
-                            <th style="width: 25%; text-align: left;">السعر</th>
-                        </tr>
-                    </thead>
-                    <tbody>${tableRows}</tbody>
-                </table>
-            </div>`;
+                // 3. إنشاء ملف الإكسل (Workbook) وربط الورقة به
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "قائمة الأسعار");
 
-            const hiddenContainer = document.getElementById('hiddenPdfContainer');
-            hiddenContainer.innerHTML = htmlToPrint;
-            
-            // إزالة العرض الثابت بالبكسل واستخدام 100% ليأخذ حجم الشاشة الطبيعي قبل التصدير
-            hiddenContainer.style.cssText = 'position: absolute; left: -9999px; top: 0; width: 800px; max-width: 100%; display: block;';
+                // 4. تحميل الملف للمستخدم
+                let fileName = appSettings.store_name ? `${appSettings.store_name}-Prices.xlsx` : 'Prices-List.xlsx';
+                XLSX.writeFile(wb, fileName);
 
-            const opt = {
-                margin:       10, // تقليل الهامش قليلاً للاستفادة من مساحة الورقة
-                filename:     'Prices-List.pdf',
-                image:        { type: 'jpeg', quality: 1 },
-                html2canvas:  { 
-                    scale: 2, // دقة 2 ممتازة للطباعة ولا تسبب انضغاط التصميم
-                    useCORS: true 
-                    // تم حذف letterRendering: true لأنها المسبب الرئيسي لتشوه الخط العربي
-                }, 
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                pagebreak:    { mode: ['css', 'legacy'] }
-            };
-
-            html2pdf().set(opt).from(hiddenContainer).save().then(() => {
-                hiddenContainer.style.display = 'none';
-                hiddenContainer.innerHTML = '';
+            } catch (error) {
+                alert("حدث خطأ أثناء استخراج ملف الإكسل.");
+                console.error(error);
+            } finally {
+                // إعادة الزر لوضعه الطبيعي
                 btnText.style.display = 'inline';
                 spinner.style.display = 'none';
-            }).catch(err => {
-                alert("حدث خطأ أثناء التصدير.");
-                hiddenContainer.style.display = 'none';
-                btnText.style.display = 'inline';
-                spinner.style.display = 'none';
-            });
+            }
         }
 
         async function saveAllChanges() {
