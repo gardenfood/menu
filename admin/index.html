@@ -197,7 +197,7 @@
     </div>
 
     <!-- الوعاء المخفي الذي سيبني داخله جدول الـ PDF -->
-    <div id="hiddenPdfContainer" style="display:none;"></div>
+    <div id="hiddenPdfContainer"></div>
 
     <script>
         const REPO = 'gardenfood/menu';
@@ -534,7 +534,6 @@
             const checkedItems = document.querySelectorAll('.exp-item:checked');
             if(checkedItems.length === 0) return alert('يرجى تحديد منتج واحد على الأقل لاستخراجه في القائمة.');
 
-            // تشغيل مؤشر التحميل وإخفاء النص
             const btnText = document.getElementById('btnExportText');
             const spinner = document.getElementById('pdfSpinner');
             btnText.style.display = 'none';
@@ -543,7 +542,6 @@
             let tableRows = '';
             let currentSection = '';
 
-            // بناء أسطر الجدول الوهمي
             checkedItems.forEach(cb => {
                 let section = cb.dataset.section;
                 if(section !== currentSection) {
@@ -556,21 +554,20 @@
                 </tr>`;
             });
 
-            // بناء هيكل الـ HTML النهائي للطباعة شامل لستايل التصدير عالي الدقة
             const htmlToPrint = `
-            <div style="font-family: 'Tajawal', sans-serif; direction: rtl; text-align: right; padding: 20px; background: #fff; width: 100%; max-width:800px; margin:0 auto;">
+            <div id="pdf-content-wrapper" style="font-family: 'Tajawal', sans-serif; direction: rtl; text-align: right; padding: 40px; background: #fff; width: 800px; box-sizing: border-box;">
                 <style>
-                    table { width: 100%; border-collapse: collapse; font-size: 1.1rem; }
-                    th, td { padding: 15px; text-align: right; border-bottom: 1px solid #e5e7eb; }
-                    th { background-color: var(--primary); color: white; font-weight: 900; font-size: 1.2rem; }
-                    tr { page-break-inside: avoid; } /* خاصية منع قطع السطر */
-                    .category-row { background-color: var(--primary-light); }
-                    .category-row td { color: var(--primary-dark); font-weight: 900; font-size: 1.3rem; border-bottom: 2px solid var(--primary); padding-top: 25px; }
-                    .price-cell { font-weight: 900; color: var(--primary); width: 25%; direction: ltr; text-align: right; }
+                    #pdf-content-wrapper table { width: 100%; border-collapse: collapse; font-size: 1.2rem; }
+                    #pdf-content-wrapper th, #pdf-content-wrapper td { padding: 15px; text-align: right; border-bottom: 1px solid #e5e7eb; }
+                    #pdf-content-wrapper th { background-color: var(--primary); color: white; font-weight: 900; font-size: 1.3rem; }
+                    #pdf-content-wrapper tr { page-break-inside: avoid; } 
+                    #pdf-content-wrapper .category-row { background-color: var(--primary-light); }
+                    #pdf-content-wrapper .category-row td { color: var(--primary-dark); font-weight: 900; font-size: 1.4rem; border-bottom: 2px solid var(--primary); padding-top: 25px; }
+                    #pdf-content-wrapper .price-cell { font-weight: 900; color: var(--primary); width: 25%; direction: ltr; text-align: right; }
                 </style>
-                <div style="text-align:center; margin-bottom: 25px; border-bottom: 4px solid var(--primary); padding-bottom: 15px;">
-                    <h1 style="color: var(--primary); font-size: 28px; margin:0; font-weight: 900;">${appSettings.store_name || 'قائمة الأسعار'}</h1>
-                    <p style="color: #555; font-size: 14px; margin:5px 0; font-weight:700;">تاريخ الإصدار: ${new Date().toLocaleDateString('ar-EG')}</p>
+                <div style="text-align:center; margin-bottom: 30px; border-bottom: 4px solid var(--primary); padding-bottom: 15px;">
+                    <h1 style="color: var(--primary); font-size: 32px; margin:0; font-weight: 900;">${appSettings.store_name || 'قائمة الأسعار'}</h1>
+                    <p style="color: #555; font-size: 16px; margin:5px 0; font-weight:700;">تاريخ الإصدار: ${new Date().toLocaleDateString('ar-EG')}</p>
                 </div>
                 <table>
                     <thead>
@@ -583,24 +580,20 @@
                 </table>
             </div>`;
 
-            // وضع الكود داخل الحاوية المخفية ليقوم html2pdf بقراءته
             const hiddenContainer = document.getElementById('hiddenPdfContainer');
             hiddenContainer.innerHTML = htmlToPrint;
-            hiddenContainer.style.display = 'block';
+            hiddenContainer.style.cssText = 'position: absolute; left: -9999px; top: 0; width: 800px; display: block;';
 
-            // إعدادات تصدير الـ PDF الاحترافية (A4، دقة عالية جداً)
             const opt = {
                 margin:       15,
                 filename:     'Prices-List.pdf',
                 image:        { type: 'jpeg', quality: 1 },
-                html2canvas:  { scale: 4, useCORS: true, letterRendering: true }, // Scale 4 للحصول على دقة فائقة
+                html2canvas:  { scale: 4, useCORS: true, letterRendering: true, windowWidth: 800 }, 
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
                 pagebreak:    { mode: ['css', 'legacy'] }
             };
 
-            // بدء التصدير
             html2pdf().set(opt).from(hiddenContainer).save().then(() => {
-                // بعد الانتهاء، إخفاء مؤشر التحميل وإرجاع النص
                 hiddenContainer.style.display = 'none';
                 hiddenContainer.innerHTML = '';
                 btnText.style.display = 'inline';
