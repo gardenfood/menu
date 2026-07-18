@@ -36,6 +36,7 @@
         .login-box input { width: 100%; padding: 18px; border-radius: var(--radius-md); border: 2px solid #eee; font-size: 1rem; text-align: left; direction: ltr; margin: 20px 0; outline: none; }
         .btn-primary { background: var(--primary); color: white; width: 100%; padding: 16px; border: none; border-radius: var(--radius-md); font-weight: 900; font-size: 1.1rem; cursor: pointer; box-shadow: 0 8px 20px rgba(12, 161, 67, 0.2); transition: var(--transition); margin-top:10px; display: flex; justify-content: center; align-items: center; gap: 10px;}
         .btn-primary:active { transform: scale(0.98); }
+        .btn-secondary { background: #333; color: white; padding: 16px 25px; border: none; border-radius: var(--radius-md); font-weight: 900; font-size: 1.1rem; cursor: pointer; transition: var(--transition); display: flex; justify-content: center; align-items: center; gap: 10px;}
         
         .save-all-banner { position: fixed; top: 15px; left: 15px; right: 15px; background: var(--text-dark); color: #fff; padding: 16px; border-radius: 20px; font-weight: 900; font-size: 1.1rem; text-align: center; cursor: pointer; z-index: 900; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transform: translateY(-150%); transition: transform 0.4s; border: 2px solid #333; }
         .save-all-banner.visible { transform: translateY(0); }
@@ -61,6 +62,7 @@
         .action-btn { background: var(--bg); border: none; width: 34px; height: 34px; border-radius: 10px; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .action-btn.delete { color: var(--danger); background: #fee2e2; }
         .action-btn.edit { color: var(--info); background: #e0f2fe; }
+        .action-btn.move { color: var(--text-dark); background: #f3f4f6; }
         .action-btn.dive { background: var(--primary-light); color: var(--primary); width: 100%; border-radius: 12px; font-family: 'Tajawal'; font-weight: 900; font-size: 0.9rem;}
 
         .fab { position: fixed; bottom: 100px; right: 20px; background: var(--primary); color: white; width: 65px; height: 65px; border-radius: 22px; font-size: 2rem; display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 25px rgba(12, 161, 67, 0.4); border: none; z-index: 99; cursor: pointer; }
@@ -94,6 +96,54 @@
         .export-tree { background: #fff; border-radius: var(--radius-md); padding: 15px; margin-bottom: 20px; border: 1px solid #eee;}
         .tree-item { margin: 8px 0; font-weight: 700; display: flex; align-items: center; gap: 10px;}
         .tree-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer; }
+
+        /* =========================================================
+           تنسيقات شاشة المعاينة والطباعة للفاتورة (A4)
+           ========================================================= */
+        .print-preview-modal { position: fixed; inset: 0; background: #2c3e50; z-index: 20000; display: none; flex-direction: column; align-items: center; overflow-y: auto; padding: 20px; }
+        .print-controls { display: flex; gap: 15px; margin-bottom: 20px; position: sticky; top: 20px; z-index: 20001; width: 100%; max-width: 800px; justify-content: center; }
+        
+        .a4-page { 
+            background: white; 
+            width: 210mm; /* مقاس A4 الحقيقي */
+            min-height: 297mm; 
+            padding: 20mm; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            border-radius: 5px;
+            direction: rtl; 
+            font-family: 'Tajawal', sans-serif; 
+            margin-bottom: 50px;
+        }
+
+        .invoice-header { text-align: center; border-bottom: 4px solid var(--primary); padding-bottom: 15px; margin-bottom: 30px; }
+        .invoice-header h1 { color: var(--primary-dark); font-size: 2.5rem; margin-bottom: 5px; font-weight: 900; }
+        .invoice-header p { font-size: 1.1rem; color: #555; font-weight: 700; }
+
+        .invoice-table { width: 100%; border-collapse: collapse; }
+        .invoice-table th { background: var(--primary); color: white; padding: 15px; font-size: 1.2rem; text-align: right; font-weight: 900; }
+        .invoice-table td { padding: 12px 15px; border-bottom: 1px solid #e5e7eb; font-weight: 700; font-size: 1.1rem; }
+        .invoice-table tr { page-break-inside: avoid; /* يمنع انقسام الصف بين صفحتين عند الطباعة */ }
+        
+        .invoice-table tr.cat-row td { 
+            background-color: var(--primary-light); 
+            color: var(--primary-dark); 
+            font-weight: 900; 
+            font-size: 1.3rem; 
+            border-bottom: 2px solid var(--primary); 
+            padding-top: 25px; 
+            text-align: right;
+        }
+        .price-cell { font-weight: 900; color: var(--primary); direction: ltr; text-align: right !important; }
+
+        /* إخفاء كل شيء وقت الطباعة وإظهار الفاتورة فقط */
+        @media print {
+            body * { visibility: hidden; }
+            @page { size: A4; margin: 10mm; }
+            .print-preview-modal { position: absolute; left: 0; top: 0; padding: 0; background: none; display: block !important; overflow: visible; width: 100%; }
+            .print-controls { display: none !important; }
+            .a4-page { width: 100%; box-shadow: none; margin: 0; padding: 0; border-radius: 0; }
+            .a4-page, .a4-page * { visibility: visible; }
+        }
     </style>
 </head>
 <body>
@@ -147,20 +197,46 @@
         </div>
     </div>
 
-    <!-- واجهة التصدير: أصبح الاعتماد على طباعة HTML المضمونة -->
+    <!-- واجهة التصدير: تحديد المنتجات -->
     <div id="view-export" class="view">
-        <h3 style="margin-bottom: 15px;">حدد المنتجات لاستخراج قائمة الأسعار:</h3>
+        <h3 style="margin-bottom: 15px;">حدد المنتجات لاستخراج الفاتورة:</h3>
         <div class="tree-item"><input type="checkbox" id="selectAllExport" onchange="toggleAllExport(this)"> <b style="color:var(--primary)">تحديد الكل</b></div>
         <div id="exportTreeContainer" class="export-tree"></div>
-        <button class="btn-primary" style="box-shadow: 0 10px 20px rgba(12, 161, 67, 0.3); border-radius: 50px;" onclick="printPriceList()">
-            <span>طباعة / حفظ كـ PDF 🖨️</span>
+        
+        <button class="btn-primary" style="box-shadow: 0 10px 20px rgba(12, 161, 67, 0.3); border-radius: 50px; padding: 20px;" onclick="generateInvoicePreview()">
+            <span>معاينة وتجهيز الفاتورة للطباعة 🧾</span>
         </button>
-        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">اضغط أعلاه وسيقوم متصفحك بتجهيز الملف للطباعة أو الحفظ كـ PDF بدقة عالية.</p>
+    </div>
+
+    <!-- شاشة معاينة الفاتورة قبل الطباعة (Modal) -->
+    <div class="print-preview-modal" id="printPreviewModal">
+        <div class="print-controls">
+            <button class="btn-primary" style="margin:0; width:auto; padding: 15px 30px; border-radius: 50px;" onclick="window.print()">طباعة الآن / حفظ كـ PDF 🖨️</button>
+            <button class="btn-secondary" style="margin:0; width:auto; border-radius: 50px;" onclick="closePrintPreview()">رجوع للتعديل ❌</button>
+        </div>
+        
+        <div class="a4-page" id="invoiceA4Page">
+            <div class="invoice-header">
+                <h1 id="invStoreName">اسم المطعم</h1>
+                <p>قائمة الأسعار المُحدثة - تاريخ: <span dir="ltr" id="invDate"></span></p>
+            </div>
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th style="width: 75%;">اسم الصنف / المنتج</th>
+                        <th style="width: 25%;">السعر</th>
+                    </tr>
+                </thead>
+                <tbody id="invTableBody">
+                    <!-- سيتم ملء المنتجات هنا عبر الجافاسكربت -->
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="bottom-nav">
         <div class="nav-item active" onclick="switchTab('structure', 'الأقسام والمنتجات 🗂️', this)"><span>🗂️</span><span>المحتوى</span></div>
-        <div class="nav-item" onclick="switchTab('export', 'تصدير الأسعار 🖨️', this); buildExportTree();"><span>🖨️</span><span>تصدير PDF</span></div>
+        <div class="nav-item" onclick="switchTab('export', 'الفواتير 🧾', this); buildExportTree();"><span>🧾</span><span>الطباعة</span></div>
         <div class="nav-item" onclick="switchTab('settings', 'الإعدادات ⚙️', this)"><span>⚙️</span><span>الإعدادات</span></div>
     </div>
 
@@ -539,87 +615,39 @@
         function toggleAllExport(el) { document.querySelectorAll('.export-tree input[type="checkbox"]').forEach(cb => cb.checked = el.checked); }
         function toggleGroup(el, targetId) { document.querySelectorAll(`#${targetId} input[type="checkbox"]`).forEach(cb => cb.checked = el.checked); }
 
-        // التصدير باستخدام أداة الطباعة الافتراضية للمتصفح (الأقوى والأضمن 100%)
-        function printPriceList() {
+        /* =========================================================
+           نظام المعاينة والطباعة الجديد (A4 Native Browser Print)
+           ========================================================= */
+        function generateInvoicePreview() {
             const checkedItems = document.querySelectorAll('.exp-item:checked');
-            if(checkedItems.length === 0) return alert('يرجى تحديد منتج واحد على الأقل للطباعة/الاستخراج.');
+            if(checkedItems.length === 0) return alert('يرجى تحديد منتج واحد على الأقل لإضافته للفاتورة.');
 
-            let tableRows = '';
+            let tbody = '';
             let currentSection = '';
 
             checkedItems.forEach(cb => {
                 let section = cb.dataset.section;
                 if(section !== currentSection) {
-                    tableRows += `<tr>
-                        <td colspan="2" class="section-header">${section}</td>
-                    </tr>`;
+                    tbody += `<tr class="cat-row"><td colspan="2">${section}</td></tr>`;
                     currentSection = section;
                 }
-                tableRows += `<tr>
-                    <td class="item-name">${cb.dataset.name}</td>
-                    <td class="item-price"><span dir="ltr">${cb.dataset.price} ${cb.dataset.cur}</span></td>
+                tbody += `<tr>
+                    <td>${cb.dataset.name}</td>
+                    <td class="price-cell">${cb.dataset.price} ${cb.dataset.cur}</td>
                 </tr>`;
             });
 
-            const dateString = new Date().toLocaleDateString('ar-EG');
-            const storeName = appSettings.store_name || 'Garden Food';
+            // تحديث بيانات الفاتورة
+            document.getElementById('invStoreName').innerText = appSettings.store_name || 'Garden Food';
+            document.getElementById('invDate').innerText = new Date().toLocaleDateString('ar-EG');
+            document.getElementById('invTableBody').innerHTML = tbody;
 
-            const printContent = `
-            <!DOCTYPE html>
-            <html lang="ar" dir="rtl">
-            <head>
-                <meta charset="UTF-8">
-                <title>قائمة أسعار - ${storeName}</title>
-                <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
-                <style>
-                    body { font-family: 'Tajawal', sans-serif; background: #fff; color: #000; padding: 20px; }
-                    .header { text-align: center; border-bottom: 3px solid #0ca143; padding-bottom: 15px; margin-bottom: 20px; }
-                    .header h1 { color: #0ca143; margin: 0 0 10px 0; font-size: 32px; font-weight: 900; }
-                    .header p { color: #555; margin: 0; font-size: 16px; font-weight: 700; }
-                    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-                    th { background-color: #0ca143; color: #fff; padding: 12px; text-align: right; font-size: 18px; font-weight: 900; }
-                    td { padding: 12px; border-bottom: 1px solid #ddd; font-size: 16px; }
-                    .section-header { background-color: #e6f9ed; color: #097d33; font-weight: 900; font-size: 20px; border-bottom: 2px solid #0ca143; padding-top: 25px; }
-                    .item-name { font-weight: 700; width: 75%; }
-                    .item-price { font-weight: 900; color: #0ca143; width: 25%; text-align: right; direction: ltr; }
-                    
-                    /* تحسينات الطباعة لضمان خروج الـ PDF بأفضل شكل */
-                    @media print {
-                        body { padding: 0; }
-                        .section-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; background-color: #e6f9ed !important; color: #097d33 !important; }
-                        th { -webkit-print-color-adjust: exact; print-color-adjust: exact; background-color: #0ca143 !important; color: #fff !important; }
-                        tr { page-break-inside: avoid; }
-                        @page { margin: 15mm; }
-                    }
-                </style>
-            </head>
-            <body onload="window.print(); window.close();">
-                <div class="header">
-                    <h1>${storeName}</h1>
-                    <p>قائمة الأسعار المُحدثة - تاريخ: <span dir="ltr">${dateString}</span></p>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th style="width: 75%;">الصنف</th>
-                            <th style="width: 25%;">السعر</th>
-                        </tr>
-                    </thead>
-                    <tbody>${tableRows}</tbody>
-                </table>
-            </body>
-            </html>
-            `;
+            // إظهار شاشة المعاينة
+            document.getElementById('printPreviewModal').style.display = 'flex';
+        }
 
-            // فتح نافذة منبثقة جديدة وبداخلها محتوى الطباعة النظيف
-            const printWindow = window.open('', '_blank');
-            if (printWindow) {
-                printWindow.document.open();
-                printWindow.document.write(printContent);
-                printWindow.document.close();
-            } else {
-                alert("تم حظر النافذة المنبثقة من قبل المتصفح. يرجى السماح بالنوافذ المنبثقة (Pop-ups) لهذا الموقع.");
-            }
+        function closePrintPreview() {
+            document.getElementById('printPreviewModal').style.display = 'none';
         }
 
         async function saveAllChanges() {
