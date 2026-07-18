@@ -14,7 +14,16 @@
           "currency": "ل.س"
         }
       ],
-      "thumb": "./images/c_thumb_1784386920433_991.jpg"
+      "thumb": "./images/c_thumb_1784386920433_991.jpg",
+      "subcategories": [
+        {
+          "id": "sub_1784396710293",
+          "items": [],
+          "name": "احمد",
+          "image": "./images/orig_1784396732197_835.jpg",
+          "thumb": "./images/thumb_1784396732197_835.jpg"
+        }
+      ]
     },
     {
       "id": "c_1784236630271",
