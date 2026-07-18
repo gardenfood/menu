@@ -1,0 +1,18 @@
+{
+  "logo": "./images/logo_1784236778626.png",
+  "store_name": "Garden Food",
+  "store_desc": "طعم ينبض بالحياة 🌱",
+  "whatsapp_number": "963991388013",
+  "whatsapp_template": "مرحباً، أود طلب التالي:",
+  "currency": "ل.س",
+  "ui_greeting": "ماذا تشتهي اليوم؟ 😋",
+  "ui_back": "رجوع",
+  "ui_cart_word": "سلة الطلبات",
+  "ui_cart_title": "مراجعة الطلب 🛒",
+  "ui_add_btn": "إضافة +",
+  "ui_checkout_btn": "تأكيد الطلب 💬",
+  "facebook_url": "احمد محمود بيك",
+  "hero_subtitle": "شركة متخصصة بتلبية احتياجات المطاعم والفنادق والكافيه بأفضل سعر  وأفضل جودة اطلب الان",
+  "instagram_url": "كمان احمد محمود بيك",
+  "click_sound": "./images/sound_1784329197355.mp3"
+}
