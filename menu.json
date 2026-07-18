@@ -121,6 +121,13 @@
       "name": "الملابس (Uniform)",
       "image": "./images/c_orig_1784390284163_121.jpg",
       "thumb": "./images/c_thumb_1784390284163_121.jpg"
+    },
+    {
+      "id": "c_1784390995141",
+      "items": [],
+      "name": "مواد تنضيف",
+      "image": "./images/c_orig_1784390996790_186.jpg",
+      "thumb": "./images/c_thumb_1784390996791_186.jpg"
     }
   ]
 }
