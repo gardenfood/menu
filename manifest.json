@@ -1,0 +1,22 @@
+{
+  "name": "Garden Food Kiosk",
+  "short_name": "Garden Food",
+  "description": "قائمة طعام ديجيتال ومستخرج الأسعار لمطعم Garden Food",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4f8f5",
+  "theme_color": "#0ca143",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "./icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
