@@ -49,14 +49,34 @@ collections:
               - { label: "معرف القسم", name: "id", widget: "string" }
               - { label: "اسم القسم", name: "name", widget: "string" }
               - { label: "صورة القسم", name: "image", widget: "image" }
-              - { label: "الصورة المصغرة (المربعة)", name: "thumb", widget: "image", required: false }
-              - label: "الأصناف"
+              - { label: "الصورة المصغرة", name: "thumb", widget: "image", required: false }
+              - label: "الأقسام الفرعية"
+                name: "subcategories"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "المعرف", name: "id", widget: "string" }
+                  - { label: "الاسم", name: "name", widget: "string" }
+                  - { label: "صورة", name: "image", widget: "image" }
+                  - { label: "الصورة المصغرة", name: "thumb", widget: "image", required: false }
+                  - label: "الأصناف"
+                    name: "items"
+                    widget: "list"
+                    fields:
+                      - { label: "المعرف", name: "id", widget: "string" }
+                      - { label: "اسم الصنف", name: "name", widget: "string" }
+                      - { label: "السعر", name: "price", widget: "string" }
+                      - { label: "عملة الصنف", name: "currency", widget: "select", options: ["ل.س", "$"], default: "ل.س" }
+                      - { label: "صورة الصنف", name: "image", widget: "image" }
+                      - { label: "صورة الصنف المصغرة", name: "thumb", widget: "image", required: false }
+              - label: "الأصناف (بدون قسم فرعي)"
                 name: "items"
                 widget: "list"
+                required: false
                 fields:
                   - { label: "المعرف", name: "id", widget: "string" }
                   - { label: "اسم الصنف", name: "name", widget: "string" }
                   - { label: "السعر", name: "price", widget: "string" }
                   - { label: "عملة الصنف", name: "currency", widget: "select", options: ["ل.س", "$"], default: "ل.س" }
-                  - { label: "صورة الصنف الأصلية", name: "image", widget: "image" }
+                  - { label: "صورة الصنف", name: "image", widget: "image" }
                   - { label: "صورة الصنف المصغرة", name: "thumb", widget: "image", required: false }
