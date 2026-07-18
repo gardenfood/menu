@@ -3,7 +3,7 @@
     {
       "id": "c1",
       "name": "اللحوم الباردة ",
-      "image": "./images/c_orig_1784386804043_943.jpg",
+      "image": "./images/c_orig_1784386920433_991.jpg",
       "items": [
         {
           "id": "i1",
@@ -14,12 +14,12 @@
           "currency": "ل.س"
         }
       ],
-      "thumb": "./images/c_thumb_1784386804043_943.jpg"
+      "thumb": "./images/c_thumb_1784386920433_991.jpg"
     },
     {
       "id": "c_1784236630271",
-      "name": "البهارات ",
-      "image": "./images/cat_1784236668846_510.png",
+      "name": "التوابل",
+      "image": "./images/c_orig_1784386923354_2.jpg",
       "items": [
         {
           "id": "i_1784337716801",
@@ -30,12 +30,13 @@
           "image": "./images/i_orig_1784337717627_712.jpg",
           "thumb": "./images/i_thumb_1784337717627_712.jpg"
         }
-      ]
+      ],
+      "thumb": "./images/c_thumb_1784386923354_2.jpg"
     },
     {
       "id": "c_1784318509908",
-      "name": "صوصات",
-      "image": "./images/cat_1784318539342_796.jpg",
+      "name": "صلصات باردة",
+      "image": "./images/c_orig_1784386926168_938.jpg",
       "items": [
         {
           "id": "i_1784318534414",
@@ -62,7 +63,8 @@
           "image": "./images/i_orig_1784337787828_502.jpg",
           "thumb": "./images/i_thumb_1784337787828_502.jpg"
         }
-      ]
+      ],
+      "thumb": "./images/c_thumb_1784386926168_938.jpg"
     }
   ]
 }
