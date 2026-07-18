@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
         :root { 
@@ -62,7 +61,6 @@
         .action-btn { background: var(--bg); border: none; width: 34px; height: 34px; border-radius: 10px; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .action-btn.delete { color: var(--danger); background: #fee2e2; }
         .action-btn.edit { color: var(--info); background: #e0f2fe; }
-        .action-btn.move { color: var(--text-dark); background: #f3f4f6; }
         .action-btn.dive { background: var(--primary-light); color: var(--primary); width: 100%; border-radius: 12px; font-family: 'Tajawal'; font-weight: 900; font-size: 0.9rem;}
 
         .fab { position: fixed; bottom: 100px; right: 20px; background: var(--primary); color: white; width: 65px; height: 65px; border-radius: 22px; font-size: 2rem; display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 25px rgba(12, 161, 67, 0.4); border: none; z-index: 99; cursor: pointer; }
@@ -149,15 +147,15 @@
         </div>
     </div>
 
-    <!-- واجهة التصدير الجديدة لـ PDF عالي الدقة -->
+    <!-- واجهة التصدير: أصبح الاعتماد على طباعة HTML المضمونة -->
     <div id="view-export" class="view">
         <h3 style="margin-bottom: 15px;">حدد المنتجات لاستخراج قائمة الأسعار:</h3>
         <div class="tree-item"><input type="checkbox" id="selectAllExport" onchange="toggleAllExport(this)"> <b style="color:var(--primary)">تحديد الكل</b></div>
         <div id="exportTreeContainer" class="export-tree"></div>
-        <button class="btn-primary" id="btnExportPDF" style="box-shadow: 0 10px 20px rgba(12, 161, 67, 0.3); border-radius: 50px;" onclick="exportHighResPDF()">
-            <span id="btnExportText">استخراج قائمة الأسعار (عالية الدقة) 🖨️</span>
-            <div id="pdfSpinner" class="spinner" style="width:20px; height:20px; border-width:3px; margin:0; display:none; border-top-color:white;"></div>
+        <button class="btn-primary" style="box-shadow: 0 10px 20px rgba(12, 161, 67, 0.3); border-radius: 50px;" onclick="printPriceList()">
+            <span>طباعة / حفظ كـ PDF 🖨️</span>
         </button>
+        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">اضغط أعلاه وسيقوم متصفحك بتجهيز الملف للطباعة أو الحفظ كـ PDF بدقة عالية.</p>
     </div>
 
     <div class="bottom-nav">
@@ -541,15 +539,10 @@
         function toggleAllExport(el) { document.querySelectorAll('.export-tree input[type="checkbox"]').forEach(cb => cb.checked = el.checked); }
         function toggleGroup(el, targetId) { document.querySelectorAll(`#${targetId} input[type="checkbox"]`).forEach(cb => cb.checked = el.checked); }
 
-        // التصدير عالي الدقة (النسخة المصححة والمحسنة)
-        function exportHighResPDF() {
+        // التصدير باستخدام أداة الطباعة الافتراضية للمتصفح (الأقوى والأضمن 100%)
+        function printPriceList() {
             const checkedItems = document.querySelectorAll('.exp-item:checked');
-            if(checkedItems.length === 0) return alert('يرجى تحديد منتج واحد على الأقل لاستخراجه في القائمة.');
-
-            const btnText = document.getElementById('btnExportText');
-            const spinner = document.getElementById('pdfSpinner');
-            btnText.style.display = 'none';
-            spinner.style.display = 'block';
+            if(checkedItems.length === 0) return alert('يرجى تحديد منتج واحد على الأقل للطباعة/الاستخراج.');
 
             let tableRows = '';
             let currentSection = '';
@@ -557,71 +550,76 @@
             checkedItems.forEach(cb => {
                 let section = cb.dataset.section;
                 if(section !== currentSection) {
-                    // استخدام Inline CSS بالكامل لتجنب أخطاء html2canvas
-                    tableRows += `<tr style="page-break-inside: avoid;">
-                        <td colspan="2" style="background-color: #e6f9ed; color: #097d33; font-weight: 900; font-size: 1.2rem; border-bottom: 2px solid #0ca143; padding: 15px 10px; padding-top: 25px; text-align: right;">${section}</td>
+                    tableRows += `<tr>
+                        <td colspan="2" class="section-header">${section}</td>
                     </tr>`;
                     currentSection = section;
                 }
-                tableRows += `<tr style="page-break-inside: avoid;">
-                    <td style="font-weight: 700; width: 75%; padding: 12px 10px; border-bottom: 1px solid #e5e7eb; text-align: right;">${cb.dataset.name}</td>
-                    <td style="font-weight: 900; color: #0ca143; width: 25%; padding: 12px 10px; border-bottom: 1px solid #e5e7eb; direction: ltr; text-align: right;">${cb.dataset.price} ${cb.dataset.cur}</td>
+                tableRows += `<tr>
+                    <td class="item-name">${cb.dataset.name}</td>
+                    <td class="item-price"><span dir="ltr">${cb.dataset.price} ${cb.dataset.cur}</span></td>
                 </tr>`;
             });
 
             const dateString = new Date().toLocaleDateString('ar-EG');
             const storeName = appSettings.store_name || 'Garden Food';
-            
-            // تم تحويل جميع التنسيقات إلى Inline Styles لتكون قوية وتُقرأ مباشرة
-            const htmlToPrint = `
-            <div style="font-family: 'Tajawal', sans-serif; direction: rtl; text-align: right; background: #ffffff; width: 100%; padding: 30px; box-sizing: border-box;">
-                <div style="text-align: center; border-bottom: 4px solid #0ca143; padding-bottom: 20px; margin-bottom: 30px;">
-                    <h1 style="color: #0ca143; font-size: 2.5rem; margin: 0 0 10px 0; font-weight: 900;">${storeName}</h1>
-                    <p style="color: #555; margin: 0; font-weight: 700; font-size: 1.1rem;">قائمة الأسعار المُحدثة - تاريخ: <span dir="ltr">${dateString}</span></p>
+
+            const printContent = `
+            <!DOCTYPE html>
+            <html lang="ar" dir="rtl">
+            <head>
+                <meta charset="UTF-8">
+                <title>قائمة أسعار - ${storeName}</title>
+                <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
+                <style>
+                    body { font-family: 'Tajawal', sans-serif; background: #fff; color: #000; padding: 20px; }
+                    .header { text-align: center; border-bottom: 3px solid #0ca143; padding-bottom: 15px; margin-bottom: 20px; }
+                    .header h1 { color: #0ca143; margin: 0 0 10px 0; font-size: 32px; font-weight: 900; }
+                    .header p { color: #555; margin: 0; font-size: 16px; font-weight: 700; }
+                    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                    th { background-color: #0ca143; color: #fff; padding: 12px; text-align: right; font-size: 18px; font-weight: 900; }
+                    td { padding: 12px; border-bottom: 1px solid #ddd; font-size: 16px; }
+                    .section-header { background-color: #e6f9ed; color: #097d33; font-weight: 900; font-size: 20px; border-bottom: 2px solid #0ca143; padding-top: 25px; }
+                    .item-name { font-weight: 700; width: 75%; }
+                    .item-price { font-weight: 900; color: #0ca143; width: 25%; text-align: right; direction: ltr; }
+                    
+                    /* تحسينات الطباعة لضمان خروج الـ PDF بأفضل شكل */
+                    @media print {
+                        body { padding: 0; }
+                        .section-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; background-color: #e6f9ed !important; color: #097d33 !important; }
+                        th { -webkit-print-color-adjust: exact; print-color-adjust: exact; background-color: #0ca143 !important; color: #fff !important; }
+                        tr { page-break-inside: avoid; }
+                        @page { margin: 15mm; }
+                    }
+                </style>
+            </head>
+            <body onload="window.print(); window.close();">
+                <div class="header">
+                    <h1>${storeName}</h1>
+                    <p>قائمة الأسعار المُحدثة - تاريخ: <span dir="ltr">${dateString}</span></p>
                 </div>
-                
-                <table style="width: 100%; border-collapse: collapse; font-size: 1.1rem;">
+                <table>
                     <thead>
                         <tr>
-                            <th style="width: 75%; padding: 15px 10px; text-align: right; background-color: #0ca143; color: white; font-weight: 900; font-size: 1.2rem;">الصنف</th>
-                            <th style="width: 25%; padding: 15px 10px; text-align: right; background-color: #0ca143; color: white; font-weight: 900; font-size: 1.2rem;">السعر</th>
+                            <th style="width: 75%;">الصنف</th>
+                            <th style="width: 25%;">السعر</th>
                         </tr>
                     </thead>
                     <tbody>${tableRows}</tbody>
                 </table>
-            </div>`;
+            </body>
+            </html>
+            `;
 
-            // الحل السحري: ننشئ العنصر ونضعه خارج الشاشة تماماً بدلاً من جعله شفافاً!
-            const tempContainer = document.createElement('div');
-            tempContainer.innerHTML = htmlToPrint;
-            tempContainer.style.cssText = 'position: absolute; left: -9999px; top: 0; width: 800px; background-color: white; z-index: -1;';
-            document.body.appendChild(tempContainer);
-
-            const opt = {
-                margin:       12, // هوامش مناسبة للطباعة بالمليمتر
-                filename:     'Prices-List.pdf',
-                image:        { type: 'jpeg', quality: 1 },
-                html2canvas:  { 
-                    scale: 2, 
-                    useCORS: true,
-                    windowWidth: 800,
-                    scrollY: 0,
-                    scrollX: 0
-                }, 
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-
-            html2pdf().set(opt).from(tempContainer).save().then(() => {
-                document.body.removeChild(tempContainer);
-                btnText.style.display = 'inline';
-                spinner.style.display = 'none';
-            }).catch(err => {
-                console.error(err);
-                alert("حدث خطأ أثناء التصدير.");
-                if(document.body.contains(tempContainer)) document.body.removeChild(tempContainer);
-                btnText.style.display = 'inline';
-                spinner.style.display = 'none';
-            });
+            // فتح نافذة منبثقة جديدة وبداخلها محتوى الطباعة النظيف
+            const printWindow = window.open('', '_blank');
+            if (printWindow) {
+                printWindow.document.open();
+                printWindow.document.write(printContent);
+                printWindow.document.close();
+            } else {
+                alert("تم حظر النافذة المنبثقة من قبل المتصفح. يرجى السماح بالنوافذ المنبثقة (Pop-ups) لهذا الموقع.");
+            }
         }
 
         async function saveAllChanges() {
