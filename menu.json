@@ -100,6 +100,13 @@
       "name": "معدات مطبخ",
       "image": "./images/c_orig_1784388863602_202.jpg",
       "thumb": "./images/c_thumb_1784388863602_202.jpg"
+    },
+    {
+      "id": "c_1784388922393",
+      "items": [],
+      "name": "تجهيزات مطبخ",
+      "image": "./images/c_orig_1784388923920_664.jpg",
+      "thumb": "./images/c_thumb_1784388923920_664.jpg"
     }
   ]
 }
