@@ -107,6 +107,13 @@
       "name": "تجهيزات مطبخ",
       "image": "./images/c_orig_1784388923920_664.jpg",
       "thumb": "./images/c_thumb_1784388923920_664.jpg"
+    },
+    {
+      "id": "c_1784389224207",
+      "items": [],
+      "name": "تغليفات (تيك أوي)",
+      "image": "./images/c_orig_1784389225509_138.jpg",
+      "thumb": "./images/c_thumb_1784389225509_138.jpg"
     }
   ]
 }
