@@ -544,7 +544,7 @@
         function toggleAllExport(el) { document.querySelectorAll('.export-tree input[type="checkbox"]').forEach(cb => cb.checked = el.checked); }
         function toggleGroup(el, targetId) { document.querySelectorAll(`#${targetId} input[type="checkbox"]`).forEach(cb => cb.checked = el.checked); }
 
-        // التصدير عالي الدقة المستوحى من كودك
+        // التصدير عالي الدقة بعد إصلاح مشكلة الملف الفارغ
         function exportHighResPDF() {
             const checkedItems = document.querySelectorAll('.exp-item:checked');
             if(checkedItems.length === 0) return alert('يرجى تحديد منتج واحد على الأقل لاستخراجه في القائمة.');
@@ -569,25 +569,25 @@
                 </tr>`;
             });
 
-            // قالب التصدير المستوحى من التنسيق الذي أرسلته
             const dateString = new Date().toLocaleDateString('ar-EG');
             const storeName = appSettings.store_name || 'Garden Food';
             
+            // تم استبدال متغيرات CSS بألوان Hex لضمان قراءتها بشكل صحيح في الـ PDF
             const htmlToPrint = `
             <div id="pdf-content-wrapper" style="font-family: 'Tajawal', sans-serif; direction: rtl; text-align: right; background: #fff; width: 800px; max-width: 100%; padding: 30px; box-sizing: border-box;">
                 <style>
-                    #pdf-content-wrapper .pdf-header { text-align: center; border-bottom: 4px solid var(--primary); padding-bottom: 20px; margin-bottom: 30px; }
-                    #pdf-content-wrapper .pdf-header h1 { color: var(--primary); font-size: 2.5rem; margin: 0 0 10px 0; font-weight: 900; }
+                    #pdf-content-wrapper .pdf-header { text-align: center; border-bottom: 4px solid #0ca143; padding-bottom: 20px; margin-bottom: 30px; }
+                    #pdf-content-wrapper .pdf-header h1 { color: #0ca143; font-size: 2.5rem; margin: 0 0 10px 0; font-weight: 900; }
                     #pdf-content-wrapper .pdf-header p { color: #555; margin: 0; font-weight: 700; font-size: 1.1rem; }
                     
                     #pdf-content-wrapper table { width: 100%; border-collapse: collapse; font-size: 1.1rem; }
                     #pdf-content-wrapper th, #pdf-content-wrapper td { padding: 15px; text-align: right; border-bottom: 1px solid #e5e7eb; }
-                    #pdf-content-wrapper th { background-color: var(--primary); color: white; font-weight: 900; font-size: 1.2rem; }
+                    #pdf-content-wrapper th { background-color: #0ca143; color: white; font-weight: 900; font-size: 1.2rem; }
                     #pdf-content-wrapper tr { page-break-inside: avoid; } 
                     
-                    #pdf-content-wrapper .category-row { background-color: var(--primary-light); }
-                    #pdf-content-wrapper .category-row td { color: var(--primary-dark); font-weight: 900; font-size: 1.3rem; border-bottom: 2px solid var(--primary); padding-top: 25px; }
-                    #pdf-content-wrapper .price-cell { font-weight: 900; color: var(--primary); width: 25%; direction: ltr; text-align: right; }
+                    #pdf-content-wrapper .category-row { background-color: #e6f9ed; }
+                    #pdf-content-wrapper .category-row td { color: #097d33; font-weight: 900; font-size: 1.3rem; border-bottom: 2px solid #0ca143; padding-top: 25px; }
+                    #pdf-content-wrapper .price-cell { font-weight: 900; color: #0ca143; width: 25%; direction: ltr; text-align: right; }
                 </style>
                 
                 <div class="pdf-header">
@@ -609,17 +609,17 @@
             const hiddenContainer = document.getElementById('hiddenPdfContainer');
             hiddenContainer.innerHTML = htmlToPrint;
             
-            // إظهار اللوحة في مكان مخفي بحيث لا تضغط العناصر وتتشوه
-            hiddenContainer.style.cssText = 'position: absolute; left: -9999px; top: 0; width: 800px; display: block;';
+            // التعديل الجذري: إخفاء العنصر خلف واجهة التطبيق بدون إخراجه عن إحداثيات الشاشة
+            hiddenContainer.style.cssText = 'position: fixed; right: 0; top: 0; width: 800px; z-index: -9999; display: block; background: #fff;';
 
             const opt = {
                 margin:       15,
                 filename:     'Prices-List.pdf',
                 image:        { type: 'jpeg', quality: 1 },
                 html2canvas:  { 
-                    scale: 3, // دقة 3 ممتازة للحصول على تفاصيل قوية دون تكسر 
-                    useCORS: true 
-                    // ملاحظة: تم إزالة letterRendering لأنها تتسبب في تكسر الأحرف العربية
+                    scale: 2, // 2 ممتازة جداً وتمنع انهيار الذاكرة الذي يسبب شاشة بيضاء
+                    useCORS: true,
+                    windowWidth: 800 // إجبار الكانفاس على استخدام العرض الصحيح حتى على الهواتف
                 }, 
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
                 pagebreak:    { mode: ['css', 'legacy'] }
@@ -631,6 +631,7 @@
                 btnText.style.display = 'inline';
                 spinner.style.display = 'none';
             }).catch(err => {
+                console.error(err);
                 alert("حدث خطأ أثناء التصدير.");
                 hiddenContainer.style.display = 'none';
                 btnText.style.display = 'inline';
