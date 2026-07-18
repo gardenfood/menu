@@ -7,11 +7,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-    <!-- مكتبة التصدير إلى إكسل -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
-        :root { --primary: #0ca143; --primary-light: #e6f9ed; --bg: #f4f7f6; --surface: #ffffff; --text-dark: #111827; --text-muted: #6b7280; --danger: #ef4444; --warning: #f59e0b; --info: #3b82f6; --radius-lg: 24px; --radius-md: 16px; --transition: all 0.3s ease; }
+        :root { 
+            --primary: #0ca143; 
+            --primary-dark: #097d33; 
+            --primary-light: #e6f9ed; 
+            --bg: #f4f7f6; 
+            --surface: #ffffff; 
+            --text-dark: #111827; 
+            --text-muted: #6b7280; 
+            --danger: #ef4444; 
+            --warning: #f59e0b; 
+            --info: #3b82f6; 
+            --radius-lg: 24px; 
+            --radius-md: 16px; 
+            --transition: all 0.3s ease; 
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg); color: var(--text-dark); padding-bottom: 90px; overflow-x: hidden; }
 
@@ -136,20 +149,20 @@
         </div>
     </div>
 
-    <!-- واجهة تصدير الـ Excel -->
+    <!-- واجهة التصدير الجديدة لـ PDF عالي الدقة -->
     <div id="view-export" class="view">
         <h3 style="margin-bottom: 15px;">حدد المنتجات لاستخراج قائمة الأسعار:</h3>
         <div class="tree-item"><input type="checkbox" id="selectAllExport" onchange="toggleAllExport(this)"> <b style="color:var(--primary)">تحديد الكل</b></div>
         <div id="exportTreeContainer" class="export-tree"></div>
-        <button class="btn-primary" id="btnExportExcel" onclick="exportExcel()">
-            <span id="btnExportText">استخراج الإكسل (Excel) 📊</span>
-            <div id="excelSpinner" class="spinner" style="width:20px; height:20px; border-width:3px; margin:0; display:none; border-top-color:white;"></div>
+        <button class="btn-primary" id="btnExportPDF" style="box-shadow: 0 10px 20px rgba(12, 161, 67, 0.3); border-radius: 50px;" onclick="exportHighResPDF()">
+            <span id="btnExportText">استخراج قائمة الأسعار (عالية الدقة) 🖨️</span>
+            <div id="pdfSpinner" class="spinner" style="width:20px; height:20px; border-width:3px; margin:0; display:none; border-top-color:white;"></div>
         </button>
     </div>
 
     <div class="bottom-nav">
         <div class="nav-item active" onclick="switchTab('structure', 'الأقسام والمنتجات 🗂️', this)"><span>🗂️</span><span>المحتوى</span></div>
-        <div class="nav-item" onclick="switchTab('export', 'تصدير الأسعار 📊', this); buildExportTree();"><span>📊</span><span>تصدير إكسل</span></div>
+        <div class="nav-item" onclick="switchTab('export', 'تصدير الأسعار 🖨️', this); buildExportTree();"><span>🖨️</span><span>تصدير PDF</span></div>
         <div class="nav-item" onclick="switchTab('settings', 'الإعدادات ⚙️', this)"><span>⚙️</span><span>الإعدادات</span></div>
     </div>
 
@@ -196,6 +209,9 @@
             <button class="crop-btn confirm" onclick="confirmCrop()">تأكيد القص</button>
         </div>
     </div>
+
+    <!-- الوعاء المخفي الذي سيبني داخله قالب الـ PDF المستوحى من كودك -->
+    <div id="hiddenPdfContainer"></div>
 
     <script>
         const REPO = 'gardenfood/menu';
@@ -528,50 +544,98 @@
         function toggleAllExport(el) { document.querySelectorAll('.export-tree input[type="checkbox"]').forEach(cb => cb.checked = el.checked); }
         function toggleGroup(el, targetId) { document.querySelectorAll(`#${targetId} input[type="checkbox"]`).forEach(cb => cb.checked = el.checked); }
 
-        // الوظيفة الجديدة لاستخراج ملف الإكسل بدلاً من الـ PDF
-        function exportExcel() {
+        // التصدير عالي الدقة المستوحى من كودك
+        function exportHighResPDF() {
             const checkedItems = document.querySelectorAll('.exp-item:checked');
             if(checkedItems.length === 0) return alert('يرجى تحديد منتج واحد على الأقل لاستخراجه في القائمة.');
 
             const btnText = document.getElementById('btnExportText');
-            const spinner = document.getElementById('excelSpinner');
+            const spinner = document.getElementById('pdfSpinner');
             btnText.style.display = 'none';
             spinner.style.display = 'block';
 
-            try {
-                // 1. تحضير وتجهيز البيانات
-                let excelData = [];
-                checkedItems.forEach(cb => {
-                    excelData.push({
-                        "القسم": cb.dataset.section,
-                        "الصنف": cb.dataset.name,
-                        "السعر": Number(cb.dataset.price) || cb.dataset.price, // حاول تحويله لرقم لسهولة الحساب في الإكسل
-                        "العملة": cb.dataset.cur
-                    });
-                });
+            let tableRows = '';
+            let currentSection = '';
 
-                // 2. إنشاء ورقة العمل (Worksheet)
-                const ws = XLSX.utils.json_to_sheet(excelData);
+            checkedItems.forEach(cb => {
+                let section = cb.dataset.section;
+                if(section !== currentSection) {
+                    tableRows += `<tr class="category-row"><td colspan="2">${section}</td></tr>`;
+                    currentSection = section;
+                }
+                tableRows += `<tr>
+                    <td style="font-weight: 700; width: 75%;">${cb.dataset.name}</td>
+                    <td class="price-cell"><span dir="ltr">${cb.dataset.price} ${cb.dataset.cur}</span></td>
+                </tr>`;
+            });
+
+            // قالب التصدير المستوحى من التنسيق الذي أرسلته
+            const dateString = new Date().toLocaleDateString('ar-EG');
+            const storeName = appSettings.store_name || 'Garden Food';
+            
+            const htmlToPrint = `
+            <div id="pdf-content-wrapper" style="font-family: 'Tajawal', sans-serif; direction: rtl; text-align: right; background: #fff; width: 800px; max-width: 100%; padding: 30px; box-sizing: border-box;">
+                <style>
+                    #pdf-content-wrapper .pdf-header { text-align: center; border-bottom: 4px solid var(--primary); padding-bottom: 20px; margin-bottom: 30px; }
+                    #pdf-content-wrapper .pdf-header h1 { color: var(--primary); font-size: 2.5rem; margin: 0 0 10px 0; font-weight: 900; }
+                    #pdf-content-wrapper .pdf-header p { color: #555; margin: 0; font-weight: 700; font-size: 1.1rem; }
+                    
+                    #pdf-content-wrapper table { width: 100%; border-collapse: collapse; font-size: 1.1rem; }
+                    #pdf-content-wrapper th, #pdf-content-wrapper td { padding: 15px; text-align: right; border-bottom: 1px solid #e5e7eb; }
+                    #pdf-content-wrapper th { background-color: var(--primary); color: white; font-weight: 900; font-size: 1.2rem; }
+                    #pdf-content-wrapper tr { page-break-inside: avoid; } 
+                    
+                    #pdf-content-wrapper .category-row { background-color: var(--primary-light); }
+                    #pdf-content-wrapper .category-row td { color: var(--primary-dark); font-weight: 900; font-size: 1.3rem; border-bottom: 2px solid var(--primary); padding-top: 25px; }
+                    #pdf-content-wrapper .price-cell { font-weight: 900; color: var(--primary); width: 25%; direction: ltr; text-align: right; }
+                </style>
                 
-                // تحديد اتجاه الورقة من اليمين لليسار (RTL) ليتناسب مع اللغة العربية
-                if(!ws['!dir']) ws['!dir'] = 'rtl';
+                <div class="pdf-header">
+                    <h1>${storeName}</h1>
+                    <p>قائمة الأسعار المُحدثة - تاريخ: <span dir="ltr">${dateString}</span></p>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 75%;">الصنف</th>
+                            <th style="width: 25%;">السعر</th>
+                        </tr>
+                    </thead>
+                    <tbody>${tableRows}</tbody>
+                </table>
+            </div>`;
 
-                // 3. إنشاء ملف الإكسل (Workbook) وربط الورقة به
-                const wb = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(wb, ws, "قائمة الأسعار");
+            const hiddenContainer = document.getElementById('hiddenPdfContainer');
+            hiddenContainer.innerHTML = htmlToPrint;
+            
+            // إظهار اللوحة في مكان مخفي بحيث لا تضغط العناصر وتتشوه
+            hiddenContainer.style.cssText = 'position: absolute; left: -9999px; top: 0; width: 800px; display: block;';
 
-                // 4. تحميل الملف للمستخدم
-                let fileName = appSettings.store_name ? `${appSettings.store_name}-Prices.xlsx` : 'Prices-List.xlsx';
-                XLSX.writeFile(wb, fileName);
+            const opt = {
+                margin:       15,
+                filename:     'Prices-List.pdf',
+                image:        { type: 'jpeg', quality: 1 },
+                html2canvas:  { 
+                    scale: 3, // دقة 3 ممتازة للحصول على تفاصيل قوية دون تكسر 
+                    useCORS: true 
+                    // ملاحظة: تم إزالة letterRendering لأنها تتسبب في تكسر الأحرف العربية
+                }, 
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak:    { mode: ['css', 'legacy'] }
+            };
 
-            } catch (error) {
-                alert("حدث خطأ أثناء استخراج ملف الإكسل.");
-                console.error(error);
-            } finally {
-                // إعادة الزر لوضعه الطبيعي
+            html2pdf().set(opt).from(hiddenContainer).save().then(() => {
+                hiddenContainer.style.display = 'none';
+                hiddenContainer.innerHTML = '';
                 btnText.style.display = 'inline';
                 spinner.style.display = 'none';
-            }
+            }).catch(err => {
+                alert("حدث خطأ أثناء التصدير.");
+                hiddenContainer.style.display = 'none';
+                btnText.style.display = 'inline';
+                spinner.style.display = 'none';
+            });
         }
 
         async function saveAllChanges() {
