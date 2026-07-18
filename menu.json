@@ -93,6 +93,13 @@
       "name": "بار وحلويات",
       "image": "./images/c_orig_1784387177935_577.jpg",
       "thumb": "./images/c_thumb_1784387177935_577.jpg"
+    },
+    {
+      "id": "c_1784388861522",
+      "items": [],
+      "name": "معدات مطبخ",
+      "image": "./images/c_orig_1784388863602_202.jpg",
+      "thumb": "./images/c_thumb_1784388863602_202.jpg"
     }
   ]
 }
