@@ -64,7 +64,11 @@
         .action-btn.edit { color: var(--info); background: #e0f2fe; }
         .action-btn.dive { background: var(--primary-light); color: var(--primary); width: 100%; border-radius: 12px; font-family: 'Tajawal'; font-weight: 900; font-size: 0.9rem;}
 
-        .fab { position: fixed; bottom: 100px; right: 20px; background: var(--primary); color: white; width: 65px; height: 65px; border-radius: 22px; font-size: 2rem; display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 25px rgba(12, 161, 67, 0.4); border: none; z-index: 99; cursor: pointer; }
+        /* حاوية الأزرار العائمة الجديدة */
+        .fab-container { position: fixed; bottom: 95px; left: 20px; right: 20px; display: flex; justify-content: center; gap: 15px; pointer-events: none; z-index: 99; }
+        .fab-btn { pointer-events: auto; background: var(--primary); color: white; border: none; padding: 0 25px; height: 55px; border-radius: 30px; font-size: 1.1rem; font-weight: 900; box-shadow: 0 10px 20px rgba(12, 161, 67, 0.3); cursor: pointer; display: flex; align-items: center; gap: 8px; transition: transform 0.2s; font-family: 'Tajawal'; flex: 1; justify-content: center;}
+        .fab-btn:active { transform: scale(0.95); }
+        .fab-btn.secondary { background: #111827; box-shadow: 0 10px 20px rgba(17, 24, 39, 0.2); }
 
         .sheet-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 999; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
         .sheet-overlay.active { opacity: 1; pointer-events: all; }
@@ -96,7 +100,7 @@
         .tree-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer; }
 
         /* ========================================================
-           تنسيقات الفاتورة الاحترافية A4 والطباعة 
+           تنسيقات الفاتورة الاحترافية A4 والطباعة (3 أعمدة)
            ======================================================== */
         .invoice-preview-container { background: #525659; padding: 20px 10px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
         .invoice-actions { display: flex; justify-content: space-between; width: 100%; max-width: 210mm; margin-bottom: 20px; background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
@@ -104,9 +108,9 @@
         .invoice-a4 {
             background: white;
             width: 100%;
-            max-width: 210mm; /* عرض A4 */
-            min-height: 297mm; /* طول A4 */
-            padding: 20mm; /* هوامش داخلية للورقة */
+            max-width: 210mm; 
+            min-height: 297mm; 
+            padding: 20mm; 
             box-shadow: 0 0 20px rgba(0,0,0,0.3);
             border-radius: 5px;
             direction: rtl;
@@ -116,14 +120,13 @@
         .invoice-a4 header h1 { color: var(--primary-dark); font-size: 2.5rem; margin-bottom: 10px; font-weight: 900; }
         .invoice-a4 header p { color: #555; font-size: 1.1rem; font-weight: 700; margin: 0; }
 
-        .invoice-table { width: 100%; border-collapse: collapse; font-size: 1.1rem; }
-        .invoice-table th, .invoice-table td { padding: 12px 15px; text-align: right; border-bottom: 1px solid #e5e7eb; }
+        .invoice-table { width: 100%; border-collapse: collapse; font-size: 1.05rem; }
+        .invoice-table th, .invoice-table td { padding: 12px 10px; text-align: right; border-bottom: 1px solid #e5e7eb; vertical-align: middle; }
         .invoice-table th { background-color: var(--primary-light); color: var(--primary-dark); font-weight: 900; border-bottom: 2px solid var(--primary); }
         .invoice-table .section-row td { background-color: #f8fafc; color: var(--text-dark); font-weight: 900; font-size: 1.2rem; padding-top: 20px; border-bottom: 2px solid #cbd5e1; }
-        .invoice-table .price-cell { font-weight: 900; color: var(--primary-dark); direction: ltr; width: 25%; }
-        .invoice-table tr { page-break-inside: avoid; } /* يمنع انقسام السطر بين صفحتين عند الطباعة */
+        .invoice-table .price-cell { font-weight: 900; color: var(--primary-dark); direction: ltr; text-align: left !important; }
+        .invoice-table tr { page-break-inside: avoid; } 
 
-        /* إعدادات الطباعة: إخفاء كل شيء باستثناء الفاتورة */
         @media print {
             @page { size: A4; margin: 0; }
             body { background: white; padding: 0; margin: 0; overflow: visible; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -148,7 +151,7 @@
         </div>
     </div>
 
-    <!-- الهيدر الخاص بالتطبيق (يختفي عند عرض الفاتورة والطباعة) -->
+    <!-- الهيدر الخاص بالتطبيق -->
     <div class="app-header no-print">
         <div style="display:flex; align-items:center; gap:15px;">
             <button class="app-header-back" id="adminBackBtn" onclick="goBackAdminLevel()">رجوع</button>
@@ -156,9 +159,10 @@
         </div>
     </div>
 
-    <div id="view-structure" class="view active no-print">
+    <div id="view-structure" class="view active no-print" style="padding-bottom: 150px;">
         <div id="structureList"></div>
-        <button class="fab" id="structureFab" onclick="openAddDialog()">+</button>
+        <!-- الأزرار العائمة الذكية -->
+        <div class="fab-container" id="fabContainer"></div>
     </div>
 
     <div id="view-settings" class="view no-print">
@@ -197,7 +201,7 @@
         </button>
     </div>
 
-    <!-- واجهة الفاتورة النهائية (تظهر بدلاً من التطبيق للطباعة) -->
+    <!-- واجهة الفاتورة النهائية للطباعة 3 أعمدة -->
     <div id="view-invoice" class="view" style="padding:0;">
         <div class="invoice-preview-container">
             <div class="invoice-actions">
@@ -205,7 +209,6 @@
                 <button class="btn-primary" style="margin: 0; width: auto; padding: 10px 30px;" onclick="printInvoice()">🖨️ طباعة / حفظ PDF</button>
             </div>
 
-            <!-- الورقة A4 -->
             <div class="invoice-a4" id="printableA4">
                 <header>
                     <h1 id="invStoreName">اسم المطعم</h1>
@@ -215,8 +218,9 @@
                 <table class="invoice-table">
                     <thead>
                         <tr>
-                            <th style="width: 75%;">الصنف</th>
-                            <th style="width: 25%;">السعر</th>
+                            <th style="width: 25%;">الاسم</th>
+                            <th style="width: 55%;">الوصف</th>
+                            <th style="width: 20%; text-align: left;">السعر</th>
                         </tr>
                     </thead>
                     <tbody id="invTableBody">
@@ -407,10 +411,15 @@
 
         function renderStructureLevel() {
             const list = document.getElementById('structureList'); list.innerHTML = '';
+            const fabContainer = document.getElementById('fabContainer');
             
             if (adminLevel === 'main') {
                 document.getElementById('headerTitle').innerText = 'الأقسام الرئيسية 🗂️';
                 document.getElementById('adminBackBtn').style.display = 'none';
+                
+                // زر الأقسام الرئيسية
+                fabContainer.innerHTML = `<button class="fab-btn" onclick="openCategorySheet()">إضافة قسم رئيسي ➕</button>`;
+
                 menuData.categories.forEach((cat, idx) => {
                     list.innerHTML += `<div class="card"><img src="${getImgSrc(cat.thumb || cat.image)}"><div class="card-info"><h3>${cat.name}</h3></div>
                     <div class="actions-group">
@@ -423,6 +432,12 @@
                 document.getElementById('headerTitle').innerText = cat.name;
                 document.getElementById('adminBackBtn').style.display = 'block';
                 
+                // زرين: قسم فرعي ومنتج
+                fabContainer.innerHTML = `
+                    <button class="fab-btn secondary" onclick="openCategorySheet('${currentAdminCatId}')">إضافة قسم فرعي 📂</button>
+                    <button class="fab-btn" onclick="openProductSheet('${currentAdminCatId}', null)">إضافة منتج 🍔</button>
+                `;
+
                 if(cat.subcategories) {
                     cat.subcategories.forEach((sub, idx) => {
                         list.innerHTML += `<div class="card"><img src="${getImgSrc(sub.thumb || sub.image)}"><div class="card-info"><h3>${sub.name} <span style="font-size:0.8em; color:var(--primary)">(قسم فرعي)</span></h3></div>
@@ -445,6 +460,9 @@
                 document.getElementById('headerTitle').innerText = sub.name;
                 document.getElementById('adminBackBtn').style.display = 'block';
 
+                // زر إضافة منتج فقط داخل القسم الفرعي
+                fabContainer.innerHTML = `<button class="fab-btn" onclick="openProductSheet('${currentAdminCatId}', '${currentAdminSubId}')">إضافة منتج 🍔</button>`;
+
                 if(sub.items) {
                     sub.items.forEach((item, idx) => {
                         let cur = item.currency || appSettings.currency || '';
@@ -460,15 +478,6 @@
         function goBackAdminLevel() {
             if (adminLevel === 'items') adminLevel = 'sub'; else if (adminLevel === 'sub') adminLevel = 'main';
             renderStructureLevel();
-        }
-
-        function openAddDialog() {
-            if (adminLevel === 'main') openCategorySheet(); 
-            else if (adminLevel === 'sub') {
-                const choice = confirm("هل تريد إضافة (قسم فرعي) داخل هذا القسم؟\n\nاضغط 'موافق' لإضافة قسم فرعي.\nاضغط 'إلغاء' لإضافة منتج مباشرة هنا.");
-                if(choice) openCategorySheet(currentAdminCatId); else openProductSheet(currentAdminCatId, null);
-            } 
-            else if (adminLevel === 'items') openProductSheet(currentAdminCatId, currentAdminSubId);
         }
 
         let editCatType = 'main'; 
@@ -596,7 +605,8 @@
                         if(sub.items) {
                             sub.items.forEach(item => {
                                 let cur = item.currency || appSettings.currency || '';
-                                html += `<div class="tree-item" style="margin-right:50px;"><input type="checkbox" class="exp-item" data-name="${item.name}" data-price="${item.price}" data-cur="${cur}" data-section="${cat.name} - ${sub.name}"> <span>📄 ${item.name} (${item.price} ${cur})</span></div>`;
+                                let safeDesc = (item.description || '').replace(/"/g, '&quot;');
+                                html += `<div class="tree-item" style="margin-right:50px;"><input type="checkbox" class="exp-item" data-name="${item.name}" data-desc="${safeDesc}" data-price="${item.price}" data-cur="${cur}" data-section="${cat.name} - ${sub.name}"> <span>📄 ${item.name} (${item.price} ${cur})</span></div>`;
                             });
                         }
                         html += `</div>`;
@@ -605,7 +615,8 @@
                 if(cat.items) {
                     cat.items.forEach(item => {
                         let cur = item.currency || appSettings.currency || '';
-                        html += `<div class="tree-item" style="margin-right:25px;"><input type="checkbox" class="exp-item" data-name="${item.name}" data-price="${item.price}" data-cur="${cur}" data-section="${cat.name}"> <span>📄 ${item.name} (${item.price} ${cur})</span></div>`;
+                        let safeDesc = (item.description || '').replace(/"/g, '&quot;');
+                        html += `<div class="tree-item" style="margin-right:25px;"><input type="checkbox" class="exp-item" data-name="${item.name}" data-desc="${safeDesc}" data-price="${item.price}" data-cur="${cur}" data-section="${cat.name}"> <span>📄 ${item.name} (${item.price} ${cur})</span></div>`;
                     });
                 }
                 html += `</div>`;
@@ -617,7 +628,7 @@
         function toggleGroup(el, targetId) { document.querySelectorAll(`#${targetId} input[type="checkbox"]`).forEach(cb => cb.checked = el.checked); }
 
         /* ========================================================
-           نظام عرض الفاتورة والطباعة الذكي HTML Native Print
+           نظام عرض الفاتورة والطباعة الذكي (3 أعمدة)
            ======================================================== */
         function generateInvoicePreview() {
             const checkedItems = document.querySelectorAll('.exp-item:checked');
@@ -629,11 +640,12 @@
             checkedItems.forEach(cb => {
                 let section = cb.dataset.section;
                 if(section !== currentSection) {
-                    tableRows += `<tr class="section-row"><td colspan="2">${section}</td></tr>`;
+                    tableRows += `<tr class="section-row"><td colspan="3">${section}</td></tr>`;
                     currentSection = section;
                 }
                 tableRows += `<tr>
-                    <td style="font-weight: 700;">${cb.dataset.name}</td>
+                    <td style="font-weight: 800; color: var(--text-dark);">${cb.dataset.name}</td>
+                    <td style="color: #6b7280; font-size: 0.95rem;">${cb.dataset.desc || ''}</td>
                     <td class="price-cell">${cb.dataset.price} ${cb.dataset.cur}</td>
                 </tr>`;
             });
