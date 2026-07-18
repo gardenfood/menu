@@ -198,13 +198,12 @@
     </div>
 
     <script>
-       const REPO = 'gardenfood/menu'; مسارك الجديد
+        const REPO = 'gardenfood/menu'; // المسار الجديد الصحيح بناءً على الصورة
         let PAT = localStorage.getItem('gh_pat'), menuData = { categories: [] }, appSettings = {};
         
         let tempUploads = { product: null, category: null, settings: null, audio: null };
         let cropperInstance = null; let currentCropType = null;
         
-        // نظام التوجيه المعمق للإدارة (لأجل الأقسام الفرعية)
         let adminLevel = 'main'; // 'main', 'sub', 'items'
         let currentAdminCatId = null;
         let currentAdminSubId = null;
@@ -264,7 +263,6 @@
 
         function closeSheets() { document.querySelectorAll('.bottom-sheet').forEach(s => s.classList.remove('active')); document.getElementById('sheetOverlay').classList.remove('active'); }
 
-        // ================= الإعدادات والصور =================
         function populateSettingsUI() {
             const map = { sName:'store_name', sDesc:'store_desc', sHero:'hero_subtitle', sWhatsApp:'whatsapp_number', sMsg:'whatsapp_template', sCurrency:'currency' };
             for(let id in map) if(document.getElementById(id)) document.getElementById(id).value = appSettings[map[id]] || '';
@@ -319,7 +317,6 @@
             cancelCrop();
         }
 
-        // ================= التصفح والتعديل الهرمي (الأقسام > فرعية > منتجات) =================
         function renderStructureLevel() {
             const list = document.getElementById('structureList'); list.innerHTML = '';
             
@@ -338,7 +335,6 @@
                 document.getElementById('headerTitle').innerText = cat.name;
                 document.getElementById('adminBackBtn').style.display = 'block';
                 
-                // عرض الأقسام الفرعية
                 if(cat.subcategories) {
                     cat.subcategories.forEach((sub, idx) => {
                         list.innerHTML += `<div class="card"><img src="${getImgSrc(sub.thumb || sub.image)}"><div class="card-info"><h3>${sub.name} <span style="font-size:0.8em; color:var(--primary)">(قسم فرعي)</span></h3></div>
@@ -348,7 +344,6 @@
                         </div></div>`;
                     });
                 }
-                // عرض المنتجات المباشرة في القسم الرئيسي
                 if(cat.items) {
                     cat.items.forEach((item, idx) => {
                         let cur = item.currency || appSettings.currency || '';
@@ -379,39 +374,35 @@
             renderStructureLevel();
         }
 
-        // فتح نافذة الإضافة بناءً على المستوى الحالي
         function openAddDialog() {
             if (adminLevel === 'main') openCategorySheet(); 
             else if (adminLevel === 'sub') {
-                // نسأله: بدك تضيف قسم فرعي ولا منتج مباشر؟ (أو ببساطة نفتح نافذة قسم ونضيف زرين)
-                // للتبسيط: سنفتح نافذة قسم فرعي، وإذا أراد إضافة منتج سنعطيه زر للتبديل، أو نصمم نافذة سريعة.
                 const choice = confirm("هل تريد إضافة (قسم فرعي) داخل هذا القسم؟\n\nاضغط 'موافق' لإضافة قسم فرعي.\nاضغط 'إلغاء' لإضافة منتج مباشرة هنا.");
                 if(choice) openCategorySheet(currentAdminCatId); else openProductSheet(currentAdminCatId, null);
             } 
             else if (adminLevel === 'items') openProductSheet(currentAdminCatId, currentAdminSubId);
         }
 
-        // --- دوال القسم ---
-        let editCatType = 'main'; // main or sub
+        let editCatType = 'main'; 
         let editCatParentId = null;
 
         function openCategorySheet(parentId = null, subId = null) {
             tempUploads.category = null;
             document.getElementById('cName').value = ''; document.getElementById('cPreview').style.display = 'none';
 
-            if (!parentId) { // إضافة أو تعديل رئيسي
+            if (!parentId) { 
                 editCatType = 'main'; editId = null; editCatParentId = null;
                 document.getElementById('cSheetTitle').innerText = 'إضافة قسم رئيسي';
-            } else if (parentId && !subId && adminLevel === 'main') { // تعديل رئيسي
+            } else if (parentId && !subId && adminLevel === 'main') { 
                 editCatType = 'main'; editId = parentId; editCatParentId = null;
                 document.getElementById('cSheetTitle').innerText = 'تعديل قسم رئيسي';
                 const cat = menuData.categories.find(c => c.id === parentId);
                 document.getElementById('cName').value = cat.name;
                 if(cat.image) { document.getElementById('cPreview').src = getImgSrc(cat.thumb || cat.image); document.getElementById('cPreview').style.display = 'inline-block'; }
-            } else if (parentId && !subId && adminLevel === 'sub') { // إضافة فرعي
+            } else if (parentId && !subId && adminLevel === 'sub') { 
                 editCatType = 'sub'; editId = null; editCatParentId = parentId;
                 document.getElementById('cSheetTitle').innerText = 'إضافة قسم فرعي';
-            } else if (parentId && subId) { // تعديل فرعي
+            } else if (parentId && subId) { 
                 editCatType = 'sub'; editId = subId; editCatParentId = parentId;
                 document.getElementById('cSheetTitle').innerText = 'تعديل قسم فرعي';
                 const cat = menuData.categories.find(c => c.id === parentId);
@@ -446,7 +437,6 @@
             markUnsaved(); renderStructureLevel(); closeSheets();
         }
 
-        // --- دوال المنتجات ---
         let editProdCatId = null;
         let editProdSubId = null;
 
@@ -507,7 +497,6 @@
             markUnsaved(); renderStructureLevel(); 
         }
 
-        // ================= تصدير الأسعار PDF =================
         function buildExportTree() {
             const container = document.getElementById('exportTreeContainer');
             let html = '';
@@ -580,7 +569,6 @@
             html2pdf().set(opt).from(el).save();
         }
 
-        // ================= Bulk Save =================
         async function saveAllChanges() {
             document.getElementById('loader').style.display = 'flex';
             try {
@@ -595,7 +583,6 @@
                     appSettings.click_sound = `./${path}`; tempUploads.audio = null;
                 }
 
-                // دالة مساعدة لرفع الصور المكدسة في أي مصفوفة لتجنب تكرار الكود
                 async function uploadItemsImages(itemsArray) {
                     if(!itemsArray) return;
                     for (let item of itemsArray) {
@@ -611,7 +598,6 @@
                     }
                 }
 
-                // رفع صور الأقسام والفرعية والمنتجات
                 for (let cat of menuData.categories) {
                     if (cat.tempBase64Orig) {
                         const rnd = Math.floor(Math.random()*1000);
