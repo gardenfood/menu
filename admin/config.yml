@@ -1,6 +1,6 @@
 backend:
   name: git-gateway
-  repo: majdmereee/menu-test
+  repo: gardenfood/menu
   branch: main
   identity_url: https://auth.decapbridge.com/sites/0794f97d-26ce-425f-a989-e65ae53ce86d
   gateway_url: https://gateway.decapbridge.com
