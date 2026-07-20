@@ -137,6 +137,14 @@
       "name": "مواد تنضيف",
       "image": "./images/c_orig_1784390996790_186.jpg",
       "thumb": "./images/c_thumb_1784390996791_186.jpg"
+    },
+    {
+      "id": "c_1784544591278",
+      "subcategories": [],
+      "items": [],
+      "name": "محارم",
+      "image": "./images/orig_1784544592477_459.jpg",
+      "thumb": "./images/thumb_1784544592477_459.jpg"
     }
   ]
 }
