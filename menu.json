@@ -57,7 +57,9 @@
               "name": "مايونيز اميرغو ",
               "description": "مايونيز لبناني وزن 3.5 كغ",
               "price": "14",
-              "currency": "$"
+              "currency": "$",
+              "image": "./images/orig_1784563447209_138.jpg",
+              "thumb": "./images/thumb_1784563447209_138.jpg"
             },
             {
               "id": "i_1784562921304",
@@ -75,30 +77,8 @@
             }
           ],
           "name": "قسم المايونيز ",
-          "image": "./images/orig_1784562997173_286.jpg",
-          "thumb": "./images/thumb_1784562997173_286.jpg"
-        },
-        {
-          "id": "sub_1784563181173",
-          "items": [
-            {
-              "id": "i_1784563317921",
-              "name": "باربكيو أميرغو",
-              "description": "باربكيو لبناني وزن 4.5 كغ",
-              "price": "9.5",
-              "currency": "$"
-            },
-            {
-              "id": "i_1784563378768",
-              "name": "باربكيو دوفراي",
-              "description": "باربكيو لباني وزن 4.5 كغ",
-              "price": "9.5",
-              "currency": "$"
-            }
-          ],
-          "name": "قسم الباربكيو ",
-          "image": "./images/orig_1784563418313_987.jpg",
-          "thumb": "./images/thumb_1784563418313_987.jpg"
+          "image": "./images/orig_1784563056452_731.jpg",
+          "thumb": "./images/thumb_1784563056452_731.jpg"
         }
       ]
     },
