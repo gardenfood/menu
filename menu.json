@@ -46,33 +46,7 @@
       "id": "c_1784318509908",
       "name": "صلصات باردة",
       "image": "./images/c_orig_1784386926168_938.jpg",
-      "items": [
-        {
-          "id": "i_1784318534414",
-          "name": "ريو",
-          "description": "٣ كغ تكة",
-          "price": "12",
-          "image": "./images/prod_1784318545589_32.jpg"
-        },
-        {
-          "id": "i_1784236616213",
-          "name": "كريسبي ",
-          "description": "كريسبي جاهزة",
-          "price": "55",
-          "image": "./images/i_orig_1784327170403_765.jpg",
-          "thumb": "./images/i_thumb_1784327170403_765.jpg",
-          "currency": "$"
-        },
-        {
-          "id": "i_1784337783283",
-          "name": "عو",
-          "description": "تثتيا",
-          "price": "5",
-          "currency": "ل.س",
-          "image": "./images/i_orig_1784337787828_502.jpg",
-          "thumb": "./images/i_thumb_1784337787828_502.jpg"
-        }
-      ],
+      "items": [],
       "thumb": "./images/c_thumb_1784386926168_938.jpg"
     },
     {
