@@ -46,7 +46,15 @@
       "id": "c_1784318509908",
       "name": "صلصات باردة",
       "image": "./images/c_orig_1784386926168_938.jpg",
-      "items": [],
+      "items": [
+        {
+          "id": "i_1784569309318",
+          "name": "صوص تيكساس",
+          "description": "",
+          "price": "15.5",
+          "currency": "$"
+        }
+      ],
       "thumb": "./images/c_thumb_1784386926168_938.jpg",
       "subcategories": [
         {
