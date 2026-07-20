@@ -2,11 +2,14 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0ca143">
     <title>إدارة Garden Food - لوحة التحكم</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <!-- ربط مانيفست الإدارة -->
+    <link rel="manifest" href="./manifest.json">
     
     <style>
         :root { 
@@ -65,7 +68,6 @@
         .action-btn.edit { color: var(--info); background: #e0f2fe; }
         .action-btn.dive { background: var(--primary-light); color: var(--primary); width: 100%; border-radius: 12px; font-family: 'Tajawal'; font-weight: 900; font-size: 0.9rem;}
 
-        /* حاوية الأزرار العائمة */
         .fab-container { position: fixed; bottom: 95px; left: 20px; right: 20px; display: flex; justify-content: center; gap: 15px; pointer-events: none; z-index: 99; }
         .fab-btn { pointer-events: auto; background: var(--primary); color: white; border: none; padding: 0 25px; height: 55px; border-radius: 30px; font-size: 1.1rem; font-weight: 900; box-shadow: 0 10px 20px rgba(12, 161, 67, 0.3); cursor: pointer; display: flex; align-items: center; gap: 8px; transition: transform 0.2s; font-family: 'Tajawal'; flex: 1; justify-content: center;}
         .fab-btn:active { transform: scale(0.95); }
@@ -101,6 +103,33 @@
         .tree-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer; }
 
         /* ========================================================
+           تنسيقات قسم التعديل السريع للأسعار ⚡ (نظام أكورديون)
+           ======================================================== */
+        .accordion-header { background: var(--primary-light); color: var(--primary-dark); padding: 16px 20px; font-weight: 900; font-size: 1.1rem; border-radius: 14px; margin-top: 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border: 2px solid transparent; transition: var(--transition); box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+        .accordion-header.active { border-color: var(--primary); border-radius: 14px 14px 0 0; box-shadow: none; }
+        .accordion-arrow { transition: transform 0.3s ease; font-size: 1.2rem; }
+        .accordion-header.active .accordion-arrow { transform: rotate(180deg); }
+        
+        .accordion-content { background: var(--surface); border-radius: 0 0 14px 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #eee; border-top: none; display: none; overflow: hidden; }
+        .accordion-content.active { display: block; animation: slideDown 0.3s ease-out; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .qe-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; border-bottom: 1px solid #f1f5f9; transition: var(--transition); }
+        .qe-row:last-child { border-bottom: none; }
+        .qe-row:hover { background: #f8fafc; }
+        .qe-name { font-weight: 800; font-size: 1rem; color: var(--text-dark); flex: 1; padding-left: 10px; }
+        
+        .qe-input-wrapper { display: flex; align-items: center; gap: 8px; background: var(--bg); border: 2px solid #e2e8f0; border-radius: 12px; padding: 6px 12px; transition: var(--transition); }
+        .qe-input-wrapper:focus-within { border-color: var(--primary); background: white; box-shadow: 0 0 0 3px var(--primary-light); }
+        .qe-input-wrapper.changed { background: #fef08a !important; border-color: #fde047 !important; }
+        
+        .qe-input { border: none; background: transparent; font-size: 1.1rem; font-weight: 900; color: var(--primary-dark); width: 80px; text-align: center; outline: none; direction: ltr; font-family: 'Tajawal', sans-serif; }
+        .qe-input::-webkit-outer-spin-button, .qe-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .qe-input[type=number] { -moz-appearance: textfield; }
+        .qe-currency { font-weight: 800; color: var(--text-muted); font-size: 0.85rem; }
+        .qe-sub-header { background: #f1f5f9; color: #475569; font-size: 0.95rem; font-weight: 900; padding: 8px 15px; border-bottom: 1px solid #e2e8f0; }
+
+        /* ========================================================
            تنسيقات الفاتورة الاحترافية A4 والطباعة 
            ======================================================== */
         .invoice-preview-container { background: #525659; padding: 20px 10px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
@@ -119,32 +148,16 @@
         @media print {
             @page { size: A4; margin: 0; }
             body { background: white; padding: 0; margin: 0; overflow: visible; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .app-header, .bottom-nav, #saveAllBanner, .invoice-actions, .no-print { display: none !important; }
+            .app-header, .bottom-nav, #saveAllBanner, .invoice-actions, .no-print, #adminPwaBtn { display: none !important; }
             .view { display: none !important; padding: 0 !important; }
             #view-invoice { display: block !important; padding: 0 !important; background: white; }
             .invoice-preview-container { background: white; padding: 0; }
             .invoice-a4 { box-shadow: none; max-width: 100%; min-height: auto; margin: 0; padding: 15mm; border-radius: 0; }
         }
 
-        /* ========================================================
-           تنسيقات قسم التعديل السريع للأسعار ⚡
-           ======================================================== */
-        .qe-category { background: var(--primary-light); color: var(--primary-dark); padding: 12px 15px; font-weight: 900; font-size: 1.1rem; border-radius: 12px 12px 0 0; margin-top: 20px; border-bottom: 2px solid var(--primary); }
-        .qe-card { background: var(--surface); border-radius: 0 0 12px 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); overflow: hidden; border: 1px solid #eee; border-top: none; }
-        .qe-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; border-bottom: 1px solid #f1f5f9; transition: var(--transition); }
-        .qe-row:last-child { border-bottom: none; }
-        .qe-row:hover { background: #f8fafc; }
-        .qe-name { font-weight: 800; font-size: 1rem; color: var(--text-dark); flex: 1; padding-left: 10px; }
-        
-        .qe-input-wrapper { display: flex; align-items: center; gap: 8px; background: var(--bg); border: 2px solid #e2e8f0; border-radius: 12px; padding: 6px 12px; transition: var(--transition); }
-        .qe-input-wrapper:focus-within { border-color: var(--primary); background: white; box-shadow: 0 0 0 3px var(--primary-light); }
-        .qe-input-wrapper.changed { background: #fef08a !important; border-color: #fde047 !important; }
-        
-        .qe-input { border: none; background: transparent; font-size: 1.1rem; font-weight: 900; color: var(--primary-dark); width: 80px; text-align: center; outline: none; direction: ltr; font-family: 'Tajawal', sans-serif; }
-        .qe-input::-webkit-outer-spin-button, .qe-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        .qe-input[type=number] { -moz-appearance: textfield; }
-        .qe-currency { font-weight: 800; color: var(--text-muted); font-size: 0.85rem; }
-        .qe-sub-header { background: #f1f5f9; color: #475569; font-size: 0.95rem; font-weight: 900; padding: 8px 15px; border-bottom: 1px solid #e2e8f0; }
+        /* زر التثبيت الذكي العائم للوحة الإدارة */
+        #adminPwaBtn { position: fixed; bottom: 100px; left: 20px; background: #0ca143; color: white; border: none; width: 55px; height: 55px; border-radius: 50%; font-weight: bold; z-index: 998; box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: none; justify-content: center; align-items: center; cursor: pointer; font-size: 1.4rem; border: 2px solid white; transition: var(--transition); }
+        #adminPwaBtn:active { transform: scale(0.9); }
     </style>
 </head>
 <body>
@@ -174,16 +187,16 @@
         <div class="fab-container" id="fabContainer"></div>
     </div>
 
-    <!-- 2. واجهة التعديل السريع للأسعار ⚡ (القسم الجديد الذي طلبته) -->
+    <!-- 2. واجهة التعديل السريع للأسعار ⚡ (نظام الأكورديون) -->
     <div id="view-quickedit" class="view no-print" style="padding-bottom: 120px;">
         <div style="background: white; padding: 20px; border-radius: var(--radius-lg); margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); display:flex; align-items:center; gap:15px; border: 1px solid #eee;">
             <div style="font-size:2.5rem; background: var(--primary-light); width: 60px; height: 60px; display:flex; justify-content:center; align-items:center; border-radius: 20px;">⚡</div>
             <div>
                 <h3 style="font-weight:900; color:var(--primary); font-size:1.2rem; margin-bottom:3px;">التعديل السريع للأسعار</h3>
-                <p style="font-size:0.9rem; color:var(--text-muted); font-weight:700; line-height: 1.4;">اكتب السعر الجديد مباشرة. سيتحول المربع للون الأصفر، اضغط حفظ في الأعلى عند الانتهاء.</p>
+                <p style="font-size:0.9rem; color:var(--text-muted); font-weight:700; line-height: 1.4;">اضغط على اسم القسم لفتحه، واكتب السعر الجديد مباشرة.</p>
             </div>
         </div>
-        <!-- الحاوية التي سيتم حقن مربعات المنتجات بداخلها -->
+        <!-- الحاوية التي سيتم حقن الأقسام بداخلها -->
         <div id="quickEditContainer"></div>
     </div>
 
@@ -253,6 +266,9 @@
             </div>
         </div>
     </div>
+
+    <!-- زر التثبيت العائم الذكي للإدارة -->
+    <button id="adminPwaBtn" class="no-print" title="تثبيت لوحة التحكم">🛠️</button>
 
     <!-- الشريط السفلي (التنقل بين الصفحات) -->
     <div class="bottom-nav no-print">
@@ -351,30 +367,27 @@
                 const sData = await ghApi('settings.json'); appSettings = JSON.parse(atou(sData.content));
                 populateSettingsUI();
                 const mData = await ghApi('menu.json'); menuData = JSON.parse(atou(mData.content));
-                if (!menuData.categories) menuData.categories = []; // لتفادي الأخطاء إذا كان المنيو فارغاً
+                if (!menuData.categories) menuData.categories = [];
                 renderStructureLevel();
             } catch (e) { alert("خطأ:\n" + e.message); }
             document.getElementById('loader').style.display = 'none';
         }
 
-        /* دالة التنقل بين الصفحات بشكل احترافي */
         function switchTab(tabId, title, element) {
-            // 1. إخفاء كل الواجهات
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
             
-            // 2. تفعيل الزر في الشريط السفلي
             if(element) {
                 document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
                 element.classList.add('active');
             }
             
-            // 3. إظهار الواجهة المطلوبة
             document.getElementById(`view-${tabId}`).classList.add('active');
             
-            // 4. تخصيص الهيدر وعمليات الواجهة
+            const instBtn = document.getElementById('adminPwaBtn');
             if(tabId !== 'invoice') {
                 document.querySelector('.app-header').style.display = 'flex';
                 document.querySelector('.bottom-nav').style.display = 'flex';
+                if(instBtn && deferredPrompt) instBtn.style.bottom = '100px';
                 
                 if (tabId === 'structure') {
                     adminLevel = 'main'; currentAdminCatId = null; currentAdminSubId = null;
@@ -382,15 +395,17 @@
                 } else if (tabId === 'quickedit') {
                     document.getElementById('headerTitle').innerText = title;
                     document.getElementById('adminBackBtn').style.display = 'none';
-                    renderQuickEdit(); // تشغيل رسم الأسعار
+                    renderQuickEdit(); 
                 } else if (tabId === 'export') {
                     document.getElementById('headerTitle').innerText = title;
                     document.getElementById('adminBackBtn').style.display = 'none';
-                    buildExportTree(); // تشغيل شجرة الفواتير
+                    buildExportTree(); 
                 } else {
                     document.getElementById('headerTitle').innerText = title;
                     document.getElementById('adminBackBtn').style.display = 'none';
                 }
+            } else {
+                if(instBtn) instBtn.style.bottom = '-100px'; // إخفاء الزر أثناء الطباعة
             }
             window.scrollTo(0, 0);
         }
@@ -454,12 +469,14 @@
         function renderStructureLevel() {
             const list = document.getElementById('structureList'); list.innerHTML = '';
             const fabContainer = document.getElementById('fabContainer');
+            const instBtn = document.getElementById('adminPwaBtn');
             
             if (adminLevel === 'main') {
                 document.getElementById('headerTitle').innerText = 'الأقسام الرئيسية 🗂️';
                 document.getElementById('adminBackBtn').style.display = 'none';
                 
                 fabContainer.innerHTML = `<button class="fab-btn" onclick="openCategorySheet()">إضافة قسم رئيسي ➕</button>`;
+                if(instBtn && deferredPrompt) instBtn.style.bottom = '170px'; // رفعه فوق زر الإضافة
 
                 menuData.categories.forEach((cat, idx) => {
                     list.innerHTML += `<div class="card"><img src="${getImgSrc(cat.thumb || cat.image)}"><div class="card-info"><h3>${cat.name}</h3></div>
@@ -477,6 +494,7 @@
                     <button class="fab-btn secondary" onclick="openCategorySheet('${currentAdminCatId}')">إضافة قسم فرعي 📂</button>
                     <button class="fab-btn" onclick="openProductSheet('${currentAdminCatId}', null)">إضافة منتج 🍔</button>
                 `;
+                if(instBtn && deferredPrompt) instBtn.style.bottom = '170px';
 
                 if(cat.subcategories) {
                     cat.subcategories.forEach((sub, idx) => {
@@ -501,6 +519,7 @@
                 document.getElementById('adminBackBtn').style.display = 'block';
 
                 fabContainer.innerHTML = `<button class="fab-btn" onclick="openProductSheet('${currentAdminCatId}', '${currentAdminSubId}')">إضافة منتج 🍔</button>`;
+                if(instBtn && deferredPrompt) instBtn.style.bottom = '170px';
 
                 if(sub.items) {
                     sub.items.forEach((item, idx) => {
@@ -634,7 +653,7 @@
         }
 
         /* ========================================================
-           دالة التعديل السريع للأسعار ⚡
+           دالة التعديل السريع للأسعار ⚡ (بنظام الأكورديون)
            ======================================================== */
         function renderQuickEdit() {
             const container = document.getElementById('quickEditContainer');
@@ -648,14 +667,14 @@
 
             menuData.categories.forEach(cat => {
                 let hasItems = false;
-                let catHtml = `<div class="qe-category">📁 ${cat.name}</div><div class="qe-card">`;
+                let catContent = '';
                 
                 // منتجات القسم المباشرة
                 if (cat.items && cat.items.length > 0) {
                     hasItems = true;
                     cat.items.forEach(item => {
                         let cur = item.currency || defaultCurrency;
-                        catHtml += `
+                        catContent += `
                         <div class="qe-row">
                             <div class="qe-name">${item.name}</div>
                             <div class="qe-input-wrapper">
@@ -671,10 +690,10 @@
                     cat.subcategories.forEach(sub => {
                         if (sub.items && sub.items.length > 0) {
                             hasItems = true;
-                            catHtml += `<div class="qe-sub-header">📂 ${sub.name}</div>`;
+                            catContent += `<div class="qe-sub-header">📂 ${sub.name}</div>`;
                             sub.items.forEach(item => {
                                 let cur = item.currency || defaultCurrency;
-                                catHtml += `
+                                catContent += `
                                 <div class="qe-row">
                                     <div class="qe-name" style="padding-right: 25px; color:#475569;">${item.name}</div>
                                     <div class="qe-input-wrapper">
@@ -687,12 +706,29 @@
                     });
                 }
                 
-                catHtml += `</div>`;
-                if(hasItems) html += catHtml;
+                if(hasItems) {
+                    html += `
+                    <div class="accordion-header" id="acc-header-${cat.id}" onclick="toggleAccordion('${cat.id}')">
+                        <span>📁 ${cat.name}</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-content" id="acc-content-${cat.id}">
+                        ${catContent}
+                    </div>`;
+                }
             });
 
             if(html === '') html = '<div style="text-align:center; padding: 30px; font-weight:800; color:var(--text-muted);">لا يوجد منتجات قابلة للتعديل.</div>';
             container.innerHTML = html;
+        }
+
+        // دالة فتح وإغلاق الأكورديون
+        function toggleAccordion(id) {
+            const header = document.getElementById('acc-header-' + id);
+            const content = document.getElementById('acc-content-' + id);
+            
+            header.classList.toggle('active');
+            content.classList.toggle('active');
         }
 
         // تحديث السعر الفوري في المصفوفة (ويتحول المربع للأصفر)
@@ -857,6 +893,42 @@
             } catch (e) { alert("فشل الرفع\n" + e.message); }
             document.getElementById('loader').style.display = 'none';
         }
+
+        // ================== PWA سكربت التثبيت وتفعيل السيرفس وركر للإدارة ==================
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Admin Service Worker Registered', reg.scope))
+                    .catch(err => console.error('Admin Service Worker Failed', err));
+            });
+        }
+
+        let deferredPrompt;
+        const adminPwaBtn = document.getElementById('adminPwaBtn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if(adminPwaBtn) adminPwaBtn.style.display = 'flex';
+        });
+
+        if(adminPwaBtn) {
+            adminPwaBtn.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    if (outcome === 'accepted') {
+                        console.log('Admin accepted install');
+                    }
+                    deferredPrompt = null;
+                    adminPwaBtn.style.display = 'none';
+                }
+            });
+        }
+
+        window.addEventListener('appinstalled', () => {
+            if(adminPwaBtn) adminPwaBtn.style.display = 'none';
+        });
     </script>
 </body>
 </html>
