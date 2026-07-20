@@ -57,7 +57,9 @@
               "name": "مايونيز اميرغو ",
               "description": "مايونيز لبناني وزن 3.5 كغ",
               "price": "14",
-              "currency": "$"
+              "currency": "$",
+              "image": "./images/orig_1784564271118_175.jpg",
+              "thumb": "./images/thumb_1784564271118_175.jpg"
             },
             {
               "id": "i_1784562921304",
