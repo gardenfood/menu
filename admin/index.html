@@ -27,7 +27,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg); color: var(--text-dark); padding-bottom: 90px; overflow-x: hidden; }
 
-        .loader-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.95); z-index: 10000; display: flex; justify-content: center; align-items: center; flex-direction: column; font-weight: 900; color: var(--primary); font-size: 1.2rem; display: none; backdrop-filter: blur(5px); }
+        .loader-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.95); z-index: 10000; display: flex; justify-content: center; align-items: center; flex-direction: column; font-weight: 900; color: var(--primary); font-size: 1.2rem; display: none; backdrop-filter: blur(5px); text-align: center; padding: 20px;}
         .spinner { width: 45px; height: 45px; border: 5px solid var(--primary-light); border-top: 5px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 15px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
@@ -64,7 +64,6 @@
         .action-btn.edit { color: var(--info); background: #e0f2fe; }
         .action-btn.dive { background: var(--primary-light); color: var(--primary); width: 100%; border-radius: 12px; font-family: 'Tajawal'; font-weight: 900; font-size: 0.9rem;}
 
-        /* حاوية الأزرار العائمة الجديدة */
         .fab-container { position: fixed; bottom: 95px; left: 20px; right: 20px; display: flex; justify-content: center; gap: 15px; pointer-events: none; z-index: 99; }
         .fab-btn { pointer-events: auto; background: var(--primary); color: white; border: none; padding: 0 25px; height: 55px; border-radius: 30px; font-size: 1.1rem; font-weight: 900; box-shadow: 0 10px 20px rgba(12, 161, 67, 0.3); cursor: pointer; display: flex; align-items: center; gap: 8px; transition: transform 0.2s; font-family: 'Tajawal'; flex: 1; justify-content: center;}
         .fab-btn:active { transform: scale(0.95); }
@@ -99,9 +98,7 @@
         .tree-item { margin: 8px 0; font-weight: 700; display: flex; align-items: center; gap: 10px;}
         .tree-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer; }
 
-        /* ========================================================
-           تنسيقات الفاتورة الاحترافية A4 والطباعة (3 أعمدة)
-           ======================================================== */
+        /* تنسيقات الفاتورة الاحترافية A4 والطباعة (3 أعمدة) */
         .invoice-preview-container { background: #525659; padding: 20px 10px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
         .invoice-actions { display: flex; justify-content: space-between; width: 100%; max-width: 210mm; margin-bottom: 20px; background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         
@@ -151,7 +148,6 @@
         </div>
     </div>
 
-    <!-- الهيدر الخاص بالتطبيق -->
     <div class="app-header no-print">
         <div style="display:flex; align-items:center; gap:15px;">
             <button class="app-header-back" id="adminBackBtn" onclick="goBackAdminLevel()">رجوع</button>
@@ -161,7 +157,6 @@
 
     <div id="view-structure" class="view active no-print" style="padding-bottom: 150px;">
         <div id="structureList"></div>
-        <!-- الأزرار العائمة الذكية -->
         <div class="fab-container" id="fabContainer"></div>
     </div>
 
@@ -191,7 +186,6 @@
         </div>
     </div>
 
-    <!-- واجهة التصدير الجديدة (استعراض الفاتورة) -->
     <div id="view-export" class="view no-print">
         <h3 style="margin-bottom: 15px;">حدد المنتجات لاستخراج الفاتورة (قائمة الأسعار):</h3>
         <div class="tree-item"><input type="checkbox" id="selectAllExport" onchange="toggleAllExport(this)"> <b style="color:var(--primary)">تحديد الكل</b></div>
@@ -201,7 +195,6 @@
         </button>
     </div>
 
-    <!-- واجهة الفاتورة النهائية للطباعة 3 أعمدة -->
     <div id="view-invoice" class="view" style="padding:0;">
         <div class="invoice-preview-container">
             <div class="invoice-actions">
@@ -224,7 +217,6 @@
                         </tr>
                     </thead>
                     <tbody id="invTableBody">
-                        <!-- يتم حقن البيانات هنا -->
                     </tbody>
                 </table>
             </div>
@@ -283,7 +275,11 @@
 
     <script>
         const REPO = 'gardenfood/menu';
+        
+        // المتغيرات الجديدة للدمج (المزامنة)
         let PAT = localStorage.getItem('gh_pat'), menuData = { categories: [] }, appSettings = {};
+        let baseMenuData = null, baseSettingsData = null;
+        let initialMenuSha = null, initialSettingsSha = null;
         
         let tempUploads = { product: null, category: null, settings: null, audio: null };
         let cropperInstance = null; let currentCropType = null;
@@ -321,10 +317,18 @@
 
         async function loadData() {
             document.getElementById('loader').style.display = 'flex';
+            document.getElementById('loaderText').innerText = 'جاري تحميل البيانات...';
             try {
-                const sData = await ghApi('settings.json'); appSettings = JSON.parse(atou(sData.content));
+                const sData = await ghApi('settings.json'); 
+                appSettings = JSON.parse(atou(sData.content));
+                baseSettingsData = JSON.parse(JSON.stringify(appSettings)); // أخذ نسخة أساسية للمقارنة
+                initialSettingsSha = sData.sha;
                 populateSettingsUI();
-                const mData = await ghApi('menu.json'); menuData = JSON.parse(atou(mData.content));
+                
+                const mData = await ghApi('menu.json'); 
+                menuData = JSON.parse(atou(mData.content));
+                baseMenuData = JSON.parse(JSON.stringify(menuData)); // أخذ نسخة أساسية للمقارنة
+                initialMenuSha = mData.sha;
                 renderStructureLevel();
             } catch (e) { alert("خطأ:\n" + e.message); }
             document.getElementById('loader').style.display = 'none';
@@ -416,8 +420,6 @@
             if (adminLevel === 'main') {
                 document.getElementById('headerTitle').innerText = 'الأقسام الرئيسية 🗂️';
                 document.getElementById('adminBackBtn').style.display = 'none';
-                
-                // زر الأقسام الرئيسية
                 fabContainer.innerHTML = `<button class="fab-btn" onclick="openCategorySheet()">إضافة قسم رئيسي ➕</button>`;
 
                 menuData.categories.forEach((cat, idx) => {
@@ -432,7 +434,6 @@
                 document.getElementById('headerTitle').innerText = cat.name;
                 document.getElementById('adminBackBtn').style.display = 'block';
                 
-                // زرين: قسم فرعي ومنتج
                 fabContainer.innerHTML = `
                     <button class="fab-btn secondary" onclick="openCategorySheet('${currentAdminCatId}')">إضافة قسم فرعي 📂</button>
                     <button class="fab-btn" onclick="openProductSheet('${currentAdminCatId}', null)">إضافة منتج 🍔</button>
@@ -460,7 +461,6 @@
                 document.getElementById('headerTitle').innerText = sub.name;
                 document.getElementById('adminBackBtn').style.display = 'block';
 
-                // زر إضافة منتج فقط داخل القسم الفرعي
                 fabContainer.innerHTML = `<button class="fab-btn" onclick="openProductSheet('${currentAdminCatId}', '${currentAdminSubId}')">إضافة منتج 🍔</button>`;
 
                 if(sub.items) {
@@ -627,9 +627,6 @@
         function toggleAllExport(el) { document.querySelectorAll('.export-tree input[type="checkbox"]').forEach(cb => cb.checked = el.checked); }
         function toggleGroup(el, targetId) { document.querySelectorAll(`#${targetId} input[type="checkbox"]`).forEach(cb => cb.checked = el.checked); }
 
-        /* ========================================================
-           نظام عرض الفاتورة والطباعة الذكي (3 أعمدة)
-           ======================================================== */
         function generateInvoicePreview() {
             const checkedItems = document.querySelectorAll('.exp-item:checked');
             if(checkedItems.length === 0) return alert('يرجى تحديد منتج واحد على الأقل لاستخراجه في الفاتورة.');
@@ -650,29 +647,92 @@
                 </tr>`;
             });
 
-            // تحديث بيانات الفاتورة
             document.getElementById('invStoreName').innerText = appSettings.store_name || 'Garden Food';
             document.getElementById('invDate').innerText = new Date().toLocaleDateString('ar-EG');
             document.getElementById('invTableBody').innerHTML = tableRows;
 
-            // إخفاء القوائم العلوية والسفلية والانتقال لواجهة الفاتورة
             document.querySelector('.app-header').style.display = 'none';
             document.querySelector('.bottom-nav').style.display = 'none';
             switchTab('invoice', '', null);
         }
 
         function closeInvoicePreview() {
-            // العودة لواجهة التصدير
             switchTab('export', 'تصدير الأسعار 🖨️', document.querySelectorAll('.nav-item')[1]);
         }
 
         function printInvoice() {
-            window.print(); // يعتمد على تنسيقات @media print في الأعلى
+            window.print(); 
+        }
+
+        /* دوال الدمج الذكي (3-Way Merge) لمزامنة التعديلات بين شخصين */
+        function mergeSettings(base, remote, local) {
+            let merged = { ...remote };
+            for (let key in local) {
+                if (!base || local[key] !== base[key]) merged[key] = local[key];
+            }
+            return merged;
+        }
+
+        function mergeArraysById(baseArr = [], remoteArr = [], localArr = []) {
+            let merged = [];
+            const allIds = [...new Set([...remoteArr.map(i => i.id), ...localArr.map(i => i.id)])];
+            
+            allIds.forEach(id => {
+                const b = baseArr.find(i => i.id === id);
+                const r = remoteArr.find(i => i.id === id);
+                const l = localArr.find(i => i.id === id);
+                
+                if (l && !r && !b) { merged.push(l); } 
+                else if (r && !l && !b) { merged.push(r); } 
+                else if (l && r) { 
+                    let mergedItem = { ...r };
+                    for (let key in l) {
+                        if (key !== 'subcategories' && key !== 'items' && key !== 'tempBase64Orig' && key !== 'tempBase64Thumb' && key !== 'tempExt') {
+                            if (!b || JSON.stringify(l[key]) !== JSON.stringify(b[key])) mergedItem[key] = l[key];
+                        }
+                        if (key === 'tempBase64Orig') { // إعطاء الأولوية للصور المرفوعة حديثاً محلياً
+                            mergedItem.tempBase64Orig = l.tempBase64Orig; mergedItem.tempBase64Thumb = l.tempBase64Thumb;
+                            mergedItem.tempExt = l.tempExt; mergedItem.image = l.image; mergedItem.thumb = l.thumb;
+                        }
+                    }
+                    if (l.subcategories || r.subcategories) mergedItem.subcategories = mergeArraysById(b ? b.subcategories : [], r.subcategories || [], l.subcategories || []);
+                    if (l.items || r.items) mergedItem.items = mergeArraysById(b ? b.items : [], r.items || [], l.items || []);
+                    merged.push(mergedItem);
+                }
+                else if (!r && l && b) {
+                    let modifiedLocally = false;
+                    for(let key in l) {
+                        if(key !== 'subcategories' && key !== 'items' && JSON.stringify(l[key]) !== JSON.stringify(b[key])) {
+                            modifiedLocally = true; break;
+                        }
+                    }
+                    if (modifiedLocally) merged.push(l); 
+                }
+            });
+            return merged;
         }
 
         async function saveAllChanges() {
-            document.getElementById('loader').style.display = 'flex';
+            const loader = document.getElementById('loader');
+            const loaderText = document.getElementById('loaderText');
+            loader.style.display = 'flex';
+            loaderText.innerText = 'جاري التزامن مع تعديلات شريكك...';
             try {
+                // 1. التزامن الذكي: جلب البيانات الجديدة ودمجها مع التعديلات المحلية
+                const liveSettingsCheck = await ghApi('settings.json');
+                if (liveSettingsCheck.sha !== initialSettingsSha) {
+                    const remoteSettings = JSON.parse(atou(liveSettingsCheck.content));
+                    appSettings = mergeSettings(baseSettingsData, remoteSettings, appSettings);
+                }
+
+                const liveMenuCheck = await ghApi('menu.json');
+                if (liveMenuCheck.sha !== initialMenuSha) {
+                    const remoteMenu = JSON.parse(atou(liveMenuCheck.content));
+                    menuData.categories = mergeArraysById(baseMenuData.categories || [], remoteMenu.categories || [], menuData.categories || []);
+                }
+
+                // 2. رفع الصور الجديدة
+                loaderText.innerText = 'جاري رفع الصور...';
                 if (tempUploads.settings) {
                     const path = `images/logo_${Date.now()}.${tempUploads.settings.ext}`;
                     await ghApi(path, 'PUT', { message: 'Update Logo', content: tempUploads.settings.base64 });
@@ -726,16 +786,22 @@
                     await uploadItemsImages(cat.items);
                 }
 
-                const liveSettings = await ghApi('settings.json');
-                await ghApi('settings.json', 'PUT', { message: "Update Settings", content: utoa(JSON.stringify(appSettings, null, 2)), sha: liveSettings.sha });
+                // 3. الحفظ النهائي في المستودع
+                loaderText.innerText = 'جاري حفظ البيانات النهائية...';
+                
+                const finalSettings = await ghApi('settings.json');
+                await ghApi('settings.json', 'PUT', { message: "Update Settings", content: utoa(JSON.stringify(appSettings, null, 2)), sha: finalSettings.sha });
 
-                const liveMenu = await ghApi('menu.json');
-                await ghApi('menu.json', 'PUT', { message: "Bulk Update", content: utoa(JSON.stringify(menuData, null, 2)), sha: liveMenu.sha });
+                const finalMenu = await ghApi('menu.json');
+                await ghApi('menu.json', 'PUT', { message: "Bulk Update", content: utoa(JSON.stringify(menuData, null, 2)), sha: finalMenu.sha });
                 
                 document.getElementById('saveAllBanner').classList.remove('visible');
-                alert("تم تحديث موقعك بنجاح! 🎉");
+                alert("تم التحديث بنجاح! تم دمج التعديلات المتزامنة (إن وجدت) بشكل آلي وتلقائي. 🎉");
+                
+                // إعادة تحميل الصفحة لتحديث أرقام SHA الأساسية والبيانات المدمجة
+                location.reload(); 
             } catch (e) { alert("فشل الرفع\n" + e.message); }
-            document.getElementById('loader').style.display = 'none';
+            loader.style.display = 'none';
         }
     </script>
 </body>
