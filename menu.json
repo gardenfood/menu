@@ -66,7 +66,9 @@
               "name": "مايونيز غولدن بليت ",
               "description": "مايونيز وطني بجودة اميركيه وزن 3.5 كغ ",
               "price": "9.5",
-              "currency": "$"
+              "currency": "$",
+              "image": "./images/orig_1784563474590_53.jpg",
+              "thumb": "./images/thumb_1784563474590_53.jpg"
             },
             {
               "id": "i_1784562975231",
