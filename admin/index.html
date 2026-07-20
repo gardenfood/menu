@@ -276,7 +276,6 @@
     <script>
         const REPO = 'gardenfood/menu';
         
-        // المتغيرات الجديدة للدمج (المزامنة)
         let PAT = localStorage.getItem('gh_pat'), menuData = { categories: [] }, appSettings = {};
         let baseMenuData = null, baseSettingsData = null;
         let initialMenuSha = null, initialSettingsSha = null;
@@ -288,6 +287,46 @@
         let currentAdminCatId = null;
         let currentAdminSubId = null;
         let editId = null;
+
+        // --- نظام تاريخ المتصفح والتنقل (History API) ---
+        // تهيئة الحالة الأساسية للموقع عند فتحه
+        history.replaceState({ type: 'level', id: 'main' }, '', location.href);
+
+        window.addEventListener('popstate', function(event) {
+            // 1. الإغلاق الإجباري لأي نوافذ أو أدوات منبثقة معلقة (Sheet, Modal, Cropper)
+            document.getElementById('cropModal').style.display = 'none';
+            if(cropperInstance) cropperInstance.destroy();
+            document.querySelectorAll('.bottom-sheet').forEach(s => s.classList.remove('active'));
+            document.getElementById('sheetOverlay').classList.remove('active');
+            
+            if (document.getElementById('view-invoice').classList.contains('active')) {
+                document.querySelector('.app-header').style.display = 'flex';
+                document.querySelector('.bottom-nav').style.display = 'flex';
+                document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+                document.getElementById('view-export').classList.add('active');
+            }
+
+            // 2. قراءة الحالة السابقة والرجوع إلى القسم الصحيح
+            const state = event.state;
+            if (state && state.type === 'level') {
+                adminLevel = state.id;
+                currentAdminCatId = state.catId || null;
+                currentAdminSubId = state.subId || null;
+                renderStructureLevel();
+            } else if (!state) {
+                // حالة الطوارئ إذا لم يكن هناك تاريخ مسجل (العودة للرئيسية)
+                adminLevel = 'main';
+                currentAdminCatId = null;
+                currentAdminSubId = null;
+                renderStructureLevel();
+            }
+        });
+
+        // دوال الإغلاق أصبحت تعتمد على الرجوع في تاريخ المتصفح لتفعيل كود popstate
+        function closeSheets() { history.back(); }
+        function cancelCrop() { history.back(); }
+        function closeInvoicePreview() { history.back(); }
+        // ------------------------------------------------
 
         function utoa(str) { return btoa(unescape(encodeURIComponent(str))); }
         function atou(str) { return decodeURIComponent(escape(atob(str))); }
@@ -321,13 +360,13 @@
             try {
                 const sData = await ghApi('settings.json'); 
                 appSettings = JSON.parse(atou(sData.content));
-                baseSettingsData = JSON.parse(JSON.stringify(appSettings)); // أخذ نسخة أساسية للمقارنة
+                baseSettingsData = JSON.parse(JSON.stringify(appSettings)); 
                 initialSettingsSha = sData.sha;
                 populateSettingsUI();
                 
                 const mData = await ghApi('menu.json'); 
                 menuData = JSON.parse(atou(mData.content));
-                baseMenuData = JSON.parse(JSON.stringify(menuData)); // أخذ نسخة أساسية للمقارنة
+                baseMenuData = JSON.parse(JSON.stringify(menuData)); 
                 initialMenuSha = mData.sha;
                 renderStructureLevel();
             } catch (e) { alert("خطأ:\n" + e.message); }
@@ -347,6 +386,8 @@
                 document.querySelector('.bottom-nav').style.display = 'flex';
                 
                 if (tabId === 'structure') {
+                    // تحديث حالة التاريخ عند الرجوع لتبويب المحتوى
+                    history.replaceState({ type: 'level', id: 'main' }, '', location.href);
                     adminLevel = 'main'; currentAdminCatId = null; currentAdminSubId = null;
                     renderStructureLevel();
                 } else {
@@ -356,8 +397,6 @@
             }
             window.scrollTo(0, 0);
         }
-
-        function closeSheets() { document.querySelectorAll('.bottom-sheet').forEach(s => s.classList.remove('active')); document.getElementById('sheetOverlay').classList.remove('active'); }
 
         function populateSettingsUI() {
             const map = { sName:'store_name', sDesc:'store_desc', sHero:'hero_subtitle', sWhatsApp:'whatsapp_number', sMsg:'whatsapp_template', sCurrency:'currency' };
@@ -386,6 +425,10 @@
 
         function openCropper(event, type) {
             const file = event.target.files[0]; if(!file) return;
+            
+            // إضافة نقطة تاريخ جديدة لتمكين زر الرجوع لإغلاق القص
+            history.pushState({ type: 'modal', id: 'crop' }, '', location.href);
+
             currentCropType = type;
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -396,7 +439,7 @@
             }; reader.readAsDataURL(file);
             event.target.value = '';
         }
-        function cancelCrop() { document.getElementById('cropModal').style.display = 'none'; if(cropperInstance) cropperInstance.destroy(); }
+
         function confirmCrop() {
             if(!cropperInstance) return;
             const thumbDataUrl = cropperInstance.getCroppedCanvas({ width: 360, height: 360 }).toDataURL('image/jpeg', 0.8);
@@ -410,7 +453,8 @@
             const uploadObj = { thumbBase64: thumbDataUrl.split(',')[1], origBase64: origDataUrl.split(',')[1], thumbFull: thumbDataUrl, origFull: origDataUrl, ext: 'jpg' };
             if(currentCropType === 'product') { tempUploads.product = uploadObj; document.getElementById('pPreview').src = thumbDataUrl; document.getElementById('pPreview').style.display = 'inline-block'; } 
             else { tempUploads.category = uploadObj; document.getElementById('cPreview').src = thumbDataUrl; document.getElementById('cPreview').style.display = 'inline-block'; }
-            cancelCrop();
+            
+            cancelCrop(); // تغلق الأداة عبر الـ History API
         }
 
         function renderStructureLevel() {
@@ -473,17 +517,25 @@
             }
         }
 
-        function goAdminSubLevel(catId) { adminLevel = 'sub'; currentAdminCatId = catId; renderStructureLevel(); }
-        function goAdminItemsLevel(catId, subId) { adminLevel = 'items'; currentAdminCatId = catId; currentAdminSubId = subId; renderStructureLevel(); }
+        // تسجيل الدخول للأقسام مع تحديث تاريخ المتصفح
+        function goAdminSubLevel(catId) { 
+            history.pushState({ type: 'level', id: 'sub', catId: catId }, '', location.href);
+            adminLevel = 'sub'; currentAdminCatId = catId; renderStructureLevel(); 
+        }
+        function goAdminItemsLevel(catId, subId) { 
+            history.pushState({ type: 'level', id: 'items', catId: catId, subId: subId }, '', location.href);
+            adminLevel = 'items'; currentAdminCatId = catId; currentAdminSubId = subId; renderStructureLevel(); 
+        }
         function goBackAdminLevel() {
-            if (adminLevel === 'items') adminLevel = 'sub'; else if (adminLevel === 'sub') adminLevel = 'main';
-            renderStructureLevel();
+            history.back(); // زر الرجوع العلوي أصبح ينفذ الرجوع بشكل آلي ومربوط بمتصفحك
         }
 
         let editCatType = 'main'; 
         let editCatParentId = null;
 
         function openCategorySheet(parentId = null, subId = null) {
+            history.pushState({ type: 'modal', id: 'sheet' }, '', location.href);
+
             tempUploads.category = null;
             document.getElementById('cName').value = ''; document.getElementById('cPreview').style.display = 'none';
 
@@ -531,13 +583,15 @@
                 targetObj.tempBase64Orig = tempUploads.category.origBase64; targetObj.tempBase64Thumb = tempUploads.category.thumbBase64; targetObj.tempExt = tempUploads.category.ext;
                 targetObj.image = tempUploads.category.origFull; targetObj.thumb = tempUploads.category.thumbFull;
             }
-            markUnsaved(); renderStructureLevel(); closeSheets();
+            markUnsaved(); renderStructureLevel(); closeSheets(); // تغلق عبر History API
         }
 
         let editProdCatId = null;
         let editProdSubId = null;
 
         function openProductSheet(catId, subId, itemId = null) {
+            history.pushState({ type: 'modal', id: 'sheet' }, '', location.href);
+
             editId = itemId; editProdCatId = catId; editProdSubId = subId; tempUploads.product = null;
             document.getElementById('pSheetTitle').innerText = itemId ? 'تعديل المنتج' : 'إضافة منتج';
             document.getElementById('pName').value = ''; document.getElementById('pDesc').value = ''; document.getElementById('pPrice').value = '';
@@ -574,7 +628,7 @@
                 itemObj.tempBase64Orig = tempUploads.product.origBase64; itemObj.tempBase64Thumb = tempUploads.product.thumbBase64; itemObj.tempExt = tempUploads.product.ext;
                 itemObj.image = tempUploads.product.origFull; itemObj.thumb = tempUploads.product.thumbFull;
             }
-            markUnsaved(); renderStructureLevel(); closeSheets();
+            markUnsaved(); renderStructureLevel(); closeSheets(); // تغلق عبر History API
         }
 
         function deleteCategory(catId, subId = null) { 
@@ -631,6 +685,8 @@
             const checkedItems = document.querySelectorAll('.exp-item:checked');
             if(checkedItems.length === 0) return alert('يرجى تحديد منتج واحد على الأقل لاستخراجه في الفاتورة.');
 
+            history.pushState({ type: 'modal', id: 'invoice' }, '', location.href);
+
             let tableRows = '';
             let currentSection = '';
 
@@ -653,18 +709,14 @@
 
             document.querySelector('.app-header').style.display = 'none';
             document.querySelector('.bottom-nav').style.display = 'none';
-            switchTab('invoice', '', null);
-        }
-
-        function closeInvoicePreview() {
-            switchTab('export', 'تصدير الأسعار 🖨️', document.querySelectorAll('.nav-item')[1]);
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById('view-invoice').classList.add('active');
         }
 
         function printInvoice() {
             window.print(); 
         }
 
-        /* دوال الدمج الذكي (3-Way Merge) لمزامنة التعديلات بين شخصين */
         function mergeSettings(base, remote, local) {
             let merged = { ...remote };
             for (let key in local) {
@@ -690,7 +742,7 @@
                         if (key !== 'subcategories' && key !== 'items' && key !== 'tempBase64Orig' && key !== 'tempBase64Thumb' && key !== 'tempExt') {
                             if (!b || JSON.stringify(l[key]) !== JSON.stringify(b[key])) mergedItem[key] = l[key];
                         }
-                        if (key === 'tempBase64Orig') { // إعطاء الأولوية للصور المرفوعة حديثاً محلياً
+                        if (key === 'tempBase64Orig') { 
                             mergedItem.tempBase64Orig = l.tempBase64Orig; mergedItem.tempBase64Thumb = l.tempBase64Thumb;
                             mergedItem.tempExt = l.tempExt; mergedItem.image = l.image; mergedItem.thumb = l.thumb;
                         }
@@ -718,7 +770,6 @@
             loader.style.display = 'flex';
             loaderText.innerText = 'جاري التزامن مع تعديلات شريكك...';
             try {
-                // 1. التزامن الذكي: جلب البيانات الجديدة ودمجها مع التعديلات المحلية
                 const liveSettingsCheck = await ghApi('settings.json');
                 if (liveSettingsCheck.sha !== initialSettingsSha) {
                     const remoteSettings = JSON.parse(atou(liveSettingsCheck.content));
@@ -731,7 +782,6 @@
                     menuData.categories = mergeArraysById(baseMenuData.categories || [], remoteMenu.categories || [], menuData.categories || []);
                 }
 
-                // 2. رفع الصور الجديدة
                 loaderText.innerText = 'جاري رفع الصور...';
                 if (tempUploads.settings) {
                     const path = `images/logo_${Date.now()}.${tempUploads.settings.ext}`;
@@ -786,7 +836,6 @@
                     await uploadItemsImages(cat.items);
                 }
 
-                // 3. الحفظ النهائي في المستودع
                 loaderText.innerText = 'جاري حفظ البيانات النهائية...';
                 
                 const finalSettings = await ghApi('settings.json');
@@ -796,9 +845,8 @@
                 await ghApi('menu.json', 'PUT', { message: "Bulk Update", content: utoa(JSON.stringify(menuData, null, 2)), sha: finalMenu.sha });
                 
                 document.getElementById('saveAllBanner').classList.remove('visible');
-                alert("تم التحديث بنجاح! تم دمج التعديلات المتزامنة (إن وجدت) بشكل آلي وتلقائي. 🎉");
+                alert("تم التحديث بنجاح! تم دمج التعديلات المتزامنة بشكل آلي وتلقائي. 🎉");
                 
-                // إعادة تحميل الصفحة لتحديث أرقام SHA الأساسية والبيانات المدمجة
                 location.reload(); 
             } catch (e) { alert("فشل الرفع\n" + e.message); }
             loader.style.display = 'none';
