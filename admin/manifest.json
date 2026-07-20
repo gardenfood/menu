@@ -1,0 +1,22 @@
+{
+  "name": "president",
+  "short_name": "president",
+  "description": "لوحة تحكم وتصدير أسعار مطعم Garden Food",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4f7f6",
+  "theme_color": "#0ca143",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./admin-icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "./admin-icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
