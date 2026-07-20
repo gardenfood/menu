@@ -163,6 +163,21 @@
           "name": "قسم الكتشب ",
           "image": "./images/orig_1784564436423_848.jpg",
           "thumb": "./images/thumb_1784564436423_848.jpg"
+        },
+        {
+          "id": "sub_1784566089241",
+          "items": [
+            {
+              "id": "i_1784566213776",
+              "name": "صوص صويا أميرغو",
+              "description": "صويا لبناني 3.8 لتر",
+              "price": "9",
+              "currency": "$"
+            }
+          ],
+          "name": "قسم صوص الصويا ",
+          "image": "./images/orig_1784566215726_961.jpg",
+          "thumb": "./images/thumb_1784566215726_961.jpg"
         }
       ]
     },
