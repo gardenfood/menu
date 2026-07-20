@@ -31,13 +31,11 @@
       "image": "./images/c_orig_1784386923354_2.jpg",
       "items": [
         {
-          "id": "i_1784337716801",
-          "name": "عو",
-          "description": "نيتيتوثو",
-          "price": "5",
-          "currency": "ل.س",
-          "image": "./images/i_orig_1784337717627_712.jpg",
-          "thumb": "./images/i_thumb_1784337717627_712.jpg"
+          "id": "i_1784569656852",
+          "name": "فلفل أبيض ",
+          "description": "تعبئة 1كغ ",
+          "price": "0",
+          "currency": "ل.س"
         }
       ],
       "thumb": "./images/c_thumb_1784386923354_2.jpg"
