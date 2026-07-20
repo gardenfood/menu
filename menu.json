@@ -57,14 +57,18 @@
               "name": "مايونيز اميرغو ",
               "description": "مايونيز لبناني وزن 3.5 كغ",
               "price": "14",
-              "currency": "$"
+              "currency": "$",
+              "image": "./images/orig_1784565083870_484.jpg",
+              "thumb": "./images/thumb_1784565083870_484.jpg"
             },
             {
               "id": "i_1784562921304",
               "name": "مايونيز غولدن بليت ",
               "description": "مايونيز وطني بجودة اميركيه وزن 3.5 كغ ",
               "price": "9.5",
-              "currency": "$"
+              "currency": "$",
+              "image": "./images/orig_1784565088707_598.jpg",
+              "thumb": "./images/thumb_1784565088707_598.jpg"
             },
             {
               "id": "i_1784562975231",
@@ -77,8 +81,8 @@
             }
           ],
           "name": "قسم المايونيز ",
-          "image": "./images/orig_1784562997173_286.jpg",
-          "thumb": "./images/thumb_1784562997173_286.jpg"
+          "image": "./images/orig_1784565079192_444.jpg",
+          "thumb": "./images/thumb_1784565079192_444.jpg"
         },
         {
           "id": "sub_1784563181173",
