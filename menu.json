@@ -300,9 +300,16 @@
       "items": [
         {
           "id": "i_1784569309318",
-          "name": "صوص تيكساس",
-          "description": "",
+          "name": "صوص تيكساس Hello",
+          "description": "صوص تيكساس وزن 3.8 كغ ",
           "price": "15.5",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784648976800",
+          "name": "صوص HP",
+          "description": "صوص اتش بي وزن 2.3 كغ ",
+          "price": "22",
           "currency": "$"
         }
       ],
