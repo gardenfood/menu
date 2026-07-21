@@ -128,6 +128,48 @@
           "description": "تعبئة 1كغ",
           "price": "0",
           "currency": "$"
+        },
+        {
+          "id": "i_1784618601407",
+          "name": "بابريكا حلوة ",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784618612508",
+          "name": "بابريكا مدخنة ",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784618627412",
+          "name": "بهار مشكلة ",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784618642475",
+          "name": "يانسون ",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784618669478",
+          "name": "لومي ",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784618694617",
+          "name": "عصفر",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
         }
       ],
       "thumb": "./images/c_thumb_1784386923354_2.jpg"
