@@ -652,7 +652,16 @@
       "items": [],
       "name": "بار وحلويات",
       "image": "./images/c_orig_1784387177935_577.jpg",
-      "thumb": "./images/c_thumb_1784387177935_577.jpg"
+      "thumb": "./images/c_thumb_1784387177935_577.jpg",
+      "subcategories": [
+        {
+          "id": "sub_1784658581612",
+          "items": [],
+          "name": "شوكولا ليرات بلجيكي Belcolade",
+          "image": "./images/orig_1784658589276_699.jpg",
+          "thumb": "./images/thumb_1784658589276_699.jpg"
+        }
+      ]
     },
     {
       "id": "c_1784388861522",
