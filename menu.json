@@ -634,6 +634,22 @@
       "name": "محارم",
       "image": "./images/orig_1784544592477_459.jpg",
       "thumb": "./images/thumb_1784544592477_459.jpg"
+    },
+    {
+      "id": "c_1784652888340",
+      "subcategories": [
+        {
+          "id": "sub_1784652920946",
+          "items": [],
+          "name": "باستا زارا",
+          "image": "./images/orig_1784652927194_682.jpg",
+          "thumb": "./images/thumb_1784652927194_682.jpg"
+        }
+      ],
+      "items": [],
+      "name": "قسم الباستا",
+      "image": "./images/orig_1784652923990_803.jpg",
+      "thumb": "./images/thumb_1784652923990_803.jpg"
     }
   ]
 }
