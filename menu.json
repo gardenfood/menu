@@ -38,6 +38,13 @@
           "description": "عثاثا\n",
           "price": "0",
           "currency": "$"
+        },
+        {
+          "id": "i_1784669014684",
+          "name": "عيايو",
+          "description": "",
+          "price": "64",
+          "currency": "$"
         }
       ],
       "thumb": "./images/c_thumb_1784386920433_991.jpg",
