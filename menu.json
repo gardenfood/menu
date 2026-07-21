@@ -233,6 +233,41 @@
           "description": "تعبئة 1كغ",
           "price": "0",
           "currency": "$"
+        },
+        {
+          "id": "i_1784619091412",
+          "name": "ملح صيني ",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784619103697",
+          "name": "حمض الليمون ",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784619116390",
+          "name": "بهار كبسة ",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784619129919",
+          "name": "بهار شاورما ",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784619141736",
+          "name": "بهار شيش",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
         }
       ],
       "thumb": "./images/c_thumb_1784386923354_2.jpg"
