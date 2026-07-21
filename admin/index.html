@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-    <!-- ربط مانيفست الإدارة -->
     <link rel="manifest" href="./manifest.json">
     
     <style>
@@ -55,18 +54,24 @@
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .card { background: var(--surface); padding: 12px; border-radius: var(--radius-lg); box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 15px; display: flex; gap: 12px; align-items: center; border: 1px solid rgba(0,0,0,0.02); }
-        .card img { width: 75px; height: 75px; border-radius: 16px; object-fit: cover; background: var(--bg); flex-shrink: 0; }
-        .card-info { flex-grow: 1; min-width: 0; }
-        .card-info h3 { font-weight: 900; font-size: 1.1rem; margin-bottom: 3px; }
+        /* تعديلات أحجام البطاقة لتناسب أزرار الترتيب */
+        .card { background: var(--surface); padding: 12px 10px; border-radius: var(--radius-lg); box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 15px; display: flex; gap: 10px; align-items: center; border: 1px solid rgba(0,0,0,0.02); }
+        .card img { width: 60px; height: 60px; border-radius: 14px; object-fit: cover; background: var(--bg); flex-shrink: 0; }
+        .card-info { flex-grow: 1; min-width: 0; padding: 0 4px; }
+        .card-info h3 { font-weight: 900; font-size: 1.05rem; margin-bottom: 3px; }
         .card-info p { font-weight: 800; color: var(--primary); font-size: 0.95rem; }
         
         .actions-group { display: flex; flex-direction: column; gap: 6px; }
         .actions-row { display: flex; gap: 6px; justify-content: flex-end; }
-        .action-btn { background: var(--bg); border: none; width: 34px; height: 34px; border-radius: 10px; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .action-btn { background: var(--bg); border: none; width: 32px; height: 32px; border-radius: 10px; font-size: 1.05rem; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .action-btn.delete { color: var(--danger); background: #fee2e2; }
         .action-btn.edit { color: var(--info); background: #e0f2fe; }
-        .action-btn.dive { background: var(--primary-light); color: var(--primary); width: 100%; border-radius: 12px; font-family: 'Tajawal'; font-weight: 900; font-size: 0.9rem;}
+        .action-btn.dive { background: var(--primary-light); color: var(--primary); width: 100%; border-radius: 10px; font-family: 'Tajawal'; font-weight: 900; font-size: 0.85rem;}
+
+        /* أزرار الترتيب (الأسهم) */
+        .move-arrows { display: flex; flex-direction: column; gap: 6px; align-items: center; justify-content: center; }
+        .move-btn { background: #f1f5f9; border: none; width: 30px; height: 30px; border-radius: 8px; font-size: 1rem; color: #475569; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.04); transition: var(--transition); }
+        .move-btn:active { background: #e2e8f0; transform: scale(0.9); }
 
         .fab-container { position: fixed; bottom: 95px; left: 20px; right: 20px; display: flex; justify-content: center; gap: 15px; pointer-events: none; z-index: 99; }
         .fab-btn { pointer-events: auto; background: var(--primary); color: white; border: none; padding: 0 25px; height: 55px; border-radius: 30px; font-size: 1.1rem; font-weight: 900; box-shadow: 0 10px 20px rgba(12, 161, 67, 0.3); cursor: pointer; display: flex; align-items: center; gap: 8px; transition: transform 0.2s; font-family: 'Tajawal'; flex: 1; justify-content: center;}
@@ -102,14 +107,11 @@
         .tree-item { margin: 8px 0; font-weight: 700; display: flex; align-items: center; gap: 10px;}
         .tree-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer; }
 
-        /* ========================================================
-           تنسيقات قسم التعديل السريع للأسعار ⚡ (نظام أكورديون)
-           ======================================================== */
+        /* الأكورديون للتعديل السريع */
         .accordion-header { background: var(--primary-light); color: var(--primary-dark); padding: 16px 20px; font-weight: 900; font-size: 1.1rem; border-radius: 14px; margin-top: 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border: 2px solid transparent; transition: var(--transition); box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
         .accordion-header.active { border-color: var(--primary); border-radius: 14px 14px 0 0; box-shadow: none; }
         .accordion-arrow { transition: transform 0.3s ease; font-size: 1.2rem; }
         .accordion-header.active .accordion-arrow { transform: rotate(180deg); }
-        
         .accordion-content { background: var(--surface); border-radius: 0 0 14px 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #eee; border-top: none; display: none; overflow: hidden; }
         .accordion-content.active { display: block; animation: slideDown 0.3s ease-out; }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
@@ -118,20 +120,16 @@
         .qe-row:last-child { border-bottom: none; }
         .qe-row:hover { background: #f8fafc; }
         .qe-name { font-weight: 800; font-size: 1rem; color: var(--text-dark); flex: 1; padding-left: 10px; }
-        
         .qe-input-wrapper { display: flex; align-items: center; gap: 8px; background: var(--bg); border: 2px solid #e2e8f0; border-radius: 12px; padding: 6px 12px; transition: var(--transition); }
         .qe-input-wrapper:focus-within { border-color: var(--primary); background: white; box-shadow: 0 0 0 3px var(--primary-light); }
         .qe-input-wrapper.changed { background: #fef08a !important; border-color: #fde047 !important; }
-        
         .qe-input { border: none; background: transparent; font-size: 1.1rem; font-weight: 900; color: var(--primary-dark); width: 80px; text-align: center; outline: none; direction: ltr; font-family: 'Tajawal', sans-serif; }
         .qe-input::-webkit-outer-spin-button, .qe-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         .qe-input[type=number] { -moz-appearance: textfield; }
         .qe-currency { font-weight: 800; color: var(--text-muted); font-size: 0.85rem; }
         .qe-sub-header { background: #f1f5f9; color: #475569; font-size: 0.95rem; font-weight: 900; padding: 8px 15px; border-bottom: 1px solid #e2e8f0; }
 
-        /* ========================================================
-           تنسيقات الفاتورة الاحترافية A4 والطباعة 
-           ======================================================== */
+        /* الفاتورة */
         .invoice-preview-container { background: #525659; padding: 20px 10px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
         .invoice-actions { display: flex; justify-content: space-between; width: 100%; max-width: 210mm; margin-bottom: 20px; background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .invoice-a4 { background: white; width: 100%; max-width: 210mm; min-height: 297mm; padding: 20mm; box-shadow: 0 0 20px rgba(0,0,0,0.3); border-radius: 5px; direction: rtl; }
@@ -155,7 +153,6 @@
             .invoice-a4 { box-shadow: none; max-width: 100%; min-height: auto; margin: 0; padding: 15mm; border-radius: 0; }
         }
 
-        /* زر التثبيت الذكي العائم للوحة الإدارة */
         #adminPwaBtn { position: fixed; bottom: 100px; left: 20px; background: #0ca143; color: white; border: none; width: 55px; height: 55px; border-radius: 50%; font-weight: bold; z-index: 998; box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: none; justify-content: center; align-items: center; cursor: pointer; font-size: 1.4rem; border: 2px solid white; transition: var(--transition); }
         #adminPwaBtn:active { transform: scale(0.9); }
     </style>
@@ -181,7 +178,7 @@
         </div>
     </div>
 
-    <!-- 1. واجهة إدارة المحتوى (الأقسام والمنتجات) -->
+    <!-- 1. واجهة إدارة المحتوى (الأقسام والمنتجات مع أسهم الترتيب) -->
     <div id="view-structure" class="view active no-print" style="padding-bottom: 120px;">
         <div id="structureList"></div>
         <div class="fab-container" id="fabContainer"></div>
@@ -189,14 +186,13 @@
 
     <!-- 2. واجهة التعديل السريع للأسعار ⚡ (نظام الأكورديون) -->
     <div id="view-quickedit" class="view no-print" style="padding-bottom: 120px;">
-        <div style="background: white; padding: 20px; border-radius: var(--radius-lg); margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); display:flex; align-items:center; gap:15px; border: 1px solid #eee;">
-            <div style="font-size:2.5rem; background: var(--primary-light); width: 60px; height: 60px; display:flex; justify-content:center; align-items:center; border-radius: 20px;">⚡</div>
+        <div style="background: white; padding: 15px; border-radius: var(--radius-lg); margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); display:flex; align-items:center; gap:12px; border: 1px solid #eee;">
+            <div style="font-size:2rem; background: var(--primary-light); width: 50px; height: 50px; display:flex; justify-content:center; align-items:center; border-radius: 16px;">⚡</div>
             <div>
-                <h3 style="font-weight:900; color:var(--primary); font-size:1.2rem; margin-bottom:3px;">التعديل السريع للأسعار</h3>
-                <p style="font-size:0.9rem; color:var(--text-muted); font-weight:700; line-height: 1.4;">اضغط على اسم القسم لفتحه، واكتب السعر الجديد مباشرة.</p>
+                <h3 style="font-weight:900; color:var(--primary); font-size:1.1rem; margin-bottom:3px;">التعديل السريع للأسعار</h3>
+                <p style="font-size:0.85rem; color:var(--text-muted); font-weight:700; line-height: 1.4;">اضغط على القسم واكتب السعر مباشرة.</p>
             </div>
         </div>
-        <!-- الحاوية التي سيتم حقن الأقسام بداخلها -->
         <div id="quickEditContainer"></div>
     </div>
 
@@ -267,7 +263,6 @@
         </div>
     </div>
 
-    <!-- زر التثبيت العائم الذكي للإدارة -->
     <button id="adminPwaBtn" class="no-print" title="تثبيت لوحة التحكم">🛠️</button>
 
     <!-- الشريط السفلي (التنقل بين الصفحات) -->
@@ -375,14 +370,8 @@
 
         function switchTab(tabId, title, element) {
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            
-            if(element) {
-                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-                element.classList.add('active');
-            }
-            
+            if(element) { document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); element.classList.add('active'); }
             document.getElementById(`view-${tabId}`).classList.add('active');
-            
             const instBtn = document.getElementById('adminPwaBtn');
             if(tabId !== 'invoice') {
                 document.querySelector('.app-header').style.display = 'flex';
@@ -390,23 +379,15 @@
                 if(instBtn && deferredPrompt) instBtn.style.bottom = '100px';
                 
                 if (tabId === 'structure') {
-                    adminLevel = 'main'; currentAdminCatId = null; currentAdminSubId = null;
-                    renderStructureLevel();
+                    adminLevel = 'main'; currentAdminCatId = null; currentAdminSubId = null; renderStructureLevel();
                 } else if (tabId === 'quickedit') {
-                    document.getElementById('headerTitle').innerText = title;
-                    document.getElementById('adminBackBtn').style.display = 'none';
-                    renderQuickEdit(); 
+                    document.getElementById('headerTitle').innerText = title; document.getElementById('adminBackBtn').style.display = 'none'; renderQuickEdit(); 
                 } else if (tabId === 'export') {
-                    document.getElementById('headerTitle').innerText = title;
-                    document.getElementById('adminBackBtn').style.display = 'none';
-                    buildExportTree(); 
+                    document.getElementById('headerTitle').innerText = title; document.getElementById('adminBackBtn').style.display = 'none'; buildExportTree(); 
                 } else {
-                    document.getElementById('headerTitle').innerText = title;
-                    document.getElementById('adminBackBtn').style.display = 'none';
+                    document.getElementById('headerTitle').innerText = title; document.getElementById('adminBackBtn').style.display = 'none';
                 }
-            } else {
-                if(instBtn) instBtn.style.bottom = '-100px'; // إخفاء الزر أثناء الطباعة
-            }
+            } else { if(instBtn) instBtn.style.bottom = '-100px'; }
             window.scrollTo(0, 0);
         }
 
@@ -424,26 +405,22 @@
             const file = e.target.files[0]; if(!file) return;
             const r = new FileReader(); r.onload = function(ev) {
                 document.getElementById('sLogoPreview').src = ev.target.result; document.getElementById('sLogoPreview').style.display = 'inline-block';
-                tempUploads.settings = { base64: ev.target.result.split(',')[1], ext: file.name.split('.').pop() };
-                appSettings.logo = ev.target.result; markUnsaved();
+                tempUploads.settings = { base64: ev.target.result.split(',')[1], ext: file.name.split('.').pop() }; appSettings.logo = ev.target.result; markUnsaved();
             }; r.readAsDataURL(file);
         }
         function handleAudioSelection(e) {
             const file = e.target.files[0]; if(!file) return;
             const r = new FileReader(); r.onload = function(ev) {
                 document.getElementById('sAudioPreview').src = ev.target.result; document.getElementById('sAudioPreview').style.display = 'block';
-                tempUploads.audio = { base64: ev.target.result.split(',')[1], ext: file.name.split('.').pop() };
-                appSettings.click_sound = ev.target.result; markUnsaved();
+                tempUploads.audio = { base64: ev.target.result.split(',')[1], ext: file.name.split('.').pop() }; appSettings.click_sound = ev.target.result; markUnsaved();
             }; r.readAsDataURL(file);
         }
 
         function openCropper(event, type) {
-            const file = event.target.files[0]; if(!file) return;
-            currentCropType = type;
+            const file = event.target.files[0]; if(!file) return; currentCropType = type;
             const reader = new FileReader();
             reader.onload = function(e) {
-                document.getElementById('cropperImage').src = e.target.result;
-                document.getElementById('cropModal').style.display = 'flex';
+                document.getElementById('cropperImage').src = e.target.result; document.getElementById('cropModal').style.display = 'flex';
                 if(cropperInstance) cropperInstance.destroy();
                 cropperInstance = new Cropper(document.getElementById('cropperImage'), { aspectRatio: 1, viewMode: 2, dragMode: 'move', autoCropArea: 0.9 });
             }; reader.readAsDataURL(file);
@@ -466,6 +443,37 @@
             cancelCrop();
         }
 
+        // ==========================================
+        // دالة تحريك العناصر (الأسهم)
+        // ==========================================
+        function moveNode(type, catId, subId, itemId, dir) {
+            let arr = [];
+            if (type === 'cat') arr = menuData.categories;
+            else if (type === 'sub') arr = menuData.categories.find(c => c.id === catId).subcategories;
+            else if (type === 'item') {
+                const cat = menuData.categories.find(c => c.id === catId);
+                arr = subId ? cat.subcategories.find(s => s.id === subId).items : cat.items;
+            }
+
+            if(!arr) return;
+            let idx = -1;
+            if (type === 'cat') idx = arr.findIndex(c => c.id === catId);
+            else if (type === 'sub') idx = arr.findIndex(s => s.id === subId);
+            else if (type === 'item') idx = arr.findIndex(i => i.id === itemId);
+
+            if (idx === -1) return;
+            let newIdx = idx + dir;
+            if (newIdx < 0 || newIdx >= arr.length) return; // منع الخروج من الحدود
+
+            // تبديل الأماكن
+            let temp = arr[idx];
+            arr[idx] = arr[newIdx];
+            arr[newIdx] = temp;
+
+            markUnsaved();
+            renderStructureLevel();
+        }
+
         function renderStructureLevel() {
             const list = document.getElementById('structureList'); list.innerHTML = '';
             const fabContainer = document.getElementById('fabContainer');
@@ -476,14 +484,25 @@
                 document.getElementById('adminBackBtn').style.display = 'none';
                 
                 fabContainer.innerHTML = `<button class="fab-btn" onclick="openCategorySheet()">إضافة قسم رئيسي ➕</button>`;
-                if(instBtn && deferredPrompt) instBtn.style.bottom = '170px'; // رفعه فوق زر الإضافة
+                if(instBtn && deferredPrompt) instBtn.style.bottom = '170px';
 
                 menuData.categories.forEach((cat, idx) => {
-                    list.innerHTML += `<div class="card"><img src="${getImgSrc(cat.thumb || cat.image)}"><div class="card-info"><h3>${cat.name}</h3></div>
-                    <div class="actions-group">
-                        <div class="actions-row"><button class="action-btn edit" onclick="openCategorySheet('${cat.id}')">✏️</button><button class="action-btn delete" onclick="deleteCategory('${cat.id}')">🗑️</button></div>
-                        <button class="action-btn dive" onclick="goAdminSubLevel('${cat.id}')">إدارة المحتوى 📂</button>
-                    </div></div>`;
+                    list.innerHTML += `
+                    <div class="card">
+                        <div class="move-arrows">
+                            <button class="move-btn" onclick="moveNode('cat', '${cat.id}', null, null, -1)">⬆️</button>
+                            <button class="move-btn" onclick="moveNode('cat', '${cat.id}', null, null, 1)">⬇️</button>
+                        </div>
+                        <img src="${getImgSrc(cat.thumb || cat.image)}">
+                        <div class="card-info"><h3>${cat.name}</h3></div>
+                        <div class="actions-group">
+                            <div class="actions-row">
+                                <button class="action-btn edit" onclick="openCategorySheet('${cat.id}')">✏️</button>
+                                <button class="action-btn delete" onclick="deleteCategory('${cat.id}')">🗑️</button>
+                            </div>
+                            <button class="action-btn dive" onclick="goAdminSubLevel('${cat.id}')">محتوى 📂</button>
+                        </div>
+                    </div>`;
                 });
             } else if (adminLevel === 'sub') {
                 const cat = menuData.categories.find(c => c.id === currentAdminCatId);
@@ -498,18 +517,48 @@
 
                 if(cat.subcategories) {
                     cat.subcategories.forEach((sub, idx) => {
-                        list.innerHTML += `<div class="card"><img src="${getImgSrc(sub.thumb || sub.image)}"><div class="card-info"><h3>${sub.name} <span style="font-size:0.8em; color:var(--primary)">(قسم فرعي)</span></h3></div>
-                        <div class="actions-group">
-                            <div class="actions-row"><button class="action-btn edit" onclick="openCategorySheet('${cat.id}', '${sub.id}')">✏️</button><button class="action-btn delete" onclick="deleteCategory('${cat.id}', '${sub.id}')">🗑️</button></div>
-                            <button class="action-btn dive" onclick="goAdminItemsLevel('${cat.id}', '${sub.id}')">إدارة المنتجات 🍔</button>
-                        </div></div>`;
+                        list.innerHTML += `
+                        <div class="card">
+                            <div class="move-arrows">
+                                <button class="move-btn" onclick="moveNode('sub', '${cat.id}', '${sub.id}', null, -1)">⬆️</button>
+                                <button class="move-btn" onclick="moveNode('sub', '${cat.id}', '${sub.id}', null, 1)">⬇️</button>
+                            </div>
+                            <img src="${getImgSrc(sub.thumb || sub.image)}">
+                            <div class="card-info">
+                                <h3>${sub.name}</h3>
+                                <span style="font-size:0.75rem; color:var(--primary); font-weight:800;">(فرعي)</span>
+                            </div>
+                            <div class="actions-group">
+                                <div class="actions-row">
+                                    <button class="action-btn edit" onclick="openCategorySheet('${cat.id}', '${sub.id}')">✏️</button>
+                                    <button class="action-btn delete" onclick="deleteCategory('${cat.id}', '${sub.id}')">🗑️</button>
+                                </div>
+                                <button class="action-btn dive" onclick="goAdminItemsLevel('${cat.id}', '${sub.id}')">منتجات 🍔</button>
+                            </div>
+                        </div>`;
                     });
                 }
                 if(cat.items) {
                     cat.items.forEach((item, idx) => {
                         let cur = item.currency || appSettings.currency || '';
-                        list.innerHTML += `<div class="card"><img src="${getImgSrc(item.thumb || item.image)}"><div class="card-info"><h3>${item.name}</h3><p>${item.price} ${cur}</p></div>
-                        <div class="actions-group"><div class="actions-row"><button class="action-btn edit" onclick="openProductSheet('${cat.id}', null, '${item.id}')">✏️</button><button class="action-btn delete" onclick="deleteItem('${cat.id}', null, '${item.id}')">🗑️</button></div></div></div>`;
+                        list.innerHTML += `
+                        <div class="card">
+                            <div class="move-arrows">
+                                <button class="move-btn" onclick="moveNode('item', '${cat.id}', null, '${item.id}', -1)">⬆️</button>
+                                <button class="move-btn" onclick="moveNode('item', '${cat.id}', null, '${item.id}', 1)">⬇️</button>
+                            </div>
+                            <img src="${getImgSrc(item.thumb || item.image)}">
+                            <div class="card-info">
+                                <h3>${item.name}</h3>
+                                <p>${item.price} ${cur}</p>
+                            </div>
+                            <div class="actions-group">
+                                <div class="actions-row">
+                                    <button class="action-btn edit" onclick="openProductSheet('${cat.id}', null, '${item.id}')">✏️</button>
+                                    <button class="action-btn delete" onclick="deleteItem('${cat.id}', null, '${item.id}')">🗑️</button>
+                                </div>
+                            </div>
+                        </div>`;
                     });
                 }
             } else if (adminLevel === 'items') {
@@ -524,8 +573,24 @@
                 if(sub.items) {
                     sub.items.forEach((item, idx) => {
                         let cur = item.currency || appSettings.currency || '';
-                        list.innerHTML += `<div class="card"><img src="${getImgSrc(item.thumb || item.image)}"><div class="card-info"><h3>${item.name}</h3><p>${item.price} ${cur}</p></div>
-                        <div class="actions-group"><div class="actions-row"><button class="action-btn edit" onclick="openProductSheet('${cat.id}', '${sub.id}', '${item.id}')">✏️</button><button class="action-btn delete" onclick="deleteItem('${cat.id}', '${sub.id}', '${item.id}')">🗑️</button></div></div></div>`;
+                        list.innerHTML += `
+                        <div class="card">
+                            <div class="move-arrows">
+                                <button class="move-btn" onclick="moveNode('item', '${cat.id}', '${sub.id}', '${item.id}', -1)">⬆️</button>
+                                <button class="move-btn" onclick="moveNode('item', '${cat.id}', '${sub.id}', '${item.id}', 1)">⬇️</button>
+                            </div>
+                            <img src="${getImgSrc(item.thumb || item.image)}">
+                            <div class="card-info">
+                                <h3>${item.name}</h3>
+                                <p>${item.price} ${cur}</p>
+                            </div>
+                            <div class="actions-group">
+                                <div class="actions-row">
+                                    <button class="action-btn edit" onclick="openProductSheet('${cat.id}', '${sub.id}', '${item.id}')">✏️</button>
+                                    <button class="action-btn delete" onclick="deleteItem('${cat.id}', '${sub.id}', '${item.id}')">🗑️</button>
+                                </div>
+                            </div>
+                        </div>`;
                     });
                 }
             }
@@ -546,26 +611,19 @@
             document.getElementById('cName').value = ''; document.getElementById('cPreview').style.display = 'none';
 
             if (!parentId) { 
-                editCatType = 'main'; editId = null; editCatParentId = null;
-                document.getElementById('cSheetTitle').innerText = 'إضافة قسم رئيسي';
+                editCatType = 'main'; editId = null; editCatParentId = null; document.getElementById('cSheetTitle').innerText = 'إضافة قسم رئيسي';
             } else if (parentId && !subId && adminLevel === 'main') { 
-                editCatType = 'main'; editId = parentId; editCatParentId = null;
-                document.getElementById('cSheetTitle').innerText = 'تعديل قسم رئيسي';
-                const cat = menuData.categories.find(c => c.id === parentId);
-                document.getElementById('cName').value = cat.name;
+                editCatType = 'main'; editId = parentId; editCatParentId = null; document.getElementById('cSheetTitle').innerText = 'تعديل قسم رئيسي';
+                const cat = menuData.categories.find(c => c.id === parentId); document.getElementById('cName').value = cat.name;
                 if(cat.image) { document.getElementById('cPreview').src = getImgSrc(cat.thumb || cat.image); document.getElementById('cPreview').style.display = 'inline-block'; }
             } else if (parentId && !subId && adminLevel === 'sub') { 
-                editCatType = 'sub'; editId = null; editCatParentId = parentId;
-                document.getElementById('cSheetTitle').innerText = 'إضافة قسم فرعي';
+                editCatType = 'sub'; editId = null; editCatParentId = parentId; document.getElementById('cSheetTitle').innerText = 'إضافة قسم فرعي';
             } else if (parentId && subId) { 
-                editCatType = 'sub'; editId = subId; editCatParentId = parentId;
-                document.getElementById('cSheetTitle').innerText = 'تعديل قسم فرعي';
-                const cat = menuData.categories.find(c => c.id === parentId);
-                const sub = cat.subcategories.find(s => s.id === subId);
+                editCatType = 'sub'; editId = subId; editCatParentId = parentId; document.getElementById('cSheetTitle').innerText = 'تعديل قسم فرعي';
+                const cat = menuData.categories.find(c => c.id === parentId); const sub = cat.subcategories.find(s => s.id === subId);
                 document.getElementById('cName').value = sub.name;
                 if(sub.image) { document.getElementById('cPreview').src = getImgSrc(sub.thumb || sub.image); document.getElementById('cPreview').style.display = 'inline-block'; }
             }
-            
             document.getElementById('sheetOverlay').classList.add('active'); document.getElementById('categorySheet').classList.add('active');
         }
 
@@ -592,8 +650,7 @@
             markUnsaved(); renderStructureLevel(); closeSheets();
         }
 
-        let editProdCatId = null;
-        let editProdSubId = null;
+        let editProdCatId = null; let editProdSubId = null;
 
         function openProductSheet(catId, subId, itemId = null) {
             editId = itemId; editProdCatId = catId; editProdSubId = subId; tempUploads.product = null;
@@ -637,13 +694,10 @@
 
         function deleteCategory(catId, subId = null) { 
             if(!confirm("سيتم الحذف نهائياً")) return; 
-            if(subId) {
-                let cat = menuData.categories.find(c => c.id === catId);
-                cat.subcategories = cat.subcategories.filter(s => s.id !== subId);
+            if(subId) { let cat = menuData.categories.find(c => c.id === catId); cat.subcategories = cat.subcategories.filter(s => s.id !== subId);
             } else { menuData.categories = menuData.categories.filter(c => c.id !== catId); }
             markUnsaved(); renderStructureLevel(); 
         }
-        
         function deleteItem(catId, subId, itemId) { 
             if(!confirm("تأكيد الحذف؟")) return; 
             const cat = menuData.categories.find(c => c.id === catId); 
@@ -652,24 +706,22 @@
             markUnsaved(); renderStructureLevel(); 
         }
 
-        /* ========================================================
-           دالة التعديل السريع للأسعار ⚡ (بنظام الأكورديون)
-           ======================================================== */
+        // ==========================================
+        // الأكورديون للتعديل السريع 
+        // ==========================================
         function renderQuickEdit() {
             const container = document.getElementById('quickEditContainer');
             let html = '';
             let defaultCurrency = appSettings.currency || 'ل.س';
 
             if (!menuData.categories || menuData.categories.length === 0) {
-                container.innerHTML = '<div style="text-align:center; padding: 30px; font-weight:800; color:var(--text-muted);">لا يوجد منتجات قابلة للتعديل حتى الآن.</div>';
-                return;
+                container.innerHTML = '<div style="text-align:center; padding: 30px; font-weight:800; color:var(--text-muted);">لا يوجد منتجات قابلة للتعديل حتى الآن.</div>'; return;
             }
 
             menuData.categories.forEach(cat => {
                 let hasItems = false;
                 let catContent = '';
                 
-                // منتجات القسم المباشرة
                 if (cat.items && cat.items.length > 0) {
                     hasItems = true;
                     cat.items.forEach(item => {
@@ -685,7 +737,6 @@
                     });
                 }
                 
-                // منتجات الأقسام الفرعية
                 if (cat.subcategories) {
                     cat.subcategories.forEach(sub => {
                         if (sub.items && sub.items.length > 0) {
@@ -722,38 +773,31 @@
             container.innerHTML = html;
         }
 
-        // دالة فتح وإغلاق الأكورديون
         function toggleAccordion(id) {
             const header = document.getElementById('acc-header-' + id);
             const content = document.getElementById('acc-content-' + id);
-            
-            header.classList.toggle('active');
-            content.classList.toggle('active');
+            header.classList.toggle('active'); content.classList.toggle('active');
         }
 
-        // تحديث السعر الفوري في المصفوفة (ويتحول المربع للأصفر)
         function quickUpdatePrice(catId, subId, itemId, newPrice, inputEl) {
             if(!newPrice) return; 
-            
             const cat = menuData.categories.find(c => c.id === catId);
             let targetArray = cat.items;
             if (subId) targetArray = cat.subcategories.find(s => s.id === subId).items;
             
             const item = targetArray.find(i => i.id === itemId);
-            
             if(item.price != newPrice) {
                 item.price = newPrice;
                 inputEl.parentElement.classList.add('changed');
-                markUnsaved(); // إظهار زر "حفظ جميع التعديلات" في الأعلى
+                markUnsaved(); 
             }
         }
 
-        /* ========================================================
-           نظام الفواتير والتصدير
-           ======================================================== */
+        // ==========================================
+        // نظام الفواتير
+        // ==========================================
         function buildExportTree() {
-            const container = document.getElementById('exportTreeContainer');
-            let html = '';
+            const container = document.getElementById('exportTreeContainer'); let html = '';
             menuData.categories.forEach(cat => {
                 html += `<div class="tree-item"><input type="checkbox" class="exp-cat" onchange="toggleGroup(this, 'c_${cat.id}')"> <span style="font-size:1.1rem; color:var(--primary-dark)">📁 ${cat.name}</span></div><div id="c_${cat.id}">`;
                 if(cat.subcategories) {
@@ -786,91 +830,59 @@
 
         function generateInvoicePreview() {
             const checkedItems = document.querySelectorAll('.exp-item:checked');
-            if(checkedItems.length === 0) return alert('يرجى تحديد منتج واحد على الأقل لاستخراجه في الفاتورة.');
-
-            let tableRows = '';
-            let currentSection = '';
-
+            if(checkedItems.length === 0) return alert('يرجى تحديد منتج واحد على الأقل.');
+            let tableRows = ''; let currentSection = '';
             checkedItems.forEach(cb => {
                 let section = cb.dataset.section;
-                if(section !== currentSection) {
-                    tableRows += `<tr class="section-row"><td colspan="3">${section}</td></tr>`;
-                    currentSection = section;
-                }
-                tableRows += `<tr>
-                    <td style="font-weight: 800; color: var(--text-dark);">${cb.dataset.name}</td>
-                    <td style="color: #6b7280; font-size: 0.95rem;">${cb.dataset.desc || ''}</td>
-                    <td class="price-cell">${cb.dataset.price} ${cb.dataset.cur}</td>
-                </tr>`;
+                if(section !== currentSection) { tableRows += `<tr class="section-row"><td colspan="3">${section}</td></tr>`; currentSection = section; }
+                tableRows += `<tr><td style="font-weight: 800; color: var(--text-dark);">${cb.dataset.name}</td><td style="color: #6b7280; font-size: 0.95rem;">${cb.dataset.desc || ''}</td><td class="price-cell">${cb.dataset.price} ${cb.dataset.cur}</td></tr>`;
             });
-
-            document.getElementById('invStoreName').innerText = appSettings.store_name || 'Garden Food';
-            document.getElementById('invDate').innerText = new Date().toLocaleDateString('ar-EG');
-            document.getElementById('invTableBody').innerHTML = tableRows;
-
-            document.querySelector('.app-header').style.display = 'none';
-            document.querySelector('.bottom-nav').style.display = 'none';
+            document.getElementById('invStoreName').innerText = appSettings.store_name || 'Garden Food'; document.getElementById('invDate').innerText = new Date().toLocaleDateString('ar-EG'); document.getElementById('invTableBody').innerHTML = tableRows;
+            document.querySelector('.app-header').style.display = 'none'; document.querySelector('.bottom-nav').style.display = 'none';
             switchTab('invoice', '', null);
         }
-
-        function closeInvoicePreview() {
-            switchTab('export', 'الفواتير 🖨️', document.querySelectorAll('.nav-item')[2]);
-        }
-
+        function closeInvoicePreview() { switchTab('export', 'الفواتير 🖨️', document.querySelectorAll('.nav-item')[2]); }
         function printInvoice() { window.print(); }
 
-        /* ========================================================
-           حفظ التعديلات في GitHub
-           ======================================================== */
+        // ==========================================
+        // حفظ التعديلات في GitHub
+        // ==========================================
         async function saveAllChanges() {
             document.getElementById('loader').style.display = 'flex';
             try {
                 if (tempUploads.settings) {
                     const path = `images/logo_${Date.now()}.${tempUploads.settings.ext}`;
-                    await ghApi(path, 'PUT', { message: 'Update Logo', content: tempUploads.settings.base64 });
-                    appSettings.logo = `./${path}`; tempUploads.settings = null;
+                    await ghApi(path, 'PUT', { message: 'Update Logo', content: tempUploads.settings.base64 }); appSettings.logo = `./${path}`; tempUploads.settings = null;
                 }
                 if (tempUploads.audio) {
                     const path = `images/sound_${Date.now()}.${tempUploads.audio.ext}`;
-                    await ghApi(path, 'PUT', { message: 'Update Click Sound', content: tempUploads.audio.base64 });
-                    appSettings.click_sound = `./${path}`; tempUploads.audio = null;
+                    await ghApi(path, 'PUT', { message: 'Update Click Sound', content: tempUploads.audio.base64 }); appSettings.click_sound = `./${path}`; tempUploads.audio = null;
                 }
-
                 async function uploadItemsImages(itemsArray) {
                     if(!itemsArray) return;
                     for (let item of itemsArray) {
                         if (item.tempBase64Orig) {
                             const rnd = Math.floor(Math.random()*1000);
-                            const pOrig = `images/orig_${Date.now()}_${rnd}.${item.tempExt}`;
-                            const pThumb = `images/thumb_${Date.now()}_${rnd}.${item.tempExt}`;
-                            await ghApi(pOrig, 'PUT', { message: 'Upload Orig', content: item.tempBase64Orig });
-                            await ghApi(pThumb, 'PUT', { message: 'Upload Thumb', content: item.tempBase64Thumb });
-                            item.image = `./${pOrig}`; item.thumb = `./${pThumb}`;
-                            delete item.tempBase64Orig; delete item.tempBase64Thumb; delete item.tempExt;
+                            const pOrig = `images/orig_${Date.now()}_${rnd}.${item.tempExt}`; const pThumb = `images/thumb_${Date.now()}_${rnd}.${item.tempExt}`;
+                            await ghApi(pOrig, 'PUT', { message: 'Upload Orig', content: item.tempBase64Orig }); await ghApi(pThumb, 'PUT', { message: 'Upload Thumb', content: item.tempBase64Thumb });
+                            item.image = `./${pOrig}`; item.thumb = `./${pThumb}`; delete item.tempBase64Orig; delete item.tempBase64Thumb; delete item.tempExt;
                         }
                     }
                 }
-
                 for (let cat of menuData.categories) {
                     if (cat.tempBase64Orig) {
                         const rnd = Math.floor(Math.random()*1000);
-                        const pOrig = `images/orig_${Date.now()}_${rnd}.${cat.tempExt}`;
-                        const pThumb = `images/thumb_${Date.now()}_${rnd}.${cat.tempExt}`;
-                        await ghApi(pOrig, 'PUT', { message: 'Upload Orig', content: cat.tempBase64Orig });
-                        await ghApi(pThumb, 'PUT', { message: 'Upload Thumb', content: cat.tempBase64Thumb });
-                        cat.image = `./${pOrig}`; cat.thumb = `./${pThumb}`;
-                        delete cat.tempBase64Orig; delete cat.tempBase64Thumb; delete cat.tempExt;
+                        const pOrig = `images/orig_${Date.now()}_${rnd}.${cat.tempExt}`; const pThumb = `images/thumb_${Date.now()}_${rnd}.${cat.tempExt}`;
+                        await ghApi(pOrig, 'PUT', { message: 'Upload Orig', content: cat.tempBase64Orig }); await ghApi(pThumb, 'PUT', { message: 'Upload Thumb', content: cat.tempBase64Thumb });
+                        cat.image = `./${pOrig}`; cat.thumb = `./${pThumb}`; delete cat.tempBase64Orig; delete cat.tempBase64Thumb; delete cat.tempExt;
                     }
                     if(cat.subcategories) {
                         for(let sub of cat.subcategories) {
                             if (sub.tempBase64Orig) {
                                 const rnd = Math.floor(Math.random()*1000);
-                                const pOrig = `images/orig_${Date.now()}_${rnd}.${sub.tempExt}`;
-                                const pThumb = `images/thumb_${Date.now()}_${rnd}.${sub.tempExt}`;
-                                await ghApi(pOrig, 'PUT', { message: 'Upload Orig', content: sub.tempBase64Orig });
-                                await ghApi(pThumb, 'PUT', { message: 'Upload Thumb', content: sub.tempBase64Thumb });
-                                sub.image = `./${pOrig}`; sub.thumb = `./${pThumb}`;
-                                delete sub.tempBase64Orig; delete sub.tempBase64Thumb; delete sub.tempExt;
+                                const pOrig = `images/orig_${Date.now()}_${rnd}.${sub.tempExt}`; const pThumb = `images/thumb_${Date.now()}_${rnd}.${sub.tempExt}`;
+                                await ghApi(pOrig, 'PUT', { message: 'Upload Orig', content: sub.tempBase64Orig }); await ghApi(pThumb, 'PUT', { message: 'Upload Thumb', content: sub.tempBase64Thumb });
+                                sub.image = `./${pOrig}`; sub.thumb = `./${pThumb}`; delete sub.tempBase64Orig; delete sub.tempBase64Thumb; delete sub.tempExt;
                             }
                             await uploadItemsImages(sub.items);
                         }
@@ -885,50 +897,24 @@
                 await ghApi('menu.json', 'PUT', { message: "Bulk Update", content: utoa(JSON.stringify(menuData, null, 2)), sha: liveMenu.sha });
                 
                 document.getElementById('saveAllBanner').classList.remove('visible');
-                
-                // إزالة الألوان الصفراء من مربعات التعديل السريع بعد الحفظ
                 document.querySelectorAll('.qe-input-wrapper.changed').forEach(el => el.classList.remove('changed'));
-                
                 alert("تم الحفظ وتحديث المنيو بنجاح! 🎉");
             } catch (e) { alert("فشل الرفع\n" + e.message); }
             document.getElementById('loader').style.display = 'none';
         }
 
-        // ================== PWA سكربت التثبيت وتفعيل السيرفس وركر للإدارة ==================
+        // ================== PWA ==================
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('Admin Service Worker Registered', reg.scope))
-                    .catch(err => console.error('Admin Service Worker Failed', err));
-            });
+            window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js'); });
         }
-
-        let deferredPrompt;
-        const adminPwaBtn = document.getElementById('adminPwaBtn');
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            if(adminPwaBtn) adminPwaBtn.style.display = 'flex';
-        });
-
+        let deferredPrompt; const adminPwaBtn = document.getElementById('adminPwaBtn');
+        window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; if(adminPwaBtn) adminPwaBtn.style.display = 'flex'; });
         if(adminPwaBtn) {
             adminPwaBtn.addEventListener('click', async () => {
-                if (deferredPrompt) {
-                    deferredPrompt.prompt();
-                    const { outcome } = await deferredPrompt.userChoice;
-                    if (outcome === 'accepted') {
-                        console.log('Admin accepted install');
-                    }
-                    deferredPrompt = null;
-                    adminPwaBtn.style.display = 'none';
-                }
+                if (deferredPrompt) { deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; adminPwaBtn.style.display = 'none'; }
             });
         }
-
-        window.addEventListener('appinstalled', () => {
-            if(adminPwaBtn) adminPwaBtn.style.display = 'none';
-        });
+        window.addEventListener('appinstalled', () => { if(adminPwaBtn) adminPwaBtn.style.display = 'none'; });
     </script>
 </body>
 </html>
