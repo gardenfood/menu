@@ -864,6 +864,13 @@
               "description": "تعبئة 5 كغ",
               "price": "0",
               "currency": "$"
+            },
+            {
+              "id": "i_1784665226083",
+              "name": "حشوة برتقال بوراتوس ",
+              "description": "تعبئة 5 كغ",
+              "price": "0",
+              "currency": "$"
             }
           ],
           "name": "حشوات شركة Puratos",
