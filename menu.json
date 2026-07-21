@@ -324,8 +324,8 @@
               "description": "مايونيز لبناني وزن 3.5 كغ",
               "price": "14",
               "currency": "$",
-              "image": "./images/orig_1784652459156_312.jpg",
-              "thumb": "./images/thumb_1784652459156_312.jpg"
+              "image": "./images/orig_1784573004798_330.jpg",
+              "thumb": "./images/thumb_1784573004798_330.jpg"
             },
             {
               "id": "i_1784562921304",
@@ -333,8 +333,8 @@
               "description": "مايونيز وطني بجودة اميركيه وزن 3.5 كغ ",
               "price": "9.5",
               "currency": "$",
-              "image": "./images/orig_1784652387878_295.jpg",
-              "thumb": "./images/thumb_1784652387878_295.jpg"
+              "image": "./images/orig_1784573007867_952.jpg",
+              "thumb": "./images/thumb_1784573007867_952.jpg"
             },
             {
               "id": "i_1784562975231",
@@ -342,8 +342,8 @@
               "description": "مايونيز لبناني وزن 3.5 كغ ",
               "price": "12",
               "currency": "$",
-              "image": "./images/orig_1784652491192_498.jpg",
-              "thumb": "./images/thumb_1784652491192_498.jpg"
+              "image": "./images/orig_1784573011550_216.jpg",
+              "thumb": "./images/thumb_1784573011550_216.jpg"
             }
           ],
           "name": "قسم المايونيز ",
@@ -534,33 +534,18 @@
               "description": "وارشستر صوص اميركي 3.8 لتر ",
               "price": "24",
               "currency": "$"
+            },
+            {
+              "id": "i_1784649809867",
+              "name": "وارشستر صوص ",
+              "description": "وراشستر صوص 290 غرام ",
+              "price": "3.75",
+              "currency": "$"
             }
           ],
           "name": "قسم صوص الوارشستر",
           "image": "./images/orig_1784649696142_907.jpg",
           "thumb": "./images/thumb_1784649696142_907.jpg"
-        },
-        {
-          "id": "sub_1784650513324",
-          "items": [
-            {
-              "id": "i_1784650556650",
-              "name": "خل بلسمنغ ايطالي",
-              "description": "خل بلسمنغ ايطالي وزن 5 كغ",
-              "price": "21",
-              "currency": "$"
-            },
-            {
-              "id": "i_1784650709345",
-              "name": "خل بلسمنغ زجاج",
-              "description": "خل بلسمنغ وزن 500ml ",
-              "price": "4",
-              "currency": "$"
-            }
-          ],
-          "name": "قسم خل البلسمنغ",
-          "image": "./images/orig_1784650559927_512.jpg",
-          "thumb": "./images/thumb_1784650559927_512.jpg"
         }
       ]
     },
@@ -634,22 +619,6 @@
       "name": "محارم",
       "image": "./images/orig_1784544592477_459.jpg",
       "thumb": "./images/thumb_1784544592477_459.jpg"
-    },
-    {
-      "id": "c_1784652888340",
-      "subcategories": [
-        {
-          "id": "sub_1784652920946",
-          "items": [],
-          "name": "باستا زارا",
-          "image": "./images/orig_1784652927194_682.jpg",
-          "thumb": "./images/thumb_1784652927194_682.jpg"
-        }
-      ],
-      "items": [],
-      "name": "قسم الباستا",
-      "image": "./images/orig_1784652923990_803.jpg",
-      "thumb": "./images/thumb_1784652923990_803.jpg"
     }
   ]
 }
