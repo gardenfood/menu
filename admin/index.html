@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <!-- وسوم منع الكاش الإجبارية -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
     <meta name="theme-color" content="#0ca143">
     <title>إدارة Garden Food - لوحة التحكم</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
@@ -53,7 +59,6 @@
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* تعديلات أحجام البطاقة لتناسب أزرار الترتيب */
         .card { background: var(--surface); padding: 12px 10px; border-radius: var(--radius-lg); box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 15px; display: flex; gap: 10px; align-items: center; border: 1px solid rgba(0,0,0,0.02); }
         .card img { width: 60px; height: 60px; border-radius: 14px; object-fit: cover; background: var(--bg); flex-shrink: 0; }
         .card-info { flex-grow: 1; min-width: 0; padding: 0 4px; }
@@ -67,7 +72,6 @@
         .action-btn.edit { color: var(--info); background: #e0f2fe; }
         .action-btn.dive { background: var(--primary-light); color: var(--primary); width: 100%; border-radius: 10px; font-family: 'Tajawal'; font-weight: 900; font-size: 0.85rem;}
 
-        /* أزرار الترتيب (الأسهم) */
         .move-arrows { display: flex; flex-direction: column; gap: 6px; align-items: center; justify-content: center; }
         .move-btn { background: #f1f5f9; border: none; width: 30px; height: 30px; border-radius: 8px; font-size: 1rem; color: #475569; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.04); transition: var(--transition); }
         .move-btn:active { background: #e2e8f0; transform: scale(0.9); }
@@ -128,7 +132,7 @@
         .qe-currency { font-weight: 800; color: var(--text-muted); font-size: 0.85rem; }
         .qe-sub-header { background: #f1f5f9; color: #475569; font-size: 0.95rem; font-weight: 900; padding: 8px 15px; border-bottom: 1px solid #e2e8f0; }
 
-        /* تنسيقات الفاتورة الاحترافية A4 والطباعة (3 أعمدة) */
+        /* تنسيقات الفاتورة الاحترافية A4 والطباعة */
         .invoice-preview-container { background: #525659; padding: 20px 10px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
         .invoice-actions { display: flex; justify-content: space-between; width: 100%; max-width: 210mm; margin-bottom: 20px; background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         
