@@ -37,6 +37,97 @@
           "description": "تعبئة 1كغ ",
           "price": "0",
           "currency": "ل.س"
+        },
+        {
+          "id": "i_1784618323787",
+          "name": "فلفل أسود ",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784618369260",
+          "name": "كزبرة ناعمة ",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784618379704",
+          "name": "كزبرة حب",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784618423350",
+          "name": "هيل ناعم ",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784618434210",
+          "name": "هيل حب",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784618446112",
+          "name": "قرفة ناعمة ",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784618458754",
+          "name": "قرفة سيكار ",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784618477537",
+          "name": "ثوم بودرة ",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784618487947",
+          "name": "بصل بودرة ",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784618503598",
+          "name": "سماق",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784618531918",
+          "name": "ماجي أبيض بودرة ",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784618544519",
+          "name": "ماجي أصفر بودرة",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784618557838",
+          "name": "محلب ",
+          "description": "تعبئة 1كغ",
+          "price": "0",
+          "currency": "$"
         }
       ],
       "thumb": "./images/c_thumb_1784386923354_2.jpg"
