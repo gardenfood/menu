@@ -622,7 +622,15 @@
     },
     {
       "id": "c_1784654255549",
-      "subcategories": [],
+      "subcategories": [
+        {
+          "id": "sub_1784654311786",
+          "items": [],
+          "name": "قسم باستا زارا ",
+          "image": "./images/orig_1784654325373_235.jpg",
+          "thumb": "./images/thumb_1784654325373_235.jpg"
+        }
+      ],
       "items": [],
       "name": "قسم الباستا",
       "image": "./images/orig_1784654257352_899.jpg",
