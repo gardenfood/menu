@@ -583,9 +583,9 @@
     },
     {
       "id": "c_1784387008788",
+      "items": [],
       "name": "حليب ومشتقاته",
       "image": "./images/c_orig_1784387010688_860.jpg",
-      "items": [],
       "thumb": "./images/c_thumb_1784387010688_860.jpg",
       "subcategories": [
         {
@@ -655,7 +655,29 @@
         },
         {
           "id": "sub_1784660275761",
-          "items": [],
+          "items": [
+            {
+              "id": "i_butter_1",
+              "name": "زبدة حيواني دغما بوراتوس Aloha Cake",
+              "description": "زبدة حيواني لصناعة المخبوزات (البتفور) - تعبئة 20 كغ.",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_butter_2",
+              "name": "زبدة حيواني شرائح بوراتوس Aloha Pastry",
+              "description": "تستخدم لصناعة الكروسان - تعبئة (2 كغ × 5).",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_butter_3",
+              "name": "زبدة شرحات بوراتوس",
+              "description": "تعبئة 10 كغ.",
+              "price": "0",
+              "currency": "$"
+            }
+          ],
           "name": "زبدة ",
           "image": "./images/orig_1784660284521_690.jpg",
           "thumb": "./images/thumb_1784660284521_690.jpg"
@@ -693,8 +715,6 @@
     },
     {
       "id": "c_1784387039698",
-      "name": "مفرزات",
-      "image": "./images/c_orig_1784387041650_792.jpg",
       "items": [
         {
           "id": "i_1784659064938",
@@ -711,12 +731,12 @@
           "currency": "$"
         }
       ],
+      "name": "مفرزات",
+      "image": "./images/c_orig_1784387041650_792.jpg",
       "thumb": "./images/c_thumb_1784387041650_792.jpg"
     },
     {
       "id": "c_1784387139836",
-      "name": "مواد جافة (dry store)",
-      "image": "./images/c_orig_1784387141187_711.jpg",
       "items": [
         {
           "id": "i_1784663693544",
@@ -740,6 +760,8 @@
           "currency": "$"
         }
       ],
+      "name": "مواد جافة (dry store)",
+      "image": "./images/c_orig_1784387141187_711.jpg",
       "thumb": "./images/c_thumb_1784387141187_711.jpg",
       "subcategories": [
         {
@@ -839,9 +861,9 @@
     },
     {
       "id": "c_1784387176701",
+      "items": [],
       "name": "بار وحلويات",
       "image": "./images/c_orig_1784387177935_577.jpg",
-      "items": [],
       "thumb": "./images/c_thumb_1784387177935_577.jpg",
       "subcategories": [
         {
@@ -903,21 +925,185 @@
         },
         {
           "id": "sub_1784659916811",
-          "items": [],
+          "items": [
+            {
+              "id": "i_pur_mix_1",
+              "name": "محسن للمخبوزات بوراتوس",
+              "description": "المنشأ بلجيكي | معدل الاستخدام (0.5-1%) | تعبئة 10 كغ.",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_pur_mix_2",
+              "name": "محسن للمخبوزات عالي التركيز بوراتوس",
+              "description": "المنشأ بلجيكي | معدل الاستخدام (0.3-0.5%) | تعبئة 10 كغ.",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_pur_mix_3",
+              "name": "محسن للباجيت بوراتوس",
+              "description": "تعبئة 1 كغ.",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_pur_mix_4",
+              "name": "محسن صمن لإنتاج الفاهيتا والبرجر بوراتوس",
+              "description": "تعبئة 20 كغ.",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_pur_mix_5",
+              "name": "خلطة 7 حبات الخبز الأسمر بوراتوس",
+              "description": "تعبئة 25 كغ.",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_pur_mix_6",
+              "name": "محسن خبز مكتبات بوراتوس",
+              "description": "(1 مكعب) لـ (50 كيلو طحين) | تعبئة المكعب 10 غرام | تعبئة الطرد 30 مكعب.",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_pur_mix_7",
+              "name": "ملمع للمعجنات بديل البيض بوراتوس",
+              "description": "تعبئة الطرد 1 لتر × 12 قطعة.",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_pur_mix_8",
+              "name": "خلطة سبونج فانيل بوراتوس",
+              "description": "تعبئة 25 كغ.",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_pur_mix_9",
+              "name": "خلطة سبونج كاكاو بوراتوس",
+              "description": "تعبئة 25 كغ.",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_pur_mix_10",
+              "name": "خلطة مافن فانيل بوراتوس",
+              "description": "تعبئة 15 كغ.",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_pur_mix_11",
+              "name": "خلطة مافن شوكولا بوراتوس",
+              "description": "تعبئة 12.5 كغ.",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_pur_mix_12",
+              "name": "كريم باتسير بودر بوراتوس",
+              "description": "تعبئة 15 كغ.",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_pur_mix_13",
+              "name": "غاناش ابيض بزبدة الكاكاو بوراتوس",
+              "description": "تعبئة 4 كغ.",
+              "price": "0",
+              "currency": "$"
+            }
+          ],
           "name": "محسنات وخلطات للمخبوزات  puratos",
           "image": "./images/orig_1784660089627_813.jpg",
           "thumb": "./images/thumb_1784660089627_813.jpg"
         },
         {
           "id": "sub_1784660003497",
-          "items": [],
+          "items": [
+            {
+              "id": "i_cream_1",
+              "name": "كريمة حلو بوراتوس",
+              "description": "كريمة خفق محلاة للكيك - تعبئة 1 لتر (طرد 12 قطعة).",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_cream_2",
+              "name": "كريمة حلو عالية الدسم بوراتوس",
+              "description": "كريمة خفق دسم 35% نباتي - تعبئة 1 لتر (طرد 12 قطعة).",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_cream_3",
+              "name": "كريمة حلو دغما بوراتوس",
+              "description": "تعبئة 10 لتر.",
+              "price": "0",
+              "currency": "$"
+            }
+          ],
           "name": "كريمة حلويات خفق",
           "image": "./images/orig_1784660092209_333.jpg",
           "thumb": "./images/thumb_1784660092209_333.jpg"
         },
         {
           "id": "sub_1784660083066",
-          "items": [],
+          "items": [
+            {
+              "id": "i_pur_fill_1",
+              "name": "حشوة ليمون بوراتوس",
+              "description": "تعبئة 5 كغ",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_pur_fill_2",
+              "name": "حشوة برتقال بوراتوس",
+              "description": "تعبئة 5 كغ",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_pur_fill_3",
+              "name": "حشوة كراميل بوراتوس",
+              "description": "تعبئة 5 كغ",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_pur_fill_4",
+              "name": "حشوة بندق بوراتوس",
+              "description": "تعبئة 5 كغ",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_pur_fill_5",
+              "name": "حشوة شوكولا بالبندق بوراتوس",
+              "description": "تعبئة 5 كغ",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_pur_fill_6",
+              "name": "حشوة لوتس بوراتوس",
+              "description": "تعبئة 5 كغ",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_pur_fill_7",
+              "name": "حشوة الكراميل المملح بوراتوس",
+              "description": "تعبئة 5 كغ",
+              "price": "0",
+              "currency": "$"
+            }
+          ],
           "name": "حشوات شركة Puratos",
           "image": "./images/orig_1784660094588_778.jpg",
           "thumb": "./images/thumb_1784660094588_778.jpg"
@@ -926,52 +1112,49 @@
     },
     {
       "id": "c_1784388861522",
+      "items": [],
       "name": "معدات مطبخ",
       "image": "./images/c_orig_1784388863602_202.jpg",
-      "items": [],
       "thumb": "./images/c_thumb_1784388863602_202.jpg"
     },
     {
       "id": "c_1784388922393",
+      "items": [],
       "name": "تجهيزات مطبخ",
       "image": "./images/c_orig_1784388923920_664.jpg",
-      "items": [],
       "thumb": "./images/c_thumb_1784388923920_664.jpg"
     },
     {
       "id": "c_1784389224207",
+      "items": [],
       "name": "تغليفات (Take away)",
       "image": "./images/c_orig_1784389225509_138.jpg",
-      "items": [],
       "thumb": "./images/c_thumb_1784389225509_138.jpg"
     },
     {
       "id": "c_1784390283194",
+      "items": [],
       "name": "الملابس (Uniform)",
       "image": "./images/c_orig_1784390284163_121.jpg",
-      "items": [],
       "thumb": "./images/c_thumb_1784390284163_121.jpg"
     },
     {
       "id": "c_1784390995141",
+      "items": [],
       "name": "مواد تنضيف",
       "image": "./images/c_orig_1784390996790_186.jpg",
-      "items": [],
       "thumb": "./images/c_thumb_1784390996791_186.jpg"
     },
     {
       "id": "c_1784544591278",
+      "subcategories": [],
+      "items": [],
       "name": "محارم",
       "image": "./images/orig_1784544592477_459.jpg",
-      "items": [],
-      "subcategories": [],
       "thumb": "./images/thumb_1784544592477_459.jpg"
     },
     {
       "id": "c_1784654255549",
-      "name": "قسم الباستا",
-      "image": "./images/orig_1784654257352_899.jpg",
-      "items": [],
       "subcategories": [
         {
           "id": "sub_1784654311786",
@@ -1129,6 +1312,9 @@
           "thumb": "./images/thumb_1784654325373_235.jpg"
         }
       ],
+      "items": [],
+      "name": "قسم الباستا",
+      "image": "./images/orig_1784654257352_899.jpg",
       "thumb": "./images/thumb_1784654257352_899.jpg"
     }
   ]
