@@ -583,9 +583,9 @@
     },
     {
       "id": "c_1784387008788",
-      "items": [],
       "name": "حليب ومشتقاته",
       "image": "./images/c_orig_1784387010688_860.jpg",
+      "items": [],
       "thumb": "./images/c_thumb_1784387010688_860.jpg",
       "subcategories": [
         {
@@ -693,6 +693,8 @@
     },
     {
       "id": "c_1784387039698",
+      "name": "مفرزات",
+      "image": "./images/c_orig_1784387041650_792.jpg",
       "items": [
         {
           "id": "i_1784659064938",
@@ -709,12 +711,12 @@
           "currency": "$"
         }
       ],
-      "name": "مفرزات",
-      "image": "./images/c_orig_1784387041650_792.jpg",
       "thumb": "./images/c_thumb_1784387041650_792.jpg"
     },
     {
       "id": "c_1784387139836",
+      "name": "مواد جافة (dry store)",
+      "image": "./images/c_orig_1784387141187_711.jpg",
       "items": [
         {
           "id": "i_1784663693544",
@@ -738,8 +740,6 @@
           "currency": "$"
         }
       ],
-      "name": "مواد جافة (dry store)",
-      "image": "./images/c_orig_1784387141187_711.jpg",
       "thumb": "./images/c_thumb_1784387141187_711.jpg",
       "subcategories": [
         {
@@ -839,14 +839,64 @@
     },
     {
       "id": "c_1784387176701",
-      "items": [],
       "name": "بار وحلويات",
       "image": "./images/c_orig_1784387177935_577.jpg",
+      "items": [],
       "thumb": "./images/c_thumb_1784387177935_577.jpg",
       "subcategories": [
         {
           "id": "sub_1784658581612",
-          "items": [],
+          "items": [
+            {
+              "id": "i_1784659455198",
+              "name": "شوكولا حبيبات ابيض",
+              "description": "المنشأ بلجيكي \nنسبة الكاكاو ( 31%)\nتعبئة الكيس 5 كغ",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_1784659559575",
+              "name": "شوكولا حبيبات اشقر ",
+              "description": "المنشأ بلجيكي \nنسبة الكاكاو ( 35.5%)\nتعبئة الكيس 5 كغ",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_1784659630714",
+              "name": "شوكولا حبيبات اشقر ",
+              "description": "المنشأ بلجيكي \nنسبة الكاكاو ( 41%)\nتعبئة الكيس 5 كغ",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_1784659741594",
+              "name": "شوكولا حبيبات اشقر ",
+              "description": "المنشأ بلجيكي \nدايت ( خالية من السكر )\nتعبئة الكيس 5 كغ",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_1784659814243",
+              "name": "شوكولا حبيبات داكنة ",
+              "description": "المنشأ بلجيكي \nنسبة الكاكاو ( 55%)\nتعبئة الكيس 5 كغ",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_1784659878107",
+              "name": "شوكولا حبيبات داكنة ",
+              "description": "المنشأ بلجيكي \nنسبة الكاكاو ( 64-60%)\nتعبئة الكيس 5 كغ",
+              "price": "0",
+              "currency": "$"
+            },
+            {
+              "id": "i_1784659932419",
+              "name": "شوكولا حبيبات بلوك ",
+              "description": "المنشأ بلجيكي \nدايت ( خالية من السكر )\nتعبئة الكيس 5 كغ",
+              "price": "0",
+              "currency": "$"
+            }
+          ],
           "name": "شوكولا ليرات بلجيكي Belcolade",
           "image": "./images/orig_1784658589276_699.jpg",
           "thumb": "./images/thumb_1784658589276_699.jpg"
@@ -876,49 +926,52 @@
     },
     {
       "id": "c_1784388861522",
-      "items": [],
       "name": "معدات مطبخ",
       "image": "./images/c_orig_1784388863602_202.jpg",
+      "items": [],
       "thumb": "./images/c_thumb_1784388863602_202.jpg"
     },
     {
       "id": "c_1784388922393",
-      "items": [],
       "name": "تجهيزات مطبخ",
       "image": "./images/c_orig_1784388923920_664.jpg",
+      "items": [],
       "thumb": "./images/c_thumb_1784388923920_664.jpg"
     },
     {
       "id": "c_1784389224207",
-      "items": [],
       "name": "تغليفات (Take away)",
       "image": "./images/c_orig_1784389225509_138.jpg",
+      "items": [],
       "thumb": "./images/c_thumb_1784389225509_138.jpg"
     },
     {
       "id": "c_1784390283194",
-      "items": [],
       "name": "الملابس (Uniform)",
       "image": "./images/c_orig_1784390284163_121.jpg",
+      "items": [],
       "thumb": "./images/c_thumb_1784390284163_121.jpg"
     },
     {
       "id": "c_1784390995141",
-      "items": [],
       "name": "مواد تنضيف",
       "image": "./images/c_orig_1784390996790_186.jpg",
+      "items": [],
       "thumb": "./images/c_thumb_1784390996791_186.jpg"
     },
     {
       "id": "c_1784544591278",
-      "subcategories": [],
-      "items": [],
       "name": "محارم",
       "image": "./images/orig_1784544592477_459.jpg",
+      "items": [],
+      "subcategories": [],
       "thumb": "./images/thumb_1784544592477_459.jpg"
     },
     {
       "id": "c_1784654255549",
+      "name": "قسم الباستا",
+      "image": "./images/orig_1784654257352_899.jpg",
+      "items": [],
       "subcategories": [
         {
           "id": "sub_1784654311786",
@@ -1076,9 +1129,6 @@
           "thumb": "./images/thumb_1784654325373_235.jpg"
         }
       ],
-      "items": [],
-      "name": "قسم الباستا",
-      "image": "./images/orig_1784654257352_899.jpg",
       "thumb": "./images/thumb_1784654257352_899.jpg"
     }
   ]
