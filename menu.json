@@ -656,7 +656,15 @@
       "subcategories": [
         {
           "id": "sub_1784658581612",
-          "items": [],
+          "items": [
+            {
+              "id": "i_1784659455198",
+              "name": "شوكولا حبيبات ابيض",
+              "description": "المنشأ بلجيكي \nنسبة الكاكاو ( 31%)\nتعبئة الكيس 5 كغ",
+              "price": "0",
+              "currency": "$"
+            }
+          ],
           "name": "شوكولا ليرات بلجيكي Belcolade",
           "image": "./images/orig_1784658589276_699.jpg",
           "thumb": "./images/thumb_1784658589276_699.jpg"
