@@ -304,13 +304,6 @@
           "description": "صوص تيكساس وزن 3.8 كغ ",
           "price": "15.5",
           "currency": "$"
-        },
-        {
-          "id": "i_1784648976800",
-          "name": "صوص HP",
-          "description": "صوص اتش بي وزن 2.3 كغ ",
-          "price": "22",
-          "currency": "$"
         }
       ],
       "thumb": "./images/c_thumb_1784386926168_938.jpg",
@@ -546,6 +539,28 @@
           "name": "قسم صوص الوارشستر",
           "image": "./images/orig_1784649696142_907.jpg",
           "thumb": "./images/thumb_1784649696142_907.jpg"
+        },
+        {
+          "id": "sub_1784656570778",
+          "items": [
+            {
+              "id": "i_1784656596112",
+              "name": "صوص hp غالون",
+              "description": "صوص اتش بي وزن 2.3 كغ",
+              "price": "22",
+              "currency": "$"
+            },
+            {
+              "id": "i_1784656700478",
+              "name": "صوص hp زجاج",
+              "description": "الوزن ٤٥٠ غرام ",
+              "price": "4.15",
+              "currency": "$"
+            }
+          ],
+          "name": "قسم صوص HP",
+          "image": "./images/orig_1784656701061_794.jpg",
+          "thumb": "./images/thumb_1784656701061_794.jpg"
         }
       ]
     },
