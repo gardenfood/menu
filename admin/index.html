@@ -29,7 +29,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg); color: var(--text-dark); padding-bottom: 90px; overflow-x: hidden; }
 
-        .loader-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.95); z-index: 10000; display: flex; justify-content: center; align-items: center; flex-direction: column; font-weight: 900; color: var(--primary); font-size: 1.2rem; display: none; backdrop-filter: blur(5px); }
+        .loader-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.95); z-index: 10000; display: flex; justify-content: center; align-items: center; flex-direction: column; font-weight: 900; color: var(--primary); font-size: 1.2rem; display: none; backdrop-filter: blur(5px); text-align: center; padding: 20px;}
         .spinner { width: 45px; height: 45px; border: 5px solid var(--primary-light); border-top: 5px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 15px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
@@ -49,11 +49,11 @@
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); display: flex; justify-content: space-around; padding: 15px 5px 25px 5px; box-shadow: 0 -10px 30px rgba(0,0,0,0.05); border-top-left-radius: 30px; border-top-right-radius: 30px; z-index: 100; }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 5px; color: var(--text-muted); cursor: pointer; flex: 1; font-weight: 800; font-size: 0.85rem; }
         .nav-item.active { color: var(--primary); transform: translateY(-5px); }
-        
         .view { display: none; padding: 20px; animation: fadeIn 0.3s; }
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
+        /* تعديلات أحجام البطاقة لتناسب أزرار الترتيب */
         .card { background: var(--surface); padding: 12px 10px; border-radius: var(--radius-lg); box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 15px; display: flex; gap: 10px; align-items: center; border: 1px solid rgba(0,0,0,0.02); }
         .card img { width: 60px; height: 60px; border-radius: 14px; object-fit: cover; background: var(--bg); flex-shrink: 0; }
         .card-info { flex-grow: 1; min-width: 0; padding: 0 4px; }
@@ -67,6 +67,7 @@
         .action-btn.edit { color: var(--info); background: #e0f2fe; }
         .action-btn.dive { background: var(--primary-light); color: var(--primary); width: 100%; border-radius: 10px; font-family: 'Tajawal'; font-weight: 900; font-size: 0.85rem;}
 
+        /* أزرار الترتيب (الأسهم) */
         .move-arrows { display: flex; flex-direction: column; gap: 6px; align-items: center; justify-content: center; }
         .move-btn { background: #f1f5f9; border: none; width: 30px; height: 30px; border-radius: 8px; font-size: 1rem; color: #475569; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.04); transition: var(--transition); }
         .move-btn:active { background: #e2e8f0; transform: scale(0.9); }
@@ -127,13 +128,25 @@
         .qe-currency { font-weight: 800; color: var(--text-muted); font-size: 0.85rem; }
         .qe-sub-header { background: #f1f5f9; color: #475569; font-size: 0.95rem; font-weight: 900; padding: 8px 15px; border-bottom: 1px solid #e2e8f0; }
 
-        /* الفاتورة */
+        /* تنسيقات الفاتورة الاحترافية A4 والطباعة (3 أعمدة) */
         .invoice-preview-container { background: #525659; padding: 20px 10px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
         .invoice-actions { display: flex; justify-content: space-between; width: 100%; max-width: 210mm; margin-bottom: 20px; background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .invoice-a4 { background: white; width: 100%; max-width: 210mm; min-height: 297mm; padding: 20mm; box-shadow: 0 0 20px rgba(0,0,0,0.3); border-radius: 5px; direction: rtl; }
+        
+        .invoice-a4 {
+            background: white;
+            width: 100%;
+            max-width: 210mm; 
+            min-height: 297mm; 
+            padding: 20mm; 
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            border-radius: 5px;
+            direction: rtl;
+        }
+
         .invoice-a4 header { text-align: center; border-bottom: 4px solid var(--primary); padding-bottom: 20px; margin-bottom: 30px; }
         .invoice-a4 header h1 { color: var(--primary-dark); font-size: 2.5rem; margin-bottom: 10px; font-weight: 900; }
         .invoice-a4 header p { color: #555; font-size: 1.1rem; font-weight: 700; margin: 0; }
+
         .invoice-table { width: 100%; border-collapse: collapse; font-size: 1.05rem; }
         .invoice-table th, .invoice-table td { padding: 12px 10px; text-align: right; border-bottom: 1px solid #e5e7eb; vertical-align: middle; }
         .invoice-table th { background-color: var(--primary-light); color: var(--primary-dark); font-weight: 900; border-bottom: 2px solid var(--primary); }
@@ -168,7 +181,6 @@
         </div>
     </div>
 
-    <!-- الهيدر الخاص بالتطبيق -->
     <div class="app-header no-print">
         <div style="display:flex; align-items:center; gap:15px;">
             <button class="app-header-back" id="adminBackBtn" onclick="goBackAdminLevel()">رجوع</button>
@@ -176,13 +188,13 @@
         </div>
     </div>
 
-    <!-- 1. واجهة إدارة المحتوى (الأقسام والمنتجات مع أسهم الترتيب) -->
-    <div id="view-structure" class="view active no-print" style="padding-bottom: 120px;">
+    <!-- 1. واجهة إدارة المحتوى -->
+    <div id="view-structure" class="view active no-print" style="padding-bottom: 150px;">
         <div id="structureList"></div>
         <div class="fab-container" id="fabContainer"></div>
     </div>
 
-    <!-- 2. واجهة التعديل السريع للأسعار ⚡ (نظام الأكورديون) -->
+    <!-- 2. واجهة التعديل السريع للأسعار ⚡ -->
     <div id="view-quickedit" class="view no-print" style="padding-bottom: 120px;">
         <div style="background: white; padding: 15px; border-radius: var(--radius-lg); margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); display:flex; align-items:center; gap:12px; border: 1px solid #eee;">
             <div style="font-size:2rem; background: var(--primary-light); width: 50px; height: 50px; display:flex; justify-content:center; align-items:center; border-radius: 16px;">⚡</div>
@@ -194,8 +206,7 @@
         <div id="quickEditContainer"></div>
     </div>
 
-    <!-- 3. واجهة الإعدادات -->
-    <div id="view-settings" class="view no-print" style="padding-bottom: 120px;">
+    <div id="view-settings" class="view no-print">
         <div class="card" style="flex-direction: column; align-items: stretch; gap: 0;">
             <div class="section-title">✨ الهوية والأرقام</div>
             <label style="font-weight:800; margin-bottom:10px; display:block;">شعار المطعم (اللوغو)</label>
@@ -221,8 +232,7 @@
         </div>
     </div>
 
-    <!-- 4. واجهة التصدير (استعراض الفاتورة) -->
-    <div id="view-export" class="view no-print" style="padding-bottom: 120px;">
+    <div id="view-export" class="view no-print">
         <h3 style="margin-bottom: 15px;">حدد المنتجات لاستخراج الفاتورة (قائمة الأسعار):</h3>
         <div class="tree-item"><input type="checkbox" id="selectAllExport" onchange="toggleAllExport(this)"> <b style="color:var(--primary)">تحديد الكل</b></div>
         <div id="exportTreeContainer" class="export-tree"></div>
@@ -231,7 +241,6 @@
         </button>
     </div>
 
-    <!-- واجهة الفاتورة النهائية للطباعة -->
     <div id="view-invoice" class="view" style="padding:0;">
         <div class="invoice-preview-container">
             <div class="invoice-actions">
@@ -254,7 +263,6 @@
                         </tr>
                     </thead>
                     <tbody id="invTableBody">
-                        <!-- يتم حقن البيانات هنا -->
                     </tbody>
                 </table>
             </div>
@@ -263,17 +271,15 @@
 
     <button id="adminPwaBtn" class="no-print" title="تثبيت لوحة التحكم">🛠️</button>
 
-    <!-- الشريط السفلي (التنقل بين الصفحات) -->
     <div class="bottom-nav no-print">
         <div class="nav-item active" onclick="switchTab('structure', 'الأقسام والمنتجات 🗂️', this)"><span>🗂️</span><span>المحتوى</span></div>
         <div class="nav-item" onclick="switchTab('quickedit', 'تعديل الأسعار ⚡', this)"><span>⚡</span><span>سريع</span></div>
-        <div class="nav-item" onclick="switchTab('export', 'الفواتير 🖨️', this)"><span>🖨️</span><span>فواتير</span></div>
-        <div class="nav-item" onclick="switchTab('settings', 'الإعدادات ⚙️', this)"><span>⚙️</span><span>إعدادات</span></div>
+        <div class="nav-item" onclick="switchTab('export', 'تصدير الأسعار 🖨️', this); buildExportTree();"><span>🖨️</span><span>الفواتير</span></div>
+        <div class="nav-item" onclick="switchTab('settings', 'الإعدادات ⚙️', this)"><span>⚙️</span><span>الإعدادات</span></div>
     </div>
 
     <div class="sheet-overlay no-print" id="sheetOverlay" onclick="closeSheets()"></div>
 
-    <!-- الشيتات الخاصة بالإضافة -->
     <div class="bottom-sheet no-print" id="productSheet">
         <div class="sheet-header"><h2 id="pSheetTitle">إضافة منتج</h2><button class="close-sheet" onclick="closeSheets()">✕</button></div>
         <div class="input-group"><label>اسم المنتج</label><input type="text" id="pName"></div>
@@ -330,7 +336,11 @@
         }
 
         const REPO = 'gardenfood/menu';
+        
+        // المتغيرات للدمج (المزامنة)
         let PAT = localStorage.getItem('gh_pat'), menuData = { categories: [] }, appSettings = {};
+        let baseMenuData = null, baseSettingsData = null;
+        let initialMenuSha = null, initialSettingsSha = null;
         
         let tempUploads = { product: null, category: null, settings: null, audio: null };
         let cropperInstance = null; let currentCropType = null;
@@ -343,6 +353,7 @@
         function utoa(str) { return btoa(unescape(encodeURIComponent(str))); }
         function atou(str) { return decodeURIComponent(escape(atob(str))); }
         
+        // دوال الـ History API لزر الرجوع
         function safePushState(state) { try { history.pushState(state, '', ''); } catch(e) {} }
         function safeReplaceState(state) { try { history.replaceState(state, '', ''); } catch(e) {} }
 
@@ -372,11 +383,19 @@
 
         async function loadData() {
             document.getElementById('loader').style.display = 'flex';
+            document.getElementById('loaderText').innerText = 'جاري تحميل البيانات...';
             try {
-                const sData = await ghApi('settings.json'); appSettings = JSON.parse(atou(sData.content));
+                const sData = await ghApi('settings.json'); 
+                appSettings = JSON.parse(atou(sData.content));
+                baseSettingsData = JSON.parse(JSON.stringify(appSettings)); 
+                initialSettingsSha = sData.sha;
                 populateSettingsUI();
-                const mData = await ghApi('menu.json'); menuData = JSON.parse(atou(mData.content));
+                
+                const mData = await ghApi('menu.json'); 
+                menuData = JSON.parse(atou(mData.content));
                 if (!menuData.categories) menuData.categories = [];
+                baseMenuData = JSON.parse(JSON.stringify(menuData)); 
+                initialMenuSha = mData.sha;
                 
                 // حفظ الحالة الأولية في الـ History
                 safeReplaceState({ view: 'structure', level: 'main', catId: null, subId: null, title: 'الأقسام 🗂️' });
@@ -387,10 +406,9 @@
 
         function switchTab(tabId, title, element, isHistoryPop = false) {
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            
-            if(element) { 
-                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); 
-                element.classList.add('active'); 
+            if(element) {
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                element.classList.add('active');
             } else {
                 const map = { 'structure': 0, 'quickedit': 1, 'export': 2, 'settings': 3 };
                 if(map[tabId] !== undefined) {
@@ -398,7 +416,6 @@
                     document.querySelectorAll('.nav-item')[map[tabId]].classList.add('active');
                 }
             }
-            
             document.getElementById(`view-${tabId}`).classList.add('active');
             const instBtn = document.getElementById('adminPwaBtn');
             
@@ -411,18 +428,18 @@
                     if(!isHistoryPop) { adminLevel = 'main'; currentAdminCatId = null; currentAdminSubId = null; }
                     renderStructureLevel();
                 } else if (tabId === 'quickedit') {
-                    if(title) document.getElementById('headerTitle').innerText = title; 
-                    document.getElementById('adminBackBtn').style.display = 'none'; 
-                    renderQuickEdit(); 
+                    if(title) document.getElementById('headerTitle').innerText = title;
+                    document.getElementById('adminBackBtn').style.display = 'none';
+                    renderQuickEdit();
                 } else if (tabId === 'export') {
-                    if(title) document.getElementById('headerTitle').innerText = title; 
-                    document.getElementById('adminBackBtn').style.display = 'none'; 
-                    buildExportTree(); 
+                    if(title) document.getElementById('headerTitle').innerText = title;
+                    document.getElementById('adminBackBtn').style.display = 'none';
+                    buildExportTree();
                 } else {
-                    if(title) document.getElementById('headerTitle').innerText = title; 
+                    if(title) document.getElementById('headerTitle').innerText = title;
                     document.getElementById('adminBackBtn').style.display = 'none';
                 }
-            } else { 
+            } else {
                 if(instBtn) instBtn.style.bottom = '-100px'; 
             }
             window.scrollTo(0, 0);
@@ -446,22 +463,26 @@
             const file = e.target.files[0]; if(!file) return;
             const r = new FileReader(); r.onload = function(ev) {
                 document.getElementById('sLogoPreview').src = ev.target.result; document.getElementById('sLogoPreview').style.display = 'inline-block';
-                tempUploads.settings = { base64: ev.target.result.split(',')[1], ext: file.name.split('.').pop() }; appSettings.logo = ev.target.result; markUnsaved();
+                tempUploads.settings = { base64: ev.target.result.split(',')[1], ext: file.name.split('.').pop() };
+                appSettings.logo = ev.target.result; markUnsaved();
             }; r.readAsDataURL(file);
         }
         function handleAudioSelection(e) {
             const file = e.target.files[0]; if(!file) return;
             const r = new FileReader(); r.onload = function(ev) {
                 document.getElementById('sAudioPreview').src = ev.target.result; document.getElementById('sAudioPreview').style.display = 'block';
-                tempUploads.audio = { base64: ev.target.result.split(',')[1], ext: file.name.split('.').pop() }; appSettings.click_sound = ev.target.result; markUnsaved();
+                tempUploads.audio = { base64: ev.target.result.split(',')[1], ext: file.name.split('.').pop() };
+                appSettings.click_sound = ev.target.result; markUnsaved();
             }; r.readAsDataURL(file);
         }
 
         function openCropper(event, type) {
-            const file = event.target.files[0]; if(!file) return; currentCropType = type;
+            const file = event.target.files[0]; if(!file) return;
+            currentCropType = type;
             const reader = new FileReader();
             reader.onload = function(e) {
-                document.getElementById('cropperImage').src = e.target.result; document.getElementById('cropModal').style.display = 'flex';
+                document.getElementById('cropperImage').src = e.target.result;
+                document.getElementById('cropModal').style.display = 'flex';
                 if(cropperInstance) cropperInstance.destroy();
                 cropperInstance = new Cropper(document.getElementById('cropperImage'), { aspectRatio: 1, viewMode: 2, dragMode: 'move', autoCropArea: 0.9 });
             }; reader.readAsDataURL(file);
@@ -532,11 +553,8 @@
                         <img src="${getImgSrc(cat.thumb || cat.image)}">
                         <div class="card-info"><h3>${cat.name}</h3></div>
                         <div class="actions-group">
-                            <div class="actions-row">
-                                <button class="action-btn edit" onclick="openCategorySheet('${cat.id}')">✏️</button>
-                                <button class="action-btn delete" onclick="deleteCategory('${cat.id}')">🗑️</button>
-                            </div>
-                            <button class="action-btn dive" onclick="goAdminSubLevel('${cat.id}')">محتوى 📂</button>
+                            <div class="actions-row"><button class="action-btn edit" onclick="openCategorySheet('${cat.id}')">✏️</button><button class="action-btn delete" onclick="deleteCategory('${cat.id}')">🗑️</button></div>
+                            <button class="action-btn dive" onclick="goAdminSubLevel('${cat.id}')">إدارة المحتوى 📂</button>
                         </div>
                     </div>`;
                 });
@@ -560,16 +578,10 @@
                                 <button class="move-btn" onclick="moveNode('sub', '${cat.id}', '${sub.id}', null, 1)">⬇️</button>
                             </div>
                             <img src="${getImgSrc(sub.thumb || sub.image)}">
-                            <div class="card-info">
-                                <h3>${sub.name}</h3>
-                                <span style="font-size:0.75rem; color:var(--primary); font-weight:800;">(فرعي)</span>
-                            </div>
+                            <div class="card-info"><h3>${sub.name} <span style="font-size:0.8em; color:var(--primary)">(قسم فرعي)</span></h3></div>
                             <div class="actions-group">
-                                <div class="actions-row">
-                                    <button class="action-btn edit" onclick="openCategorySheet('${cat.id}', '${sub.id}')">✏️</button>
-                                    <button class="action-btn delete" onclick="deleteCategory('${cat.id}', '${sub.id}')">🗑️</button>
-                                </div>
-                                <button class="action-btn dive" onclick="goAdminItemsLevel('${cat.id}', '${sub.id}')">منتجات 🍔</button>
+                                <div class="actions-row"><button class="action-btn edit" onclick="openCategorySheet('${cat.id}', '${sub.id}')">✏️</button><button class="action-btn delete" onclick="deleteCategory('${cat.id}', '${sub.id}')">🗑️</button></div>
+                                <button class="action-btn dive" onclick="goAdminItemsLevel('${cat.id}', '${sub.id}')">إدارة المنتجات 🍔</button>
                             </div>
                         </div>`;
                     });
@@ -584,16 +596,8 @@
                                 <button class="move-btn" onclick="moveNode('item', '${cat.id}', null, '${item.id}', 1)">⬇️</button>
                             </div>
                             <img src="${getImgSrc(item.thumb || item.image)}">
-                            <div class="card-info">
-                                <h3>${item.name}</h3>
-                                <p>${item.price} ${cur}</p>
-                            </div>
-                            <div class="actions-group">
-                                <div class="actions-row">
-                                    <button class="action-btn edit" onclick="openProductSheet('${cat.id}', null, '${item.id}')">✏️</button>
-                                    <button class="action-btn delete" onclick="deleteItem('${cat.id}', null, '${item.id}')">🗑️</button>
-                                </div>
-                            </div>
+                            <div class="card-info"><h3>${item.name}</h3><p>${item.price} ${cur}</p></div>
+                            <div class="actions-group"><div class="actions-row"><button class="action-btn edit" onclick="openProductSheet('${cat.id}', null, '${item.id}')">✏️</button><button class="action-btn delete" onclick="deleteItem('${cat.id}', null, '${item.id}')">🗑️</button></div></div>
                         </div>`;
                     });
                 }
@@ -616,16 +620,8 @@
                                 <button class="move-btn" onclick="moveNode('item', '${cat.id}', '${sub.id}', '${item.id}', 1)">⬇️</button>
                             </div>
                             <img src="${getImgSrc(item.thumb || item.image)}">
-                            <div class="card-info">
-                                <h3>${item.name}</h3>
-                                <p>${item.price} ${cur}</p>
-                            </div>
-                            <div class="actions-group">
-                                <div class="actions-row">
-                                    <button class="action-btn edit" onclick="openProductSheet('${cat.id}', '${sub.id}', '${item.id}')">✏️</button>
-                                    <button class="action-btn delete" onclick="deleteItem('${cat.id}', '${sub.id}', '${item.id}')">🗑️</button>
-                                </div>
-                            </div>
+                            <div class="card-info"><h3>${item.name}</h3><p>${item.price} ${cur}</p></div>
+                            <div class="actions-group"><div class="actions-row"><button class="action-btn edit" onclick="openProductSheet('${cat.id}', '${sub.id}', '${item.id}')">✏️</button><button class="action-btn delete" onclick="deleteItem('${cat.id}', '${sub.id}', '${item.id}')">🗑️</button></div></div>
                         </div>`;
                     });
                 }
@@ -640,9 +636,9 @@
             adminLevel = 'items'; currentAdminCatId = catId; currentAdminSubId = subId; renderStructureLevel(); 
             if(!isHistoryPop) safePushState({ view: 'structure', level: 'items', catId: catId, subId: subId, title: 'الأقسام 🗂️' });
         }
-        
-        // تعديل زر الرجوع ليعتمد على النظام
-        function goBackAdminLevel() { history.back(); }
+        function goBackAdminLevel() {
+            history.back(); // يعود للخطوة السابقة عبر نظام الهاتف مباشرة
+        }
 
         // ==========================================
         // حدث زر الرجوع من الهاتف (Hardware Back Button)
@@ -650,10 +646,10 @@
         window.addEventListener('popstate', (e) => {
             const state = e.state;
             
-            // 1. إذا كانت هناك نافذة منبثقة، أغلقها ولا تعد للخلف
+            // إغلاق النوافذ المنبثقة بدلاً من الخروج
             if (document.getElementById('sheetOverlay').classList.contains('active')) {
                 closeSheets();
-                safePushState(state); // إعادة الحالة
+                safePushState(state); // إعادة دفع نفس الحالة كي لا تتغير الشاشة
                 return;
             }
             if (document.getElementById('cropModal').style.display === 'flex') {
@@ -663,11 +659,10 @@
             }
             if (document.getElementById('view-invoice').classList.contains('active')) {
                 closeInvoicePreview(true);
-                safePushState(state);
                 return;
             }
 
-            // 2. التنقل الطبيعي
+            // التنقل العادي
             if (state) {
                 adminLevel = state.level || 'main';
                 currentAdminCatId = state.catId || null;
@@ -679,26 +674,34 @@
             }
         });
 
-        let editCatType = 'main'; let editCatParentId = null;
+        let editCatType = 'main'; 
+        let editCatParentId = null;
 
         function openCategorySheet(parentId = null, subId = null) {
             tempUploads.category = null;
             document.getElementById('cName').value = ''; document.getElementById('cPreview').style.display = 'none';
 
             if (!parentId) { 
-                editCatType = 'main'; editId = null; editCatParentId = null; document.getElementById('cSheetTitle').innerText = 'إضافة قسم رئيسي';
+                editCatType = 'main'; editId = null; editCatParentId = null;
+                document.getElementById('cSheetTitle').innerText = 'إضافة قسم رئيسي';
             } else if (parentId && !subId && adminLevel === 'main') { 
-                editCatType = 'main'; editId = parentId; editCatParentId = null; document.getElementById('cSheetTitle').innerText = 'تعديل قسم رئيسي';
-                const cat = menuData.categories.find(c => c.id === parentId); document.getElementById('cName').value = cat.name;
+                editCatType = 'main'; editId = parentId; editCatParentId = null;
+                document.getElementById('cSheetTitle').innerText = 'تعديل قسم رئيسي';
+                const cat = menuData.categories.find(c => c.id === parentId);
+                document.getElementById('cName').value = cat.name;
                 if(cat.image) { document.getElementById('cPreview').src = getImgSrc(cat.thumb || cat.image); document.getElementById('cPreview').style.display = 'inline-block'; }
             } else if (parentId && !subId && adminLevel === 'sub') { 
-                editCatType = 'sub'; editId = null; editCatParentId = parentId; document.getElementById('cSheetTitle').innerText = 'إضافة قسم فرعي';
+                editCatType = 'sub'; editId = null; editCatParentId = parentId;
+                document.getElementById('cSheetTitle').innerText = 'إضافة قسم فرعي';
             } else if (parentId && subId) { 
-                editCatType = 'sub'; editId = subId; editCatParentId = parentId; document.getElementById('cSheetTitle').innerText = 'تعديل قسم فرعي';
-                const cat = menuData.categories.find(c => c.id === parentId); const sub = cat.subcategories.find(s => s.id === subId);
+                editCatType = 'sub'; editId = subId; editCatParentId = parentId;
+                document.getElementById('cSheetTitle').innerText = 'تعديل قسم فرعي';
+                const cat = menuData.categories.find(c => c.id === parentId);
+                const sub = cat.subcategories.find(s => s.id === subId);
                 document.getElementById('cName').value = sub.name;
                 if(sub.image) { document.getElementById('cPreview').src = getImgSrc(sub.thumb || sub.image); document.getElementById('cPreview').style.display = 'inline-block'; }
             }
+            
             document.getElementById('sheetOverlay').classList.add('active'); document.getElementById('categorySheet').classList.add('active');
         }
 
@@ -725,7 +728,8 @@
             markUnsaved(); renderStructureLevel(); closeSheets();
         }
 
-        let editProdCatId = null; let editProdSubId = null;
+        let editProdCatId = null;
+        let editProdSubId = null;
 
         function openProductSheet(catId, subId, itemId = null) {
             editId = itemId; editProdCatId = catId; editProdSubId = subId; tempUploads.product = null;
@@ -769,10 +773,13 @@
 
         function deleteCategory(catId, subId = null) { 
             if(!confirm("سيتم الحذف نهائياً")) return; 
-            if(subId) { let cat = menuData.categories.find(c => c.id === catId); cat.subcategories = cat.subcategories.filter(s => s.id !== subId);
+            if(subId) {
+                let cat = menuData.categories.find(c => c.id === catId);
+                cat.subcategories = cat.subcategories.filter(s => s.id !== subId);
             } else { menuData.categories = menuData.categories.filter(c => c.id !== catId); }
             markUnsaved(); renderStructureLevel(); 
         }
+        
         function deleteItem(catId, subId, itemId) { 
             if(!confirm("تأكيد الحذف؟")) return; 
             const cat = menuData.categories.find(c => c.id === catId); 
@@ -781,14 +788,23 @@
             markUnsaved(); renderStructureLevel(); 
         }
 
+        // ==========================================
+        // الأكورديون للتعديل السريع
+        // ==========================================
         function renderQuickEdit() {
-            const container = document.getElementById('quickEditContainer'); let html = ''; let defaultCurrency = appSettings.currency || 'ل.س';
+            const container = document.getElementById('quickEditContainer');
+            let html = '';
+            let defaultCurrency = appSettings.currency || 'ل.س';
+
             if (!menuData.categories || menuData.categories.length === 0) {
-                container.innerHTML = '<div style="text-align:center; padding: 30px; font-weight:800; color:var(--text-muted);">لا يوجد منتجات قابلة للتعديل حتى الآن.</div>'; return;
+                container.innerHTML = '<div style="text-align:center; padding: 30px; font-weight:800; color:var(--text-muted);">لا يوجد منتجات قابلة للتعديل حتى الآن.</div>';
+                return;
             }
 
             menuData.categories.forEach(cat => {
-                let hasItems = false; let catContent = '';
+                let hasItems = false;
+                let catContent = '';
+                
                 if (cat.items && cat.items.length > 0) {
                     hasItems = true;
                     cat.items.forEach(item => {
@@ -803,10 +819,12 @@
                         </div>`;
                     });
                 }
+                
                 if (cat.subcategories) {
                     cat.subcategories.forEach(sub => {
                         if (sub.items && sub.items.length > 0) {
-                            hasItems = true; catContent += `<div class="qe-sub-header">📂 ${sub.name}</div>`;
+                            hasItems = true;
+                            catContent += `<div class="qe-sub-header">📂 ${sub.name}</div>`;
                             sub.items.forEach(item => {
                                 let cur = item.currency || defaultCurrency;
                                 catContent += `
@@ -821,33 +839,50 @@
                         }
                     });
                 }
+                
                 if(hasItems) {
                     html += `
                     <div class="accordion-header" id="acc-header-${cat.id}" onclick="toggleAccordion('${cat.id}')">
-                        <span>📁 ${cat.name}</span><span class="accordion-arrow">▼</span>
+                        <span>📁 ${cat.name}</span>
+                        <span class="accordion-arrow">▼</span>
                     </div>
-                    <div class="accordion-content" id="acc-content-${cat.id}">${catContent}</div>`;
+                    <div class="accordion-content" id="acc-content-${cat.id}">
+                        ${catContent}
+                    </div>`;
                 }
             });
+
             if(html === '') html = '<div style="text-align:center; padding: 30px; font-weight:800; color:var(--text-muted);">لا يوجد منتجات قابلة للتعديل.</div>';
             container.innerHTML = html;
         }
 
         function toggleAccordion(id) {
-            document.getElementById('acc-header-' + id).classList.toggle('active'); 
-            document.getElementById('acc-content-' + id).classList.toggle('active');
+            const header = document.getElementById('acc-header-' + id);
+            const content = document.getElementById('acc-content-' + id);
+            
+            header.classList.toggle('active');
+            content.classList.toggle('active');
         }
 
         function quickUpdatePrice(catId, subId, itemId, newPrice, inputEl) {
             if(!newPrice) return; 
+            
             const cat = menuData.categories.find(c => c.id === catId);
-            let targetArray = subId ? cat.subcategories.find(s => s.id === subId).items : cat.items;
+            let targetArray = cat.items;
+            if (subId) targetArray = cat.subcategories.find(s => s.id === subId).items;
+            
             const item = targetArray.find(i => i.id === itemId);
-            if(item.price != newPrice) { item.price = newPrice; inputEl.parentElement.classList.add('changed'); markUnsaved(); }
+            
+            if(item.price != newPrice) {
+                item.price = newPrice;
+                inputEl.parentElement.classList.add('changed');
+                markUnsaved(); 
+            }
         }
 
         function buildExportTree() {
-            const container = document.getElementById('exportTreeContainer'); let html = '';
+            const container = document.getElementById('exportTreeContainer');
+            let html = '';
             menuData.categories.forEach(cat => {
                 html += `<div class="tree-item"><input type="checkbox" class="exp-cat" onchange="toggleGroup(this, 'c_${cat.id}')"> <span style="font-size:1.1rem; color:var(--primary-dark)">📁 ${cat.name}</span></div><div id="c_${cat.id}">`;
                 if(cat.subcategories) {
@@ -855,7 +890,8 @@
                         html += `<div class="tree-item" style="margin-right:25px;"><input type="checkbox" class="exp-sub" onchange="toggleGroup(this, 's_${sub.id}')"> <span>📂 ${sub.name}</span></div><div id="s_${sub.id}">`;
                         if(sub.items) {
                             sub.items.forEach(item => {
-                                let cur = item.currency || appSettings.currency || ''; let safeDesc = (item.description || '').replace(/"/g, '&quot;');
+                                let cur = item.currency || appSettings.currency || '';
+                                let safeDesc = (item.description || '').replace(/"/g, '&quot;');
                                 html += `<div class="tree-item" style="margin-right:50px;"><input type="checkbox" class="exp-item" data-name="${item.name}" data-desc="${safeDesc}" data-price="${item.price}" data-cur="${cur}" data-section="${cat.name} - ${sub.name}"> <span>📄 ${item.name} (${item.price} ${cur})</span></div>`;
                             });
                         }
@@ -864,7 +900,8 @@
                 }
                 if(cat.items) {
                     cat.items.forEach(item => {
-                        let cur = item.currency || appSettings.currency || ''; let safeDesc = (item.description || '').replace(/"/g, '&quot;');
+                        let cur = item.currency || appSettings.currency || '';
+                        let safeDesc = (item.description || '').replace(/"/g, '&quot;');
                         html += `<div class="tree-item" style="margin-right:25px;"><input type="checkbox" class="exp-item" data-name="${item.name}" data-desc="${safeDesc}" data-price="${item.price}" data-cur="${cur}" data-section="${cat.name}"> <span>📄 ${item.name} (${item.price} ${cur})</span></div>`;
                     });
                 }
@@ -878,61 +915,156 @@
 
         function generateInvoicePreview() {
             const checkedItems = document.querySelectorAll('.exp-item:checked');
-            if(checkedItems.length === 0) return alert('يرجى تحديد منتج واحد على الأقل.');
-            let tableRows = ''; let currentSection = '';
+            if(checkedItems.length === 0) return alert('يرجى تحديد منتج واحد على الأقل لاستخراجه في الفاتورة.');
+
+            let tableRows = '';
+            let currentSection = '';
+
             checkedItems.forEach(cb => {
                 let section = cb.dataset.section;
-                if(section !== currentSection) { tableRows += `<tr class="section-row"><td colspan="3">${section}</td></tr>`; currentSection = section; }
-                tableRows += `<tr><td style="font-weight: 800; color: var(--text-dark);">${cb.dataset.name}</td><td style="color: #6b7280; font-size: 0.95rem;">${cb.dataset.desc || ''}</td><td class="price-cell">${cb.dataset.price} ${cb.dataset.cur}</td></tr>`;
+                if(section !== currentSection) {
+                    tableRows += `<tr class="section-row"><td colspan="3">${section}</td></tr>`;
+                    currentSection = section;
+                }
+                tableRows += `<tr>
+                    <td style="font-weight: 800; color: var(--text-dark);">${cb.dataset.name}</td>
+                    <td style="color: #6b7280; font-size: 0.95rem;">${cb.dataset.desc || ''}</td>
+                    <td class="price-cell">${cb.dataset.price} ${cb.dataset.cur}</td>
+                </tr>`;
             });
-            document.getElementById('invStoreName').innerText = appSettings.store_name || 'Garden Food'; 
-            document.getElementById('invDate').innerText = new Date().toLocaleDateString('ar-EG'); 
+
+            document.getElementById('invStoreName').innerText = appSettings.store_name || 'Garden Food';
+            document.getElementById('invDate').innerText = new Date().toLocaleDateString('ar-EG');
             document.getElementById('invTableBody').innerHTML = tableRows;
-            
-            document.querySelector('.app-header').style.display = 'none'; 
+
+            document.querySelector('.app-header').style.display = 'none';
             document.querySelector('.bottom-nav').style.display = 'none';
-            switchTab('invoice', 'استعراض الفاتورة', null, false);
+            switchTab('invoice', '', null, false);
         }
 
-        function closeInvoicePreview(isHistoryPop = false) { switchTab('export', 'الفواتير 🖨️', document.querySelectorAll('.nav-item')[2], isHistoryPop); }
-        function printInvoice() { window.print(); }
+        function closeInvoicePreview(isHistoryPop = false) {
+            switchTab('export', 'الفواتير 🖨️', document.querySelectorAll('.nav-item')[2], isHistoryPop);
+        }
+
+        function printInvoice() {
+            window.print(); 
+        }
+
+        /* دوال الدمج الذكي (3-Way Merge) لمزامنة التعديلات بين شخصين */
+        function mergeSettings(base, remote, local) {
+            let merged = { ...remote };
+            for (let key in local) {
+                if (!base || local[key] !== base[key]) merged[key] = local[key];
+            }
+            return merged;
+        }
+
+        function mergeArraysById(baseArr = [], remoteArr = [], localArr = []) {
+            let merged = [];
+            const allIds = [...new Set([...remoteArr.map(i => i.id), ...localArr.map(i => i.id)])];
+            
+            allIds.forEach(id => {
+                const b = baseArr.find(i => i.id === id);
+                const r = remoteArr.find(i => i.id === id);
+                const l = localArr.find(i => i.id === id);
+                
+                if (l && !r && !b) { merged.push(l); } 
+                else if (r && !l && !b) { merged.push(r); } 
+                else if (l && r) { 
+                    let mergedItem = { ...r };
+                    for (let key in l) {
+                        if (key !== 'subcategories' && key !== 'items' && key !== 'tempBase64Orig' && key !== 'tempBase64Thumb' && key !== 'tempExt') {
+                            if (!b || JSON.stringify(l[key]) !== JSON.stringify(b[key])) mergedItem[key] = l[key];
+                        }
+                        if (key === 'tempBase64Orig') { 
+                            mergedItem.tempBase64Orig = l.tempBase64Orig; mergedItem.tempBase64Thumb = l.tempBase64Thumb;
+                            mergedItem.tempExt = l.tempExt; mergedItem.image = l.image; mergedItem.thumb = l.thumb;
+                        }
+                    }
+                    if (l.subcategories || r.subcategories) mergedItem.subcategories = mergeArraysById(b ? b.subcategories : [], r.subcategories || [], l.subcategories || []);
+                    if (l.items || r.items) mergedItem.items = mergeArraysById(b ? b.items : [], r.items || [], l.items || []);
+                    merged.push(mergedItem);
+                }
+                else if (!r && l && b) {
+                    let modifiedLocally = false;
+                    for(let key in l) {
+                        if(key !== 'subcategories' && key !== 'items' && JSON.stringify(l[key]) !== JSON.stringify(b[key])) {
+                            modifiedLocally = true; break;
+                        }
+                    }
+                    if (modifiedLocally) merged.push(l); 
+                }
+            });
+            return merged;
+        }
 
         async function saveAllChanges() {
-            document.getElementById('loader').style.display = 'flex';
+            const loader = document.getElementById('loader');
+            const loaderText = document.getElementById('loaderText');
+            loader.style.display = 'flex';
+            loaderText.innerText = 'جاري التزامن مع تعديلات شريكك...';
             try {
+                // 1. التزامن الذكي: جلب البيانات الجديدة ودمجها مع التعديلات المحلية
+                const liveSettingsCheck = await ghApi('settings.json');
+                if (liveSettingsCheck.sha !== initialSettingsSha) {
+                    const remoteSettings = JSON.parse(atou(liveSettingsCheck.content));
+                    appSettings = mergeSettings(baseSettingsData, remoteSettings, appSettings);
+                }
+
+                const liveMenuCheck = await ghApi('menu.json');
+                if (liveMenuCheck.sha !== initialMenuSha) {
+                    const remoteMenu = JSON.parse(atou(liveMenuCheck.content));
+                    menuData.categories = mergeArraysById(baseMenuData.categories || [], remoteMenu.categories || [], menuData.categories || []);
+                }
+
+                // 2. رفع الصور الجديدة
+                loaderText.innerText = 'جاري رفع الصور...';
                 if (tempUploads.settings) {
                     const path = `images/logo_${Date.now()}.${tempUploads.settings.ext}`;
-                    await ghApi(path, 'PUT', { message: 'Update Logo', content: tempUploads.settings.base64 }); appSettings.logo = `./${path}`; tempUploads.settings = null;
+                    await ghApi(path, 'PUT', { message: 'Update Logo', content: tempUploads.settings.base64 });
+                    appSettings.logo = `./${path}`; tempUploads.settings = null;
                 }
                 if (tempUploads.audio) {
                     const path = `images/sound_${Date.now()}.${tempUploads.audio.ext}`;
-                    await ghApi(path, 'PUT', { message: 'Update Click Sound', content: tempUploads.audio.base64 }); appSettings.click_sound = `./${path}`; tempUploads.audio = null;
+                    await ghApi(path, 'PUT', { message: 'Update Click Sound', content: tempUploads.audio.base64 });
+                    appSettings.click_sound = `./${path}`; tempUploads.audio = null;
                 }
+
                 async function uploadItemsImages(itemsArray) {
                     if(!itemsArray) return;
                     for (let item of itemsArray) {
                         if (item.tempBase64Orig) {
                             const rnd = Math.floor(Math.random()*1000);
-                            const pOrig = `images/orig_${Date.now()}_${rnd}.${item.tempExt}`; const pThumb = `images/thumb_${Date.now()}_${rnd}.${item.tempExt}`;
-                            await ghApi(pOrig, 'PUT', { message: 'Upload Orig', content: item.tempBase64Orig }); await ghApi(pThumb, 'PUT', { message: 'Upload Thumb', content: item.tempBase64Thumb });
-                            item.image = `./${pOrig}`; item.thumb = `./${pThumb}`; delete item.tempBase64Orig; delete item.tempBase64Thumb; delete item.tempExt;
+                            const pOrig = `images/orig_${Date.now()}_${rnd}.${item.tempExt}`;
+                            const pThumb = `images/thumb_${Date.now()}_${rnd}.${item.tempExt}`;
+                            await ghApi(pOrig, 'PUT', { message: 'Upload Orig', content: item.tempBase64Orig });
+                            await ghApi(pThumb, 'PUT', { message: 'Upload Thumb', content: item.tempBase64Thumb });
+                            item.image = `./${pOrig}`; item.thumb = `./${pThumb}`;
+                            delete item.tempBase64Orig; delete item.tempBase64Thumb; delete item.tempExt;
                         }
                     }
                 }
+
                 for (let cat of menuData.categories) {
                     if (cat.tempBase64Orig) {
                         const rnd = Math.floor(Math.random()*1000);
-                        const pOrig = `images/orig_${Date.now()}_${rnd}.${cat.tempExt}`; const pThumb = `images/thumb_${Date.now()}_${rnd}.${cat.tempExt}`;
-                        await ghApi(pOrig, 'PUT', { message: 'Upload Orig', content: cat.tempBase64Orig }); await ghApi(pThumb, 'PUT', { message: 'Upload Thumb', content: cat.tempBase64Thumb });
-                        cat.image = `./${pOrig}`; cat.thumb = `./${pThumb}`; delete cat.tempBase64Orig; delete cat.tempBase64Thumb; delete cat.tempExt;
+                        const pOrig = `images/orig_${Date.now()}_${rnd}.${cat.tempExt}`;
+                        const pThumb = `images/thumb_${Date.now()}_${rnd}.${cat.tempExt}`;
+                        await ghApi(pOrig, 'PUT', { message: 'Upload Orig', content: cat.tempBase64Orig });
+                        await ghApi(pThumb, 'PUT', { message: 'Upload Thumb', content: cat.tempBase64Thumb });
+                        cat.image = `./${pOrig}`; cat.thumb = `./${pThumb}`;
+                        delete cat.tempBase64Orig; delete cat.tempBase64Thumb; delete cat.tempExt;
                     }
                     if(cat.subcategories) {
                         for(let sub of cat.subcategories) {
                             if (sub.tempBase64Orig) {
                                 const rnd = Math.floor(Math.random()*1000);
-                                const pOrig = `images/orig_${Date.now()}_${rnd}.${sub.tempExt}`; const pThumb = `images/thumb_${Date.now()}_${rnd}.${sub.tempExt}`;
-                                await ghApi(pOrig, 'PUT', { message: 'Upload Orig', content: sub.tempBase64Orig }); await ghApi(pThumb, 'PUT', { message: 'Upload Thumb', content: sub.tempBase64Thumb });
-                                sub.image = `./${pOrig}`; sub.thumb = `./${pThumb}`; delete sub.tempBase64Orig; delete sub.tempBase64Thumb; delete sub.tempExt;
+                                const pOrig = `images/orig_${Date.now()}_${rnd}.${sub.tempExt}`;
+                                const pThumb = `images/thumb_${Date.now()}_${rnd}.${sub.tempExt}`;
+                                await ghApi(pOrig, 'PUT', { message: 'Upload Orig', content: sub.tempBase64Orig });
+                                await ghApi(pThumb, 'PUT', { message: 'Upload Thumb', content: sub.tempBase64Thumb });
+                                sub.image = `./${pOrig}`; sub.thumb = `./${pThumb}`;
+                                delete sub.tempBase64Orig; delete sub.tempBase64Thumb; delete sub.tempExt;
                             }
                             await uploadItemsImages(sub.items);
                         }
@@ -940,21 +1072,29 @@
                     await uploadItemsImages(cat.items);
                 }
 
-                const liveSettings = await ghApi('settings.json');
-                await ghApi('settings.json', 'PUT', { message: "Update Settings", content: utoa(JSON.stringify(appSettings, null, 2)), sha: liveSettings.sha });
+                // 3. الحفظ النهائي في المستودع
+                loaderText.innerText = 'جاري حفظ البيانات النهائية...';
+                
+                const finalSettings = await ghApi('settings.json');
+                await ghApi('settings.json', 'PUT', { message: "Update Settings", content: utoa(JSON.stringify(appSettings, null, 2)), sha: finalSettings.sha });
 
-                const liveMenu = await ghApi('menu.json');
-                await ghApi('menu.json', 'PUT', { message: "Bulk Update", content: utoa(JSON.stringify(menuData, null, 2)), sha: liveMenu.sha });
+                const finalMenu = await ghApi('menu.json');
+                await ghApi('menu.json', 'PUT', { message: "Bulk Update", content: utoa(JSON.stringify(menuData, null, 2)), sha: finalMenu.sha });
                 
                 document.getElementById('saveAllBanner').classList.remove('visible');
+                
+                // إزالة الألوان الصفراء
                 document.querySelectorAll('.qe-input-wrapper.changed').forEach(el => el.classList.remove('changed'));
-                alert("تم الحفظ وتحديث المنيو بنجاح! 🎉");
+
+                alert("تم التحديث بنجاح! تم دمج التعديلات المتزامنة (إن وجدت) بشكل آلي وتلقائي. 🎉");
+                
+                // إعادة تحميل الصفحة لتحديث أرقام SHA الأساسية والبيانات المدمجة
+                location.reload(); 
             } catch (e) { alert("فشل الرفع\n" + e.message); }
-            document.getElementById('loader').style.display = 'none';
+            loader.style.display = 'none';
         }
 
         // ================== PWA ==================
-        if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js'); }); }
         let deferredPrompt; const adminPwaBtn = document.getElementById('adminPwaBtn');
         window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; if(adminPwaBtn) adminPwaBtn.style.display = 'flex'; });
         if(adminPwaBtn) { adminPwaBtn.addEventListener('click', async () => { if (deferredPrompt) { deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; adminPwaBtn.style.display = 'none'; } }); }
