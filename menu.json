@@ -1203,6 +1203,27 @@
           "description": "التعبئة 1",
           "price": "0",
           "currency": "$"
+        },
+        {
+          "id": "i_1784706406726",
+          "name": "مقشة خشنة ",
+          "description": "تعبئة 1",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784706436245",
+          "name": "مقشة ناعمة ",
+          "description": "التعبئة 1",
+          "price": "0",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784706467994",
+          "name": "كريك +مقشة",
+          "description": "تعبئة 1",
+          "price": "0",
+          "currency": "$"
         }
       ],
       "name": "مواد تنضيف",
