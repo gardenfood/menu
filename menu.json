@@ -1233,7 +1233,22 @@
     {
       "id": "c_1784544591278",
       "subcategories": [],
-      "items": [],
+      "items": [
+        {
+          "id": "i_1784727659180",
+          "name": "محارم طاولة سادة ",
+          "description": "طرد ",
+          "price": "5",
+          "currency": "$"
+        },
+        {
+          "id": "i_1784727709996",
+          "name": "محارم طاولة مطبوع ",
+          "description": "طرد",
+          "price": "5.4",
+          "currency": "$"
+        }
+      ],
       "name": "محارم",
       "image": "./images/orig_1784544592477_459.jpg",
       "thumb": "./images/thumb_1784544592477_459.jpg"
