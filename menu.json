@@ -6,57 +6,15 @@
       "image": "./images/c_orig_1784386920433_991.jpg",
       "items": [
         {
-          "id": "i1",
-          "name": "برجر Garden",
-          "description": "لحم طازج مع صوص الحديقة",
-          "price": "45",
-          "image": "./images/orig_1784577153893_55.jpg",
-          "currency": "ل.س",
-          "thumb": "./images/thumb_1784577153893_55.jpg"
-        },
-        {
-          "id": "i_1784666766930",
-          "name": "احمد مجد",
-          "description": "احمد ",
-          "price": "2228",
-          "currency": "$",
-          "image": "./images/orig_1784666843289_100.jpg",
-          "thumb": "./images/thumb_1784666843289_100.jpg"
-        },
-        {
-          "id": "i_1784668209417",
-          "name": "ت",
-          "description": "ت",
-          "price": "9",
-          "currency": "$",
-          "image": "./images/orig_1784668210257_390.jpg",
-          "thumb": "./images/thumb_1784668210257_390.jpg"
-        },
-        {
-          "id": "i_1784668962844",
-          "name": "مياو",
-          "description": "عثاثا\n",
-          "price": "0",
-          "currency": "$"
-        },
-        {
-          "id": "i_1784669014684",
-          "name": "عيايو",
-          "description": "",
-          "price": "64",
+          "id": "i_1785267836420",
+          "name": "ببروني التغذية ",
+          "description": "المنشأ لبنان\nالتعبئة ٤٥٠ غرام",
+          "price": "7",
           "currency": "$"
         }
       ],
       "thumb": "./images/c_thumb_1784386920433_991.jpg",
-      "subcategories": [
-        {
-          "id": "sub_1784396710293",
-          "items": [],
-          "name": "احمد محمود بيك",
-          "image": "./images/orig_1784396732197_835.jpg",
-          "thumb": "./images/thumb_1784396732197_835.jpg"
-        }
-      ]
+      "subcategories": []
     },
     {
       "id": "c_1784236630271",
