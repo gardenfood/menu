@@ -984,6 +984,13 @@
           "description": "زيت ترافل ايطالي ",
           "price": "17",
           "currency": "$"
+        },
+        {
+          "id": "i_1785272576032",
+          "name": "صوص تباسكو حد ",
+          "description": "المنشأ اميركي\nالتعبئة 60 ml",
+          "price": "2",
+          "currency": "$"
         }
       ],
       "name": "مواد جافة (dry store)",
