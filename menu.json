@@ -11,6 +11,13 @@
           "description": "المنشأ لبنان\nالتعبئة ٤٥٠ غرام",
           "price": "7",
           "currency": "$"
+        },
+        {
+          "id": "i_1785267976304",
+          "name": "حبش مدخن اسياني Bocatel",
+          "description": "المنشأ اسباني \nالتعبئة 3 كغ",
+          "price": "35",
+          "currency": "$"
         }
       ],
       "thumb": "./images/c_thumb_1784386920433_991.jpg",
