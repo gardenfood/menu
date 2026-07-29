@@ -17,7 +17,9 @@
           "name": "حبش مدخن اسياني Bocatel",
           "description": "المنشأ اسباني \nالتعبئة 3 كغ",
           "price": "35",
-          "currency": "$"
+          "currency": "$",
+          "image": "./images/orig_1785318349417_539.jpg",
+          "thumb": "./images/thumb_1785318349417_539.jpg"
         }
       ],
       "thumb": "./images/c_thumb_1784386920433_991.jpg",
