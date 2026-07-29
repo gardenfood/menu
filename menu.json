@@ -453,7 +453,9 @@
               "name": "باربكيو دوفراي",
               "description": "باربكيو لباني وزن 4.5 كغ",
               "price": "9.5",
-              "currency": "$"
+              "currency": "$",
+              "image": "./images/orig_1785327966201_382.jpg",
+              "thumb": "./images/thumb_1785327966201_382.jpg"
             },
             {
               "id": "i_1784568685280",
