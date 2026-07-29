@@ -515,7 +515,9 @@
               "name": "خردل فريسكو ",
               "description": "خردل اميركي وزن 3.8 لتر ",
               "price": "9",
-              "currency": "$"
+              "currency": "$",
+              "image": "./images/orig_1785330853064_391.jpg",
+              "thumb": "./images/thumb_1785330853064_391.jpg"
             }
           ],
           "name": "قسم الخردل ",
