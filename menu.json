@@ -506,7 +506,9 @@
               "name": "خردل غولدن بليت",
               "description": "خردل وطني بجودة اميركية وزن 3.8 لتر ",
               "price": "7",
-              "currency": "$"
+              "currency": "$",
+              "image": "./images/orig_1785330792981_874.jpg",
+              "thumb": "./images/thumb_1785330792981_874.jpg"
             },
             {
               "id": "i_1784563884461",
