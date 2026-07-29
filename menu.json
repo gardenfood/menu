@@ -497,7 +497,9 @@
               "name": "خردل وايت بل ",
               "description": "خردل اميركي وزن 3.8 لتر ",
               "price": "10.5",
-              "currency": "$"
+              "currency": "$",
+              "image": "./images/orig_1785330703166_905.jpg",
+              "thumb": "./images/thumb_1785330703166_905.jpg"
             },
             {
               "id": "i_1784563723559",
