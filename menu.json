@@ -899,7 +899,9 @@
               "name": "كريمة طبخ برافو 1 لتر ",
               "description": "برافو 1لتر *12 قطعه ",
               "price": "44",
-              "currency": "$"
+              "currency": "$",
+              "image": "./images/orig_1785328236648_939.jpg",
+              "thumb": "./images/thumb_1785328236648_939.jpg"
             },
             {
               "id": "i_1784664340527",
