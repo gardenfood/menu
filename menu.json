@@ -634,7 +634,10 @@
               "name": "صوص بوفالو أميرغو",
               "description": "صوص بوفالو لبناني وزن 3.8 لتر ",
               "price": "12.5",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785618739336_807.jpg",
+              "thumb": "./images/thumb_1785618739336_807.jpg"
             },
             {
               "id": "i_1784568891583",
