@@ -732,7 +732,10 @@
               "name": "وارشستر صوص ",
               "description": "وراشستر صوص 290 غرام ",
               "price": "3.75",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785620946360_784.jpg",
+              "thumb": "./images/thumb_1785620946360_784.jpg"
             }
           ],
           "name": "قسم صوص الوارشستر",
