@@ -785,7 +785,10 @@
               "name": "سيراتشر صوص زجاجه ",
               "description": "المنشأ هند\nالوزن 255 غرام",
               "price": "4",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785620830510_652.jpg",
+              "thumb": "./images/thumb_1785620830510_652.jpg"
             }
           ],
           "name": "صوص سيراتشر",
