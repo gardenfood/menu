@@ -747,7 +747,10 @@
               "name": "خل بلسمنغ زجاجة ",
               "description": "الوزن 500 غرام",
               "price": "4",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785620207180_399.jpg",
+              "thumb": "./images/thumb_1785620207180_399.jpg"
             },
             {
               "id": "i_1785168656483",
