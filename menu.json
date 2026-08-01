@@ -754,7 +754,10 @@
               "name": "خل بلسمنغ غالون",
               "description": "المنشأ ايطالي \nالوزن 5 كغ ",
               "price": "21",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785620162938_61.jpg",
+              "thumb": "./images/thumb_1785620162938_61.jpg"
             }
           ],
           "name": "قسم خل البسلمنغ ",
