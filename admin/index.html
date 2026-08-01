@@ -291,6 +291,7 @@
         
         <div style="display: flex; gap: 10px;">
             <div class="input-group" style="flex: 2;"><label>السعر</label><input type="number" id="pPrice"></div>
+            <div class="input-group" style="flex: 1;"><label>الوحدة</label><input type="text" id="pUnit" placeholder="كغ، حبة.."></div>
             <div class="input-group" style="flex: 1;">
                 <label>العملة</label>
                 <select id="pCurrency">
@@ -593,6 +594,7 @@
                 if(cat.items) {
                     cat.items.forEach((item, idx) => {
                         let cur = item.currency || appSettings.currency || '';
+                        let unitText = item.unit ? ` / ${item.unit}` : '';
                         list.innerHTML += `
                         <div class="card">
                             <div class="move-arrows">
@@ -600,7 +602,7 @@
                                 <button class="move-btn" onclick="moveNode('item', '${cat.id}', null, '${item.id}', 1)">⬇️</button>
                             </div>
                             <img src="${getImgSrc(item.thumb || item.image)}">
-                            <div class="card-info"><h3>${item.name}</h3><p>${item.price} ${cur}</p></div>
+                            <div class="card-info"><h3>${item.name}</h3><p>${item.price} ${cur}${unitText}</p></div>
                             <div class="actions-group"><div class="actions-row"><button class="action-btn edit" onclick="openProductSheet('${cat.id}', null, '${item.id}')">✏️</button><button class="action-btn delete" onclick="deleteItem('${cat.id}', null, '${item.id}')">🗑️</button></div></div>
                         </div>`;
                     });
@@ -617,6 +619,7 @@
                 if(sub.items) {
                     sub.items.forEach((item, idx) => {
                         let cur = item.currency || appSettings.currency || '';
+                        let unitText = item.unit ? ` / ${item.unit}` : '';
                         list.innerHTML += `
                         <div class="card">
                             <div class="move-arrows">
@@ -624,7 +627,7 @@
                                 <button class="move-btn" onclick="moveNode('item', '${cat.id}', '${sub.id}', '${item.id}', 1)">⬇️</button>
                             </div>
                             <img src="${getImgSrc(item.thumb || item.image)}">
-                            <div class="card-info"><h3>${item.name}</h3><p>${item.price} ${cur}</p></div>
+                            <div class="card-info"><h3>${item.name}</h3><p>${item.price} ${cur}${unitText}</p></div>
                             <div class="actions-group"><div class="actions-row"><button class="action-btn edit" onclick="openProductSheet('${cat.id}', '${sub.id}', '${item.id}')">✏️</button><button class="action-btn delete" onclick="deleteItem('${cat.id}', '${sub.id}', '${item.id}')">🗑️</button></div></div>
                         </div>`;
                     });
@@ -739,6 +742,7 @@
             editId = itemId; editProdCatId = catId; editProdSubId = subId; tempUploads.product = null;
             document.getElementById('pSheetTitle').innerText = itemId ? 'تعديل المنتج' : 'إضافة منتج';
             document.getElementById('pName').value = ''; document.getElementById('pDesc').value = ''; document.getElementById('pPrice').value = '';
+            document.getElementById('pUnit').value = '';
             document.getElementById('pPreview').style.display = 'none'; document.getElementById('pCurrency').value = appSettings.currency || 'ل.س';
 
             if(itemId) {
@@ -749,13 +753,14 @@
                 
                 document.getElementById('pName').value = item.name; document.getElementById('pDesc').value = item.description || '';
                 document.getElementById('pPrice').value = item.price; document.getElementById('pCurrency').value = item.currency || appSettings.currency || 'ل.س';
+                document.getElementById('pUnit').value = item.unit || '';
                 if(item.image) { document.getElementById('pPreview').src = getImgSrc(item.thumb || item.image); document.getElementById('pPreview').style.display = 'inline-block'; }
             }
             document.getElementById('sheetOverlay').classList.add('active'); document.getElementById('productSheet').classList.add('active');
         }
 
         function applyProductChange() {
-            const name = document.getElementById('pName').value, desc = document.getElementById('pDesc').value, price = document.getElementById('pPrice').value, currency = document.getElementById('pCurrency').value;
+            const name = document.getElementById('pName').value, desc = document.getElementById('pDesc').value, price = document.getElementById('pPrice').value, currency = document.getElementById('pCurrency').value, unit = document.getElementById('pUnit').value;
             if(!name || !price) return alert("أكمل البيانات");
             
             const cat = menuData.categories.find(c => c.id === editProdCatId);
@@ -767,7 +772,7 @@
             if(editId) itemObj = itemArrayObj.items.find(i => i.id === editId);
             else { itemObj = { id: `i_${Date.now()}` }; itemArrayObj.items.push(itemObj); }
 
-            itemObj.name = name; itemObj.description = desc; itemObj.price = price; itemObj.currency = currency;
+            itemObj.name = name; itemObj.description = desc; itemObj.price = price; itemObj.currency = currency; itemObj.unit = unit;
             if(tempUploads.product) {
                 itemObj.tempBase64Orig = tempUploads.product.origBase64; itemObj.tempBase64Thumb = tempUploads.product.thumbBase64; itemObj.tempExt = tempUploads.product.ext;
                 itemObj.image = tempUploads.product.origFull; itemObj.thumb = tempUploads.product.thumbFull;
@@ -818,7 +823,7 @@
                             <div class="qe-name">${item.name}</div>
                             <div class="qe-input-wrapper">
                                 <input type="number" class="qe-input" value="${item.price}" oninput="quickUpdatePrice('${cat.id}', null, '${item.id}', this.value, this)">
-                                <span class="qe-currency">${cur}</span>
+                                <span class="qe-currency">${cur} ${item.unit ? '/ ' + item.unit : ''}</span>
                             </div>
                         </div>`;
                     });
@@ -836,7 +841,7 @@
                                     <div class="qe-name" style="padding-right: 25px; color:#475569;">${item.name}</div>
                                     <div class="qe-input-wrapper">
                                         <input type="number" class="qe-input" value="${item.price}" oninput="quickUpdatePrice('${cat.id}', '${sub.id}', '${item.id}', this.value, this)">
-                                        <span class="qe-currency">${cur}</span>
+                                        <span class="qe-currency">${cur} ${item.unit ? '/ ' + item.unit : ''}</span>
                                     </div>
                                 </div>`;
                             });
@@ -896,7 +901,7 @@
                             sub.items.forEach(item => {
                                 let cur = item.currency || appSettings.currency || '';
                                 let safeDesc = (item.description || '').replace(/"/g, '&quot;');
-                                html += `<div class="tree-item" style="margin-right:50px;"><input type="checkbox" class="exp-item" data-name="${item.name}" data-desc="${safeDesc}" data-price="${item.price}" data-cur="${cur}" data-section="${cat.name} - ${sub.name}"> <span>📄 ${item.name} (${item.price} ${cur})</span></div>`;
+                                html += `<div class="tree-item" style="margin-right:50px;"><input type="checkbox" class="exp-item" data-name="${item.name}" data-desc="${safeDesc}" data-price="${item.price}" data-cur="${cur}" data-unit="${item.unit || ''}" data-section="${cat.name} - ${sub.name}"> <span>📄 ${item.name} (${item.price} ${cur}${item.unit ? ' / ' + item.unit : ''})</span></div>`;
                             });
                         }
                         html += `</div>`;
@@ -906,7 +911,7 @@
                     cat.items.forEach(item => {
                         let cur = item.currency || appSettings.currency || '';
                         let safeDesc = (item.description || '').replace(/"/g, '&quot;');
-                        html += `<div class="tree-item" style="margin-right:25px;"><input type="checkbox" class="exp-item" data-name="${item.name}" data-desc="${safeDesc}" data-price="${item.price}" data-cur="${cur}" data-section="${cat.name}"> <span>📄 ${item.name} (${item.price} ${cur})</span></div>`;
+                        html += `<div class="tree-item" style="margin-right:25px;"><input type="checkbox" class="exp-item" data-name="${item.name}" data-desc="${safeDesc}" data-price="${item.price}" data-cur="${cur}" data-unit="${item.unit || ''}" data-section="${cat.name}"> <span>📄 ${item.name} (${item.price} ${cur}${item.unit ? ' / ' + item.unit : ''})</span></div>`;
                     });
                 }
                 html += `</div>`;
@@ -933,7 +938,7 @@
                 tableRows += `<tr>
                     <td style="font-weight: 800; color: var(--text-dark);">${cb.dataset.name}</td>
                     <td style="color: #6b7280; font-size: 0.95rem;">${cb.dataset.desc || ''}</td>
-                    <td class="price-cell">${cb.dataset.price} ${cb.dataset.cur}</td>
+                    <td class="price-cell">${cb.dataset.price} ${cb.dataset.cur} ${cb.dataset.unit ? '/ ' + cb.dataset.unit : ''}</td>
                 </tr>`;
             });
 
