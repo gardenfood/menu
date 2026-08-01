@@ -690,7 +690,10 @@
               "name": "شيدر سائلة ريو ",
               "description": "شيدر سائلة اميركية وزن 3 كغ",
               "price": "13",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785619980025_219.jpg",
+              "thumb": "./images/thumb_1785619980025_219.jpg"
             },
             {
               "id": "i_1784648636018",
