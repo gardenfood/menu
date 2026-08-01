@@ -710,7 +710,10 @@
               "name": "شيدر سائلة ",
               "description": "شيدر سائلة وطني وزن ٤ كغ",
               "price": "0",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785622476179_504.jpg",
+              "thumb": "./images/thumb_1785622476179_504.jpg"
             }
           ],
           "name": "قسم الشيدر السائلة ",
