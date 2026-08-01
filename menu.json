@@ -616,7 +616,10 @@
               "name": "صوص صويا أميرغو",
               "description": "صويا لبناني 3.8 لتر",
               "price": "9",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785618649921_68.jpg",
+              "thumb": "./images/thumb_1785618649921_68.jpg"
             }
           ],
           "name": "قسم صوص الصويا ",
