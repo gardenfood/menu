@@ -659,7 +659,10 @@
               "name": "صوص رانش فريسكو ",
               "description": "صوص رانش اميركي 3.8 لتر ",
               "price": "15",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785619355490_925.jpg",
+              "thumb": "./images/thumb_1785619355490_925.jpg"
             },
             {
               "id": "i_1784569177633",
