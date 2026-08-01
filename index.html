@@ -67,7 +67,7 @@
 
         .qty-selector-card { display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.15); padding: 8px 12px; border-radius: 50px; margin-top: auto; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(5px); }
         .qty-selector-card button { background: #fff; color: var(--primary-dark); border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 1.4rem; font-weight: 900; cursor: pointer; display:flex; align-items:center; justify-content:center; box-shadow: var(--shadow-sm); }
-        .qty-selector-card span { font-size: 1.25rem; font-weight: 900; color: #fff; min-width: 30px; text-align: center;}
+        .qty-selector-card span { font-size: 1.15rem; font-weight: 900; color: #fff; min-width: 30px; text-align: center;}
 
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 1001; }
         .modal-overlay.active { opacity: 1; pointer-events: all; }
@@ -312,11 +312,12 @@
                 hasContent = true;
                 cat.items.forEach(item => {
                     const itemCur = item.currency || appSettings.currency || '';
+                    const unitTxt = item.unit ? ` / ${item.unit}` : '';
                     c.innerHTML += `<div class="card-square item-card" onclick="openProductModal('${cat.id}', null, '${item.id}')">
                         <div class="img-wrapper"><img src="${fixUrl(item.thumb || item.image)}"></div>
                         <div class="item-info">
                             <div class="item-title">${item.name}</div>
-                            <div class="item-price">${item.price} ${itemCur}</div>
+                            <div class="item-price">${item.price} ${itemCur}${unitTxt}</div>
                             <button class="view-btn ripple">${appSettings.ui_add_btn || "الطلب والكمية +"}</button>
                         </div>
                     </div>`;
@@ -346,11 +347,12 @@
             } else {
                 sub.items.forEach(item => {
                     const itemCur = item.currency || appSettings.currency || '';
+                    const unitTxt = item.unit ? ` / ${item.unit}` : '';
                     c.innerHTML += `<div class="card-square item-card" onclick="openProductModal('${cat.id}', '${sub.id}', '${item.id}')">
                         <div class="img-wrapper"><img src="${fixUrl(item.thumb || item.image)}"></div>
                         <div class="item-info">
                             <div class="item-title">${item.name}</div>
-                            <div class="item-price">${item.price} ${itemCur}</div>
+                            <div class="item-price">${item.price} ${itemCur}${unitTxt}</div>
                             <button class="view-btn ripple">${appSettings.ui_add_btn || "الطلب والكمية +"}</button>
                         </div>
                     </div>`;
@@ -374,6 +376,7 @@
             } else {
                 cart.forEach(item => {
                     const itemCur = item.currency || appSettings.currency || '';
+                    const unitTxt = item.unit ? ` ${item.unit}` : '';
                     c.innerHTML += `
                     <div class="card-square item-card">
                         <div class="img-wrapper" onclick="openProductModal('${item.catId}', '${item.subId}', '${item.id}')"><img src="${fixUrl(item.thumb || item.image)}"></div>
@@ -382,7 +385,7 @@
                             <div class="item-price">${item.price * item.qty} ${itemCur}</div>
                             <div class="qty-selector-card">
                                 <button onclick="updateItemQty('${item.id}', 1); event.stopPropagation();">+</button>
-                                <span>${item.qty}</span>
+                                <span>${item.qty}${unitTxt}</span>
                                 <button onclick="updateItemQty('${item.id}', -1); event.stopPropagation();">-</button>
                             </div>
                         </div>
@@ -460,11 +463,12 @@
         function renderItemsListToGrid(itemsList, container) {
             itemsList.forEach(item => {
                 const itemCur = item.currency || appSettings.currency || '';
+                const unitTxt = item.unit ? ` / ${item.unit}` : '';
                 container.innerHTML += `<div class="card-square item-card" onclick="openProductModal('${item.catId}', '${item.subId}', '${item.id}')">
                     <div class="img-wrapper"><img src="${fixUrl(item.thumb || item.image)}"></div>
                     <div class="item-info">
                         <div class="item-title">${item.name}</div>
-                        <div class="item-price">${item.price} ${itemCur}</div>
+                        <div class="item-price">${item.price} ${itemCur}${unitTxt}</div>
                         <button class="view-btn ripple">${appSettings.ui_add_btn || "الطلب والكمية +"}</button>
                     </div>
                 </div>`;
@@ -487,9 +491,10 @@
 
             currentModalQty = 1;
             const itemCur = currentModalItem.currency || appSettings.currency || '';
+            const unitTxt = currentModalItem.unit ? ` / ${currentModalItem.unit}` : '';
             document.getElementById('modalImg').src = fixUrl(currentModalItem.image);
             document.getElementById('modalTitle').innerText = currentModalItem.name;
-            document.getElementById('modalPrice').innerText = `${currentModalItem.price} ${itemCur}`;
+            document.getElementById('modalPrice').innerText = `${currentModalItem.price} ${itemCur}${unitTxt}`;
             document.getElementById('modalDesc').innerText = currentModalItem.description || 'لا توجد مواصفات إضافية لهذا المنتج.';
             updateModalUI();
             
@@ -508,7 +513,8 @@
         
         function updateModalUI() { 
             const itemCur = currentModalItem.currency || appSettings.currency || '';
-            document.getElementById('modalQty').innerText = currentModalQty; 
+            const unitTxt = currentModalItem.unit ? ` ${currentModalItem.unit}` : '';
+            document.getElementById('modalQty').innerText = currentModalQty + unitTxt; 
             document.getElementById('modalBtnTotal').innerText = `${currentModalItem.price * currentModalQty} ${itemCur}`; 
         }
 
@@ -558,8 +564,9 @@
             if(!cart.length) return; let m = "*" + (appSettings.whatsapp_template || "طلب جديد") + "*\n\n";
             cart.forEach(i => { 
                 let cur = i.currency || appSettings.currency || '';
+                let unitTxt = i.unit ? ` ${i.unit} ` : 'x ';
                 let it = i.price * i.qty; 
-                m += `📦 ${i.qty}x ${i.name} - ${it} ${cur}\n`; 
+                m += `📦 ${i.qty}${unitTxt}${i.name} - ${it} ${cur}\n`; 
             });
             window.location.href = `https://wa.me/${String(appSettings.whatsapp_number).replace(/\D/g, '')}?text=${encodeURIComponent(m + `\n*الإجمالي المطلوب: ${getCartTotalsStr()}*`)}`;
         }
