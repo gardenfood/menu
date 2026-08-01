@@ -775,7 +775,10 @@
               "name": "صوص سيراتشر ",
               "description": "المنشأ اميركي\nالوزن 3.8 كغ",
               "price": "37",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785620792919_403.jpg",
+              "thumb": "./images/thumb_1785620792919_403.jpg"
             },
             {
               "id": "i_1785169649683",
