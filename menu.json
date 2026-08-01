@@ -700,7 +700,10 @@
               "name": "شيدر سائلة فريسكو ",
               "description": "شيدر سائلة فريسكو وزن 3 كغ اميركيه",
               "price": "12.5",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785620046794_330.jpg",
+              "thumb": "./images/thumb_1785620046794_330.jpg"
             },
             {
               "id": "i_1784648707322",
