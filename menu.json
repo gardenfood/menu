@@ -669,7 +669,10 @@
               "name": "صوص رانش  هيللو",
               "description": "صوص رانش اردني وزن 3.8 كغ",
               "price": "14.5",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785619395186_505.jpg",
+              "thumb": "./images/thumb_1785619395186_505.jpg"
             }
           ],
           "name": "قسم صوص الرانش",
