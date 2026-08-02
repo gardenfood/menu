@@ -817,7 +817,10 @@
               "name": "سويت شيلي غالون ",
               "description": "المنشأ تايلند\nالوزن 4500 كغ",
               "price": "22",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785673356017_404.jpg",
+              "thumb": "./images/thumb_1785673356017_404.jpg"
             }
           ],
           "name": "قسم السويت شيلي ",
