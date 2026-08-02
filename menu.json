@@ -106,7 +106,10 @@
               "name": "روستو صدر دجاج بفاريا مدخن 150 غرام",
               "description": "",
               "price": "17500",
-              "currency": "ل.س"
+              "currency": "ل.س",
+              "unit": "",
+              "image": "./images/orig_1785709592186_327.jpg",
+              "thumb": "./images/thumb_1785709592186_327.jpg"
             },
             {
               "id": "i_1785332993203",
