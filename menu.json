@@ -205,7 +205,9 @@
               "description": "",
               "price": "155850",
               "currency": "ل.س",
-              "unit": "قالب"
+              "unit": "قالب",
+              "image": "./images/orig_1785709895128_644.jpg",
+              "thumb": "./images/thumb_1785709895128_644.jpg"
             }
           ],
           "name": "سلامي بفاريا ",
