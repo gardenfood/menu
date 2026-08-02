@@ -807,7 +807,10 @@
               "name": "سويت شيلي زجاجة",
               "description": "الوزن 500 مل\n",
               "price": "4",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785673325752_155.jpg",
+              "thumb": "./images/thumb_1785673325752_155.jpg"
             },
             {
               "id": "i_1785169886643",
