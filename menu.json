@@ -151,7 +151,10 @@
               "name": "روستو بقري مدخن 150 غرام",
               "description": "",
               "price": "23350",
-              "currency": "ل.س"
+              "currency": "ل.س",
+              "unit": "",
+              "image": "./images/orig_1785687980202_179.jpg",
+              "thumb": "./images/thumb_1785687980202_179.jpg"
             },
             {
               "id": "i_1785333597604",
