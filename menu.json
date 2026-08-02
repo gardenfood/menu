@@ -1157,8 +1157,9 @@
               "id": "i_butter_1",
               "name": "زبدة حيواني دغما بوراتوس Aloha Cake",
               "description": "زبدة حيواني لصناعة المخبوزات (البتفور) - تعبئة 20 كغ.",
-              "price": "0",
-              "currency": "$"
+              "price": "67",
+              "currency": "$",
+              "unit": "20 كغ"
             },
             {
               "id": "i_butter_2",
