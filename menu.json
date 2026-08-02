@@ -885,7 +885,10 @@
               "name": "خردل ديجون حب عبوة ",
               "description": "المنشأ فرنسا \nالتعبئة 200 g",
               "price": "3.5",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785672159003_13.jpg",
+              "thumb": "./images/thumb_1785672159003_13.jpg"
             }
           ],
           "name": "خردل ديجون",
