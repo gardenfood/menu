@@ -723,7 +723,10 @@
               "name": "وارشستر صوص مارينا ",
               "description": "وارشستر صوص اميركي 3.8 لتر ",
               "price": "24",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785671077156_989.jpg",
+              "thumb": "./images/thumb_1785671077156_989.jpg"
             },
             {
               "id": "i_1784649809867",
