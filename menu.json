@@ -233,7 +233,9 @@
               "description": "",
               "price": "166650",
               "currency": "ل.س",
-              "unit": "قالب"
+              "unit": "قالب",
+              "image": "./images/orig_1785710131830_381.jpg",
+              "thumb": "./images/thumb_1785710131830_381.jpg"
             }
           ],
           "name": "ببروني بفاريا",
