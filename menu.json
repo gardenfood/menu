@@ -865,7 +865,10 @@
               "name": "خردل ديجون حب غالون",
               "description": "المنشأ فرنسي \nالوزن 5 كغ",
               "price": "22",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785672096152_526.jpg",
+              "thumb": "./images/thumb_1785672096152_526.jpg"
             },
             {
               "id": "i_1785272474217",
