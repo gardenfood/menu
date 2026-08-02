@@ -913,7 +913,18 @@
         },
         {
           "id": "sub_1785664843765",
-          "items": [],
+          "items": [
+            {
+              "id": "i_1785673883053",
+              "name": "صوص Hp غالون",
+              "description": "التعبئة ٢.٣ كغ",
+              "price": "0",
+              "currency": "$",
+              "unit": "غالون",
+              "image": "./images/orig_1785673888289_508.jpg",
+              "thumb": "./images/thumb_1785673888289_508.jpg"
+            }
+          ],
           "name": "صوص HP",
           "image": "./images/orig_1785664850988_814.jpg",
           "thumb": "./images/thumb_1785664850988_814.jpg"
