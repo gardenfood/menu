@@ -134,7 +134,10 @@
               "name": "روستو صدر حبش مدخن بفاريا 150 غرام",
               "description": "",
               "price": "22500",
-              "currency": "ل.س"
+              "currency": "ل.س",
+              "unit": "",
+              "image": "./images/orig_1785686952261_376.jpg",
+              "thumb": "./images/thumb_1785686952261_376.jpg"
             },
             {
               "id": "i_1785333509257",
