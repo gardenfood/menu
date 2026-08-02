@@ -875,7 +875,10 @@
               "name": "خردل ديجون ناعم عبوه",
               "description": "الوزن 200 g\nالمنشأ فرنسا",
               "price": "3.5",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785672130953_57.jpg",
+              "thumb": "./images/thumb_1785672130953_57.jpg"
             },
             {
               "id": "i_1785272495513",
