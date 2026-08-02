@@ -603,10 +603,11 @@
               "id": "i_1784564483901",
               "name": "كتشب غاردين فوود",
               "description": "وطني بجودة ممتاز وزن 5 كغ",
-              "price": "0",
-              "currency": "$",
+              "price": "750",
+              "currency": "ل.س",
               "image": "./images/orig_1785337186642_661.jpg",
-              "thumb": "./images/thumb_1785337186642_661.jpg"
+              "thumb": "./images/thumb_1785337186642_661.jpg",
+              "unit": "غالون"
             }
           ],
           "name": "قسم الكتشب ",
