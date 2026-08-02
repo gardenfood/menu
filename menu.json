@@ -158,7 +158,10 @@
               "name": "روستو بقري مدخن بفاريا 1 كغ",
               "description": "",
               "price": "132500",
-              "currency": "ل.س"
+              "currency": "ل.س",
+              "unit": "",
+              "image": "./images/orig_1785687432219_749.jpg",
+              "thumb": "./images/thumb_1785687432219_749.jpg"
             }
           ],
           "name": "حبش بفاريا",
