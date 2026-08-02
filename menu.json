@@ -158,10 +158,7 @@
               "name": "روستو بقري مدخن بفاريا 1 كغ",
               "description": "",
               "price": "132500",
-              "currency": "ل.س",
-              "unit": "",
-              "image": "./images/orig_1785687432219_749.jpg",
-              "thumb": "./images/thumb_1785687432219_749.jpg"
+              "currency": "ل.س"
             }
           ],
           "name": "حبش بفاريا",
@@ -1168,15 +1165,17 @@
               "id": "i_butter_2",
               "name": "زبدة حيواني شرائح بوراتوس Aloha Pastry",
               "description": "تستخدم لصناعة الكروسان - تعبئة (2 كغ × 5).",
-              "price": "0",
-              "currency": "$"
+              "price": "30",
+              "currency": "$",
+              "unit": "5*2 كغ"
             },
             {
               "id": "i_butter_3",
               "name": "زبدة شرحات بوراتوس",
               "description": "تعبئة 10 كغ.",
-              "price": "0",
-              "currency": "$"
+              "price": "52",
+              "currency": "$",
+              "unit": "10 كغ"
             }
           ],
           "name": "زبدة ",
