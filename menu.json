@@ -626,6 +626,16 @@
               "unit": "",
               "image": "./images/orig_1785618649921_68.jpg",
               "thumb": "./images/thumb_1785618649921_68.jpg"
+            },
+            {
+              "id": "i_1785674524509",
+              "name": "صوص صويا غراند غاردين",
+              "description": "التعبئة ٣.٨ لتر\nالمنشأ اميركي",
+              "price": "12",
+              "currency": "$",
+              "unit": "غالون",
+              "image": "./images/orig_1785674527248_503.jpg",
+              "thumb": "./images/thumb_1785674527248_503.jpg"
             }
           ],
           "name": "قسم صوص الصويا ",
