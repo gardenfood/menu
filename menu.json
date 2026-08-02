@@ -78,7 +78,10 @@
               "name": "هوت دوغ دجاج مدخن 250 غرام",
               "description": "العدد بالكيس \n6 قطعه",
               "price": "13750",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785686739601_604.jpg",
+              "thumb": "./images/thumb_1785686739601_604.jpg"
             },
             {
               "id": "i_1785686688634",
