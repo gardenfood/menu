@@ -113,7 +113,10 @@
               "name": "روسو صدر دجاج مدخن بفاريا 1كغ",
               "description": "",
               "price": "101450",
-              "currency": "ل.س"
+              "currency": "ل.س",
+              "unit": "",
+              "image": "./images/orig_1785709529608_325.jpg",
+              "thumb": "./images/thumb_1785709529608_325.jpg"
             },
             {
               "id": "i_1785333101762",
