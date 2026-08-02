@@ -20,6 +20,14 @@
           "currency": "$",
           "image": "./images/orig_1785318349417_539.jpg",
           "thumb": "./images/thumb_1785318349417_539.jpg"
+        },
+        {
+          "id": "i_1785683643393",
+          "name": "بفاريا سجق 1 كغ",
+          "description": "",
+          "price": "70850",
+          "currency": "ل.س",
+          "unit": "ثطعة"
         }
       ],
       "thumb": "./images/c_thumb_1784386920433_991.jpg",
