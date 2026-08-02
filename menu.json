@@ -426,7 +426,10 @@
           "name": "صوص تيكساس Hello",
           "description": "صوص تيكساس وزن 3.8 كغ ",
           "price": "15.5",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1785664050579_380.jpg",
+          "thumb": "./images/thumb_1785664050579_380.jpg"
         },
         {
           "id": "i_1784648976800",
