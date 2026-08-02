@@ -455,9 +455,9 @@
           "id": "i_1785673476107",
           "name": "دبس رمان غاردن فود",
           "description": "التعبئة ٥.٥ كغ",
-          "price": "0",
-          "currency": "$",
-          "unit": "",
+          "price": "1000",
+          "currency": "ل.س",
+          "unit": "غالون",
           "image": "./images/orig_1785673543156_670.jpg",
           "thumb": "./images/thumb_1785673543156_670.jpg"
         }
