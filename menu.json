@@ -432,18 +432,14 @@
           "thumb": "./images/thumb_1785664050579_380.jpg"
         },
         {
-          "id": "i_1784648976800",
-          "name": "صوص HP",
-          "description": "صوص اتش بي وزن 2.3 كغ ",
-          "price": "22",
-          "currency": "$"
-        },
-        {
           "id": "i_1785168937343",
           "name": "صوص البطاطا Dutch",
           "description": "المنشأ اردني الوزن 3.8 لتر ",
           "price": "13.5",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1785664999234_956.jpg",
+          "thumb": "./images/thumb_1785664999234_956.jpg"
         },
         {
           "id": "i_1785168972822",
