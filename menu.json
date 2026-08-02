@@ -1810,50 +1810,49 @@
               "id": "i_pur_fill_1",
               "name": "حشوة ليمون بوراتوس",
               "description": "تعبئة 5 كغ",
-              "price": "0",
-              "currency": "$"
+              "price": "39",
+              "currency": "$",
+              "unit": "5 كغ"
             },
             {
               "id": "i_pur_fill_2",
               "name": "حشوة برتقال بوراتوس",
               "description": "تعبئة 5 كغ",
-              "price": "0",
-              "currency": "$"
+              "price": "40",
+              "currency": "$",
+              "unit": "5 كغ"
             },
             {
               "id": "i_pur_fill_3",
               "name": "حشوة كراميل بوراتوس",
               "description": "تعبئة 5 كغ",
-              "price": "0",
-              "currency": "$"
+              "price": "42",
+              "currency": "$",
+              "unit": "5 كغ"
             },
             {
               "id": "i_pur_fill_4",
               "name": "حشوة بندق بوراتوس",
               "description": "تعبئة 5 كغ",
-              "price": "0",
-              "currency": "$"
+              "price": "41",
+              "currency": "$",
+              "unit": "5 كغ"
             },
             {
               "id": "i_pur_fill_5",
               "name": "حشوة شوكولا بالبندق بوراتوس",
               "description": "تعبئة 5 كغ",
-              "price": "0",
-              "currency": "$"
+              "price": "97",
+              "currency": "$",
+              "unit": "5 كغ"
             },
             {
               "id": "i_pur_fill_6",
               "name": "حشوة لوتس بوراتوس",
               "description": "تعبئة 5 كغ",
-              "price": "0",
-              "currency": "$"
-            },
-            {
-              "id": "i_pur_fill_7",
-              "name": "حشوة الكراميل المملح بوراتوس",
-              "description": "تعبئة 5 كغ",
-              "price": "0",
-              "currency": "$"
+              "price": "46",
+              "currency": "$",
+              "unit": "كغ"
             }
           ],
           "name": "حشوات شركة Puratos",
