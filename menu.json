@@ -546,7 +546,10 @@
           "name": "جوزة الطيب حب",
           "description": "تعبئة 1كغ",
           "price": "0",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1785757677268_707.jpg",
+          "thumb": "./images/thumb_1785757677268_707.jpg"
         },
         {
           "id": "i_1784618788457",
