@@ -436,7 +436,10 @@
           "name": "ماجي أصفر بودرة",
           "description": "تعبئة 1كغ",
           "price": "0",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1785756895070_325.jpg",
+          "thumb": "./images/thumb_1785756895070_325.jpg"
         },
         {
           "id": "i_1784618557838",
