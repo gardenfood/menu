@@ -1588,7 +1588,10 @@
               "name": "كعك ياباني وطني",
               "description": "كعك منشأ وطني وزن 10  كغ",
               "price": "38000",
-              "currency": "ل.س"
+              "currency": "ل.س",
+              "unit": "",
+              "image": "./images/orig_1785774085631_566.jpg",
+              "thumb": "./images/thumb_1785774085631_566.jpg"
             }
           ],
           "name": "قسم الكعك الياباني ",
