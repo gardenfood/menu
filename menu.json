@@ -456,7 +456,10 @@
           "name": "بابريكا حلوة ",
           "description": "تعبئة 1كغ",
           "price": "0",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1785757290072_713.jpg",
+          "thumb": "./images/thumb_1785757290072_713.jpg"
         },
         {
           "id": "i_1784618612508",
