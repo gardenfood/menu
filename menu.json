@@ -1447,7 +1447,10 @@
               "name": "جبنة برميزان هارد تشيز ",
               "description": "المنشأ ايطالي ",
               "price": "16",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785772535062_956.jpg",
+              "thumb": "./images/thumb_1785772535062_956.jpg"
             },
             {
               "id": "i_1785272257882",
