@@ -1252,14 +1252,20 @@
               "name": "شيدر شرائح ماركوس ",
               "description": "المنشأ هنكاريا 24 قطعه *12",
               "price": "34",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785766981371_465.jpg",
+              "thumb": "./images/thumb_1785766981371_465.jpg"
             },
             {
               "id": "i_1784664105888",
               "name": "جبنة امنتال شرائح هابي كاو ",
               "description": "المنشأ نمسا \nالواحدة : طرد",
               "price": "39",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785766984409_954.jpg",
+              "thumb": "./images/thumb_1785766984409_954.jpg"
             }
           ],
           "name": "جبنة شيدر شرائح",
