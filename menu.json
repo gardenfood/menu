@@ -486,7 +486,10 @@
           "name": "يانسون ",
           "description": "تعبئة 1كغ",
           "price": "0",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1785757400191_816.jpg",
+          "thumb": "./images/thumb_1785757400191_816.jpg"
         },
         {
           "id": "i_1784618669478",
