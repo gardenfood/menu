@@ -10,7 +10,10 @@
           "name": "ببروني التغذية ",
           "description": "المنشأ لبنان\nالتعبئة ٤٥٠ غرام",
           "price": "7",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1785755699090_386.jpg",
+          "thumb": "./images/thumb_1785755699090_386.jpg"
         },
         {
           "id": "i_1785267976304",
