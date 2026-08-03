@@ -1228,7 +1228,10 @@
           "name": "فيتا ",
           "description": "التعبئة ٥٠٠ غرام ",
           "price": "3.5",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1785773453397_561.jpg",
+          "thumb": "./images/thumb_1785773453397_561.jpg"
         }
       ],
       "name": "حليب ومشتقاته",
