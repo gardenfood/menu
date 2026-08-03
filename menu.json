@@ -506,7 +506,10 @@
           "name": "عصفر",
           "description": "تعبئة 1كغ",
           "price": "0",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1785757476649_11.jpg",
+          "thumb": "./images/thumb_1785757476649_11.jpg"
         },
         {
           "id": "i_1784618737157",
