@@ -426,7 +426,10 @@
           "name": "ماجي أبيض بودرة ",
           "description": "تعبئة 1كغ",
           "price": "0",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1785756847622_68.jpg",
+          "thumb": "./images/thumb_1785756847623_68.jpg"
         },
         {
           "id": "i_1784618544519",
