@@ -496,7 +496,10 @@
           "name": "لومي ",
           "description": "تعبئة 1كغ",
           "price": "0",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1785757443533_79.jpg",
+          "thumb": "./images/thumb_1785757443533_79.jpg"
         },
         {
           "id": "i_1784618694617",
