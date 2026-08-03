@@ -1437,7 +1437,10 @@
               "name": "جبنة برميزان زانيتي ",
               "description": "المنشأ ايطالي ",
               "price": "18.5",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785772251040_751.jpg",
+              "thumb": "./images/thumb_1785772251040_751.jpg"
             },
             {
               "id": "i_1785272244505",
