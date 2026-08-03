@@ -1419,7 +1419,10 @@
               "name": "جبنة ريكفورد دغما",
               "description": "جبنه ريكفورد قالب \nالمنشأ ايطالي ",
               "price": "14",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785771729543_480.jpg",
+              "thumb": "./images/thumb_1785771729543_480.jpg"
             }
           ],
           "name": "جبنة ريكفورد",
