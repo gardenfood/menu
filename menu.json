@@ -289,7 +289,9 @@
               "description": "",
               "price": "285700",
               "currency": "ل.س",
-              "unit": "قطعة"
+              "unit": "قطعة",
+              "image": "./images/orig_1785755456554_304.jpg",
+              "thumb": "./images/thumb_1785755456554_304.jpg"
             }
           ],
           "name": "بفاريا بصطرمة",
