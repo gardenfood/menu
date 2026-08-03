@@ -1457,7 +1457,10 @@
               "name": "جبنة برميزان غرانا رجال",
               "description": "",
               "price": "16",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785772992069_752.jpg",
+              "thumb": "./images/thumb_1785772992069_752.jpg"
             }
           ],
           "name": "جبنة برميزان ",
