@@ -356,7 +356,10 @@
           "name": "هيل ناعم ",
           "description": "تعبئة 1كغ",
           "price": "0",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1785756526883_606.jpg",
+          "thumb": "./images/thumb_1785756526883_606.jpg"
         },
         {
           "id": "i_1784618434210",
