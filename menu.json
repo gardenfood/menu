@@ -536,7 +536,10 @@
           "name": "جوزة الطيب ناعمة ",
           "description": "تعبئة 1كغ",
           "price": "0",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1785757632938_705.jpg",
+          "thumb": "./images/thumb_1785757632938_705.jpg"
         },
         {
           "id": "i_1784618776544",
