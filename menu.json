@@ -446,7 +446,10 @@
           "name": "محلب ",
           "description": "تعبئة 1كغ",
           "price": "0",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1785757251053_919.jpg",
+          "thumb": "./images/thumb_1785757251053_919.jpg"
         },
         {
           "id": "i_1784618601407",
