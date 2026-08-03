@@ -261,7 +261,9 @@
               "description": "",
               "price": "34150",
               "currency": "ل.س",
-              "unit": "قطعة"
+              "unit": "قطعة",
+              "image": "./images/orig_1785755182132_391.jpg",
+              "thumb": "./images/thumb_1785755182132_391.jpg"
             }
           ],
           "name": "بيكن بفاريا",
