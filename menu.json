@@ -396,7 +396,10 @@
           "name": "ثوم بودرة ",
           "description": "تعبئة 1كغ",
           "price": "0",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1785756674081_190.jpg",
+          "thumb": "./images/thumb_1785756674081_190.jpg"
         },
         {
           "id": "i_1784618487947",
