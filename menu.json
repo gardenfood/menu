@@ -30,7 +30,9 @@
           "description": "",
           "price": "70850",
           "currency": "ل.س",
-          "unit": "ثطعة"
+          "unit": "ثطعة",
+          "image": "./images/orig_1785756156932_77.jpg",
+          "thumb": "./images/thumb_1785756156932_77.jpg"
         }
       ],
       "thumb": "./images/c_thumb_1784386920433_991.jpg",
