@@ -1578,7 +1578,10 @@
               "name": "كعك ياباني بانكو ",
               "description": "كعك ياباني ناعم وزن الشوال 10 كغ",
               "price": "3",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785774031387_272.jpg",
+              "thumb": "./images/thumb_1785774031387_272.jpg"
             },
             {
               "id": "i_1784657443638",
