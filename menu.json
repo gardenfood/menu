@@ -279,7 +279,9 @@
               "description": "",
               "price": "50000",
               "currency": "ل.س",
-              "unit": "قطعة"
+              "unit": "قطعة",
+              "image": "./images/orig_1785755382488_235.jpg",
+              "thumb": "./images/thumb_1785755382488_235.jpg"
             },
             {
               "id": "i_1785683521337",
