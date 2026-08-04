@@ -1670,14 +1670,20 @@
               "name": "كابر 400 غرام",
               "description": "المنشأ ايطالي \nالتعبئة 400 غرام",
               "price": "4",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785876582275_983.jpg",
+              "thumb": "./images/thumb_1785876582275_983.jpg"
             },
             {
               "id": "i_1785266656205",
               "name": "كابر 800 غرام",
               "description": "المنشأ ايطالي\n",
               "price": "8.5",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1785876584896_689.jpg",
+              "thumb": "./images/thumb_1785876584896_689.jpg"
             }
           ],
           "name": "كابر",
