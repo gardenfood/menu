@@ -932,13 +932,13 @@
             checkedItems.forEach(cb => {
                 let section = cb.dataset.section;
                 if(section !== currentSection) {
-                    tableRows += `<tr class="section-row"><td colspan="3">${section}</td></tr>`;
+                    tableRows += `<tr class="section-row"><td colspan="3" contenteditable="true">${section}</td></tr>`;
                     currentSection = section;
                 }
                 tableRows += `<tr>
-                    <td style="font-weight: 800; color: var(--text-dark);">${cb.dataset.name}</td>
-                    <td style="color: #6b7280; font-size: 0.95rem;">${cb.dataset.desc || ''}</td>
-                    <td class="price-cell">${cb.dataset.price} ${cb.dataset.cur} ${cb.dataset.unit ? '/ ' + cb.dataset.unit : ''}</td>
+                    <td style="font-weight: 800; color: var(--text-dark);" contenteditable="true">${cb.dataset.name}</td>
+                    <td style="color: #6b7280; font-size: 0.95rem;" contenteditable="true">${cb.dataset.desc || ''}</td>
+                    <td class="price-cell" contenteditable="true">${cb.dataset.price} ${cb.dataset.cur} ${cb.dataset.unit ? '/ ' + cb.dataset.unit : ''}</td>
                 </tr>`;
             });
 
