@@ -3,7 +3,7 @@
     {
       "id": "c1",
       "name": "اللحوم الباردة ",
-      "image": "./images/c_orig_1784386920433_991.jpg",
+      "image": "./images/orig_1786631242593_696.jpg",
       "items": [
         {
           "id": "i_1785267836420",
@@ -36,7 +36,7 @@
           "thumb": "./images/thumb_1785756156932_77.jpg"
         }
       ],
-      "thumb": "./images/c_thumb_1784386920433_991.jpg",
+      "thumb": "./images/thumb_1786631242593_696.jpg",
       "subcategories": [
         {
           "id": "sub_1785322297849",
