@@ -2255,7 +2255,28 @@
       "subcategories": [
         {
           "id": "sub_1784654311786",
-          "items": [],
+          "items": [
+            {
+              "id": "i_1786698321417",
+              "name": "ملف باستا زار الاول ",
+              "description": "",
+              "price": "0",
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1786698353552_181.jpg",
+              "thumb": "./images/thumb_1786698353552_181.jpg"
+            },
+            {
+              "id": "i_1786698349877",
+              "name": "ملف باستا زارا الثاني",
+              "description": "",
+              "price": "0",
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1786698357688_85.jpg",
+              "thumb": "./images/thumb_1786698357688_85.jpg"
+            }
+          ],
           "name": "قسم باستا زارا ",
           "image": "./images/orig_1784654325373_235.jpg",
           "thumb": "./images/thumb_1784654325373_235.jpg"
