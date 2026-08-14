@@ -1357,7 +1357,8 @@
               "price": "44",
               "currency": "$",
               "image": "./images/orig_1785328236648_939.jpg",
-              "thumb": "./images/thumb_1785328236648_939.jpg"
+              "thumb": "./images/thumb_1785328236648_939.jpg",
+              "unit": ""
             },
             {
               "id": "i_1784664340527",
@@ -1373,7 +1374,7 @@
               "id": "i_1784664523823",
               "name": "كريمة طبخ بوراتوس 1 لتر ",
               "description": "التعبئة 1 لتر *12\n",
-              "price": "42",
+              "price": "44",
               "currency": "$",
               "unit": "",
               "image": "./images/orig_1785767811366_743.jpg",
