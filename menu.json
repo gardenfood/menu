@@ -1502,14 +1502,20 @@
           "name": "سالمون فريش ",
           "description": "المنشأ : اسكتلندا \nالوحدة : 1 كغ",
           "price": "35",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1786966564560_540.jpg",
+          "thumb": "./images/thumb_1786966564560_540.jpg"
         },
         {
           "id": "i_1784659162595",
           "name": "سالمون مدخن",
           "description": "المنشأ : فرنسا \nالوحدة : 200 غرام",
           "price": "13",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1786966567694_508.jpg",
+          "thumb": "./images/thumb_1786966567694_508.jpg"
         }
       ],
       "name": "مفرزات",
