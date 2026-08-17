@@ -1406,14 +1406,20 @@
               "name": "موزريلا الفصول ",
               "description": "المنشأ دير الزور \nتعبئة الطرد 19 كغ",
               "price": "68000",
-              "currency": "ل.س"
+              "currency": "ل.س",
+              "unit": "",
+              "image": "./images/orig_1786965597079_466.jpg",
+              "thumb": "./images/thumb_1786965597079_466.jpg"
             },
             {
               "id": "i_1785264567183",
               "name": "موزريلا الفصول دغما",
               "description": "المنشأ دير الزور \nالتعبئة 20 كغ",
               "price": "64000",
-              "currency": "ل.س"
+              "currency": "ل.س",
+              "unit": "",
+              "image": "./images/orig_1786965599988_524.jpg",
+              "thumb": "./images/thumb_1786965599988_524.jpg"
             }
           ],
           "name": "موزريلا ",
