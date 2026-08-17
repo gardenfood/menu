@@ -1293,14 +1293,19 @@
               "description": "شيدر بلوكة منشأ هنغاري الواحدة 1 كغ",
               "price": "11",
               "currency": "$",
-              "unit": ""
+              "unit": "",
+              "image": "./images/orig_1786964724983_446.jpg",
+              "thumb": "./images/thumb_1786964724984_446.jpg"
             },
             {
               "id": "i_1785321716519",
               "name": "امنتال بلوكة بلان سوليه ",
               "description": "المنشأ بلجيكا ",
               "price": "11.5",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1786964728242_510.jpg",
+              "thumb": "./images/thumb_1786964728242_510.jpg"
             },
             {
               "id": "i_1785321736674",
@@ -1308,7 +1313,9 @@
               "description": "المنشأ هنغاري ",
               "price": "10",
               "currency": "$",
-              "unit": ""
+              "unit": "",
+              "image": "./images/orig_1786964730842_161.jpg",
+              "thumb": "./images/thumb_1786964730842_161.jpg"
             }
           ],
           "name": "شيدر قالب بلوك",
