@@ -1852,14 +1852,20 @@
               "name": "كينوا بيضا",
               "description": "المنشأ المغرب \nالتعبئة 900 غرام ",
               "price": "6",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1786968765195_692.jpg",
+              "thumb": "./images/thumb_1786968765195_692.jpg"
             },
             {
               "id": "i_1785271929277",
               "name": "كينوا حمرا ",
               "description": "المنشأ مغرب \nالنعبئة 900 غرام",
               "price": "6",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1786968768217_678.jpg",
+              "thumb": "./images/thumb_1786968768217_678.jpg"
             }
           ],
           "name": "كينوا",
