@@ -1824,14 +1824,20 @@
               "name": "بيستو ماونتي  صغير",
               "description": "المنشأ ايطالي \nالتعبئة 190 غرام",
               "price": "3.5",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1786967187981_709.jpg",
+              "thumb": "./images/thumb_1786967187981_709.jpg"
             },
             {
               "id": "i_1785271773214",
               "name": "بيستو ماونتي كبير",
               "description": "المنشأ ايطالي \nالتعبئة 900 غرام",
               "price": "14.5",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1786967190840_40.jpg",
+              "thumb": "./images/thumb_1786967190840_40.jpg"
             }
           ],
           "name": "بيستو ",
