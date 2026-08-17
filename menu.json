@@ -1880,7 +1880,10 @@
               "name": "خميرة باكمايا ",
               "description": "الوزن 450 غرام ",
               "price": "1.85",
-              "currency": "$"
+              "currency": "$",
+              "unit": "",
+              "image": "./images/orig_1786969592808_417.jpg",
+              "thumb": "./images/thumb_1786969592808_417.jpg"
             }
           ],
           "name": "خميرة ",
