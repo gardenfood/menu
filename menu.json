@@ -1577,7 +1577,10 @@
           "name": "ذرة عرنوس بيبي كورن",
           "description": "المنشأ تايلند \nالوزن 360 غران ",
           "price": "2.7",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1787045322571_438.jpg",
+          "thumb": "./images/thumb_1787045322571_438.jpg"
         },
         {
           "id": "i_1785271811739",
