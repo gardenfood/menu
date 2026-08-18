@@ -1123,19 +1123,21 @@
               "id": "i_1785272063877",
               "name": "ديمي غلاس بودرة ",
               "description": "شركة نسلة \nالتعبئة 750 غرام ",
-              "price": "13.5",
+              "price": "14.5",
               "currency": "$",
               "image": "./images/orig_1785324513133_610.jpg",
-              "thumb": "./images/thumb_1785324513133_610.jpg"
+              "thumb": "./images/thumb_1785324513133_610.jpg",
+              "unit": ""
             },
             {
               "id": "i_1785272088301",
               "name": "ديمي غلاس بودرة ",
               "description": "المنشأ اسباني \nالتعبئة 1 كغ",
-              "price": "16.5",
+              "price": "17.5",
               "currency": "$",
               "image": "./images/orig_1785324516884_800.jpg",
-              "thumb": "./images/thumb_1785324516884_800.jpg"
+              "thumb": "./images/thumb_1785324516884_800.jpg",
+              "unit": ""
             }
           ],
           "name": "ديمي غلاس ",
