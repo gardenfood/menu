@@ -1608,7 +1608,9 @@
           "description": "هالبينو حبة مصريه \nالتعبئة سوريه",
           "price": "5.5",
           "currency": "$",
-          "unit": "تنكة"
+          "unit": "تنكة",
+          "image": "./images/orig_1787046534519_883.jpg",
+          "thumb": "./images/thumb_1787046534520_883.jpg"
         }
       ],
       "name": "مواد جافة (dry store)",
