@@ -1597,7 +1597,10 @@
           "name": "صوص تباسكو حد ",
           "description": "المنشأ اميركي\nالتعبئة 60 ml",
           "price": "2",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1787046496168_829.jpg",
+          "thumb": "./images/thumb_1787046496168_829.jpg"
         },
         {
           "id": "i_1786884748645",
