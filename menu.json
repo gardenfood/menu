@@ -1557,7 +1557,10 @@
           "name": "بندورة مقشرة ايطالي ",
           "description": "المنشأ ايطالي \nالوزن 3كغ ",
           "price": "9",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1787045208331_611.jpg",
+          "thumb": "./images/thumb_1787045208331_611.jpg"
         },
         {
           "id": "i_1785266471348",
