@@ -1567,7 +1567,10 @@
           "name": "فاصوليا حمرا لونا ",
           "description": "المنشأ سعودي \nالتعبئة 380 غرام",
           "price": "1",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1787045263708_670.jpg",
+          "thumb": "./images/thumb_1787045263708_670.jpg"
         },
         {
           "id": "i_1785271686338",
