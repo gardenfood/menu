@@ -1530,7 +1530,10 @@
           "name": "انشوا قزاز ",
           "description": "سمك انشوا قزاز ",
           "price": "4.35",
-          "currency": "$"
+          "currency": "$",
+          "unit": "",
+          "image": "./images/orig_1787044664198_700.jpg",
+          "thumb": "./images/thumb_1787044664198_700.jpg"
         },
         {
           "id": "i_1784663714521",
