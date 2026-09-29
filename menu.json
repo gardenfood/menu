@@ -1471,7 +1471,7 @@
     {
       "id": "c_1784387176701",
       "items": [],
-      "name": "  مواد اولية للحلويات",
+      "name": "قسم البار ",
       "image": "./images/orig_1786632553000_152.jpg",
       "thumb": "./images/thumb_1786632553000_152.jpg",
       "subcategories": [
@@ -1493,13 +1493,6 @@
               "price": "16",
               "currency": "$",
               "unit": "كغ"
-            },
-            {
-              "id": "i_1784659630714",
-              "name": "شوكولا حبيبات اشقر ",
-              "description": "المنشأ بلجيكي \nنسبة الكاكاو ( 41%)\nتعبئة الكيس 5 كغ",
-              "price": "0",
-              "currency": "$"
             },
             {
               "id": "i_1784659741594",
@@ -1531,118 +1524,6 @@
           "thumb": "./images/thumb_1784658589276_699.jpg"
         },
         {
-          "id": "sub_1784659916811",
-          "items": [
-            {
-              "id": "i_pur_mix_1",
-              "name": "محسن للمخبوزات بوراتوس",
-              "description": "المنشأ بلجيكي | معدل الاستخدام (0.5-1%) | تعبئة 10 كغ.",
-              "price": "36",
-              "currency": "$",
-              "unit": "10 كع"
-            },
-            {
-              "id": "i_pur_mix_2",
-              "name": "محسن للمخبوزات عالي التركيز بوراتوس",
-              "description": "المنشأ بلجيكي | معدل الاستخدام (0.3-0.5%) | تعبئة 10 كغ.",
-              "price": "56",
-              "currency": "$",
-              "unit": "10 كع"
-            },
-            {
-              "id": "i_pur_mix_3",
-              "name": "محسن للباجيت بوراتوس",
-              "description": "تعبئة 1 كغ.",
-              "price": "12",
-              "currency": "$",
-              "unit": "1 كغ"
-            },
-            {
-              "id": "i_pur_mix_4",
-              "name": "محسن صمن لإنتاج الفاهيتا والبرجر بوراتوس",
-              "description": "تعبئة 20 كغ.",
-              "price": "121",
-              "currency": "$",
-              "unit": "20 كغ"
-            },
-            {
-              "id": "i_pur_mix_5",
-              "name": "خلطة 7 حبات الخبز الأسمر بوراتوس",
-              "description": "تعبئة 25 كغ.",
-              "price": "150",
-              "currency": "$",
-              "unit": "25 كغ"
-            },
-            {
-              "id": "i_pur_mix_6",
-              "name": "محسن خبز مكتبات بوراتوس",
-              "description": "(1 مكعب) لـ (50 كيلو طحين) | تعبئة المكعب 10 غرام | تعبئة الطرد 30 مكعب.",
-              "price": "18",
-              "currency": "$",
-              "unit": "10Gr*30"
-            },
-            {
-              "id": "i_pur_mix_7",
-              "name": "ملمع للمعجنات بديل البيض بوراتوس",
-              "description": "تعبئة الطرد 1 لتر × 12 قطعة.",
-              "price": "48",
-              "currency": "$",
-              "unit": "1L*12"
-            },
-            {
-              "id": "i_pur_mix_8",
-              "name": "خلطة سبونج فانيل بوراتوس",
-              "description": "تعبئة 25 كغ.",
-              "price": "89",
-              "currency": "$",
-              "unit": "25 كغ"
-            },
-            {
-              "id": "i_pur_mix_9",
-              "name": "خلطة سبونج كاكاو بوراتوس",
-              "description": "تعبئة 25 كغ.",
-              "price": "116",
-              "currency": "$",
-              "unit": "25 كغ"
-            },
-            {
-              "id": "i_pur_mix_10",
-              "name": "خلطة مافن فانيل بوراتوس",
-              "description": "تعبئة 15 كغ.",
-              "price": "61",
-              "currency": "$",
-              "unit": "15"
-            },
-            {
-              "id": "i_pur_mix_11",
-              "name": "خلطة مافن شوكولا بوراتوس",
-              "description": "تعبئة 12.5 كغ.",
-              "price": "74",
-              "currency": "$",
-              "unit": "12.5 كغ"
-            },
-            {
-              "id": "i_pur_mix_12",
-              "name": "كريم باتسير بودر بوراتوس",
-              "description": "تعبئة 15 كغ.",
-              "price": "91",
-              "currency": "$",
-              "unit": "15 كغ"
-            },
-            {
-              "id": "i_pur_mix_13",
-              "name": "غاناش ابيض بزبدة الكاكاو بوراتوس",
-              "description": "تعبئة 4 كغ.",
-              "price": "26",
-              "currency": "$",
-              "unit": "4 كغ"
-            }
-          ],
-          "name": "محسنات وخلطات للمخبوزات  puratos",
-          "image": "./images/orig_1784660089627_813.jpg",
-          "thumb": "./images/thumb_1784660089627_813.jpg"
-        },
-        {
           "id": "sub_1784660003497",
           "items": [
             {
@@ -1662,73 +1543,17 @@
               "unit": "طرد"
             },
             {
-              "id": "i_cream_3",
-              "name": "كريمة حلو دغما بوراتوس",
-              "description": "تعبئة 10 لتر.",
-              "price": "33",
+              "id": "i_1790711111875",
+              "name": "كريمة حلو هالتا بلجيكي",
+              "description": "",
+              "price": "35",
               "currency": "$",
-              "unit": "قطعة"
+              "unit": "طرد"
             }
           ],
           "name": "كريمة حلويات خفق",
           "image": "./images/orig_1784660092209_333.jpg",
           "thumb": "./images/thumb_1784660092209_333.jpg"
-        },
-        {
-          "id": "sub_1784660083066",
-          "items": [
-            {
-              "id": "i_pur_fill_1",
-              "name": "حشوة ليمون بوراتوس",
-              "description": "تعبئة 5 كغ",
-              "price": "39",
-              "currency": "$",
-              "unit": "5 كغ"
-            },
-            {
-              "id": "i_pur_fill_2",
-              "name": "حشوة برتقال بوراتوس",
-              "description": "تعبئة 5 كغ",
-              "price": "40",
-              "currency": "$",
-              "unit": "5 كغ"
-            },
-            {
-              "id": "i_pur_fill_3",
-              "name": "حشوة كراميل بوراتوس",
-              "description": "تعبئة 5 كغ",
-              "price": "42",
-              "currency": "$",
-              "unit": "5 كغ"
-            },
-            {
-              "id": "i_pur_fill_4",
-              "name": "حشوة بندق بوراتوس",
-              "description": "تعبئة 5 كغ",
-              "price": "41",
-              "currency": "$",
-              "unit": "5 كغ"
-            },
-            {
-              "id": "i_pur_fill_5",
-              "name": "حشوة شوكولا بالبندق بوراتوس",
-              "description": "تعبئة 5 كغ",
-              "price": "97",
-              "currency": "$",
-              "unit": "5 كغ"
-            },
-            {
-              "id": "i_pur_fill_6",
-              "name": "حشوة لوتس بوراتوس",
-              "description": "تعبئة 5 كغ",
-              "price": "46",
-              "currency": "$",
-              "unit": "كغ"
-            }
-          ],
-          "name": "حشوات شركة Puratos",
-          "image": "./images/orig_1784660094588_778.jpg",
-          "thumb": "./images/thumb_1784660094588_778.jpg"
         }
       ]
     },
