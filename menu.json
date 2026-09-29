@@ -922,44 +922,6 @@
           "thumb": "./images/thumb_1786376394562_74.jpg"
         },
         {
-          "id": "sub_1784660275761",
-          "items": [
-            {
-              "id": "i_butter_1",
-              "name": "زبدة حيواني دغما بوراتوس Aloha Cake",
-              "description": "زبدة حيواني لصناعة المخبوزات (البتفور) - تعبئة 20 كغ.",
-              "price": "67",
-              "currency": "$",
-              "unit": "20 كغ",
-              "image": "./images/orig_1786964785146_630.jpg",
-              "thumb": "./images/thumb_1786964785146_630.jpg"
-            },
-            {
-              "id": "i_butter_2",
-              "name": "زبدة حيواني شرائح بوراتوس Aloha Pastry",
-              "description": "تستخدم لصناعة الكروسان - تعبئة (2 كغ × 5).",
-              "price": "30",
-              "currency": "$",
-              "unit": "5*2 كغ",
-              "image": "./images/orig_1786964789028_384.jpg",
-              "thumb": "./images/thumb_1786964789028_384.jpg"
-            },
-            {
-              "id": "i_butter_3",
-              "name": "زبدة شرحات بوراتوس",
-              "description": "تعبئة 10 كغ.",
-              "price": "52",
-              "currency": "$",
-              "unit": "10 كغ",
-              "image": "./images/orig_1786964791902_74.jpg",
-              "thumb": "./images/thumb_1786964791902_74.jpg"
-            }
-          ],
-          "name": "زبدة ",
-          "image": "./images/orig_1784660284521_690.jpg",
-          "thumb": "./images/thumb_1784660284521_690.jpg"
-        },
-        {
           "id": "sub_1784664213007",
           "items": [
             {
@@ -976,7 +938,7 @@
               "id": "i_1784664340527",
               "name": "كريمة طبخ برافو ايطالي 10 لتر ",
               "description": "التعبئة 10 لتر ",
-              "price": "34",
+              "price": "33",
               "currency": "$",
               "unit": "",
               "image": "./images/orig_1785769418110_229.jpg",
@@ -1004,21 +966,11 @@
               "id": "i_1785264502155",
               "name": "موزريلا الفصول ",
               "description": "المنشأ دير الزور \nتعبئة الطرد 19 كغ",
-              "price": "68000",
+              "price": "76000",
               "currency": "ل.س",
-              "unit": "",
+              "unit": "كغ",
               "image": "./images/orig_1786965597079_466.jpg",
               "thumb": "./images/thumb_1786965597079_466.jpg"
-            },
-            {
-              "id": "i_1785264567183",
-              "name": "موزريلا الفصول دغما",
-              "description": "المنشأ دير الزور \nالتعبئة 20 كغ",
-              "price": "64000",
-              "currency": "ل.س",
-              "unit": "",
-              "image": "./images/orig_1786965599988_524.jpg",
-              "thumb": "./images/thumb_1786965599988_524.jpg"
             }
           ],
           "name": "موزريلا ",
@@ -1032,7 +984,7 @@
               "id": "i_1785268150414",
               "name": "جبنة ريكفورد 100 غرام",
               "description": "المنشأ ايطالي \nالتعبئة ١٠٠ غرام \nتعبئة الطرد ١٠ قطعه",
-              "price": "2.2",
+              "price": "2.3",
               "currency": "$",
               "unit": "",
               "image": "./images/orig_1785771686926_983.jpg",
