@@ -361,28 +361,31 @@
               "id": "i_1784562791394",
               "name": "مايونيز اميرغو ",
               "description": "مايونيز لبناني وزن 3.5 كغ",
-              "price": "14",
+              "price": "14.5",
               "currency": "$",
               "image": "./images/orig_1785318445284_69.jpg",
-              "thumb": "./images/thumb_1785318445284_69.jpg"
+              "thumb": "./images/thumb_1785318445284_69.jpg",
+              "unit": ""
             },
             {
               "id": "i_1784562921304",
               "name": "مايونيز غولدن بليت ",
               "description": "مايونيز وطني بجودة اميركيه وزن 3.5 كغ ",
-              "price": "9.5",
+              "price": "10",
               "currency": "$",
               "image": "./images/orig_1785318532250_642.jpg",
-              "thumb": "./images/thumb_1785318532250_642.jpg"
+              "thumb": "./images/thumb_1785318532250_642.jpg",
+              "unit": ""
             },
             {
               "id": "i_1784562975231",
               "name": "مايونيز دوفراي",
               "description": "مايونيز لبناني وزن 3.5 كغ ",
-              "price": "12",
+              "price": "11",
               "currency": "$",
               "image": "./images/orig_1785318611135_890.jpg",
-              "thumb": "./images/thumb_1785318611135_890.jpg"
+              "thumb": "./images/thumb_1785318611135_890.jpg",
+              "unit": ""
             }
           ],
           "name": "قسم المايونيز ",
@@ -400,24 +403,6 @@
               "currency": "$",
               "image": "./images/orig_1785327866472_115.jpg",
               "thumb": "./images/thumb_1785327866472_115.jpg"
-            },
-            {
-              "id": "i_1784563378768",
-              "name": "باربكيو دوفراي",
-              "description": "باربكيو لباني وزن 4.5 كغ",
-              "price": "9.5",
-              "currency": "$",
-              "image": "./images/orig_1785327966201_382.jpg",
-              "thumb": "./images/thumb_1785327966201_382.jpg"
-            },
-            {
-              "id": "i_1784568685280",
-              "name": "باربكيو فريسكو ",
-              "description": "باربكيو أميركي وزن 4.5 كغ ",
-              "price": "13",
-              "currency": "$",
-              "image": "./images/orig_1785328035409_329.jpg",
-              "thumb": "./images/thumb_1785328035409_329.jpg"
             },
             {
               "id": "i_1785168887360",
@@ -458,19 +443,11 @@
               "id": "i_1784563723559",
               "name": "خردل غولدن بليت",
               "description": "خردل وطني بجودة اميركية وزن 3.8 لتر ",
-              "price": "7",
+              "price": "7.5",
               "currency": "$",
               "image": "./images/orig_1785330792981_874.jpg",
-              "thumb": "./images/thumb_1785330792981_874.jpg"
-            },
-            {
-              "id": "i_1784563884461",
-              "name": "خردل فريسكو ",
-              "description": "خردل اميركي وزن 3.8 لتر ",
-              "price": "9",
-              "currency": "$",
-              "image": "./images/orig_1785330853064_391.jpg",
-              "thumb": "./images/thumb_1785330853064_391.jpg"
+              "thumb": "./images/thumb_1785330792981_874.jpg",
+              "unit": ""
             }
           ],
           "name": "قسم الخردل ",
