@@ -1115,6 +1115,22 @@
           "unit": "",
           "image": "./images/orig_1786966567694_508.jpg",
           "thumb": "./images/thumb_1786966567694_508.jpg"
+        },
+        {
+          "id": "i_1790710381104",
+          "name": "قريدس مفرز ١٦/٢٠ ",
+          "description": "",
+          "price": "10.5",
+          "currency": "$",
+          "unit": "كغ"
+        },
+        {
+          "id": "i_1790710430092",
+          "name": "سمك فيليه 5 بالميه ",
+          "description": "",
+          "price": "4.3",
+          "currency": "$",
+          "unit": "كغ"
         }
       ],
       "name": "مفرزات",
