@@ -9,7 +9,7 @@
           "id": "i_1785267836420",
           "name": "ببروني التغذية ",
           "description": "المنشأ لبنان\nالتعبئة ٤٥٠ غرام",
-          "price": "7",
+          "price": "7.5",
           "currency": "$",
           "unit": "",
           "image": "./images/orig_1785755699090_386.jpg",
@@ -19,11 +19,11 @@
           "id": "i_1785267976304",
           "name": "حبش مدخن اسباني Bocatel",
           "description": "المنشأ اسباني \nالتعبئة 3 كغ",
-          "price": "35",
+          "price": "35.5",
           "currency": "$",
           "image": "./images/orig_1785318349417_539.jpg",
           "thumb": "./images/thumb_1785318349417_539.jpg",
-          "unit": ""
+          "unit": "قالب "
         },
         {
           "id": "i_1785683643393",
