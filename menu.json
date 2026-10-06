@@ -433,10 +433,11 @@
               "id": "i_1784563557612",
               "name": "خردل اميرغو",
               "description": "خردل لبناني وزن 3.8 لتر ",
-              "price": "8.5",
+              "price": "8.75",
               "currency": "$",
               "image": "./images/orig_1785330614794_432.jpg",
-              "thumb": "./images/thumb_1785330614794_432.jpg"
+              "thumb": "./images/thumb_1785330614794_432.jpg",
+              "unit": ""
             },
             {
               "id": "i_1784563583479",
