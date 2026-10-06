@@ -412,6 +412,14 @@
               "currency": "$",
               "image": "./images/orig_1785328084171_803.jpg",
               "thumb": "./images/thumb_1785328084171_803.jpg"
+            },
+            {
+              "id": "i_1791285445569",
+              "name": "باربكيو ماستر شيف لبناني ",
+              "description": "",
+              "price": "8",
+              "currency": "$",
+              "unit": "غالون"
             }
           ],
           "name": "قسم الباربكيو ",
