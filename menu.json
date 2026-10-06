@@ -1216,7 +1216,9 @@
           "description": "",
           "price": "7.5",
           "currency": "$",
-          "unit": "$"
+          "unit": "$",
+          "image": "./images/orig_1791306029949_848.jpg",
+          "thumb": "./images/thumb_1791306029949_848.jpg"
         }
       ],
       "name": "مواد جافة (dry store)",
