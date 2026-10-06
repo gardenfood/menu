@@ -547,7 +547,9 @@
               "description": "",
               "price": "16",
               "currency": "$",
-              "unit": "غالون"
+              "unit": "غالون",
+              "image": "./images/orig_1791305214843_376.jpg",
+              "thumb": "./images/thumb_1791305214843_376.jpg"
             }
           ],
           "name": "قسم صوص البوفالو ",
