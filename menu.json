@@ -1069,6 +1069,30 @@
           "price": "33",
           "currency": "$",
           "unit": "كغ"
+        },
+        {
+          "id": "i_1791282749972",
+          "name": "قريدس سي بلو 16/20",
+          "description": "",
+          "price": "12",
+          "currency": "$",
+          "unit": "Kg"
+        },
+        {
+          "id": "i_1791282818798",
+          "name": "سالمون مدخن فرخ ",
+          "description": "",
+          "price": "34",
+          "currency": "$",
+          "unit": "Kg"
+        },
+        {
+          "id": "i_1791282863915",
+          "name": "Sسالمون مدخن فرخ ",
+          "description": "",
+          "price": "32",
+          "currency": "$",
+          "unit": "كغ"
         }
       ],
       "name": "مفرزات",
