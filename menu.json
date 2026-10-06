@@ -419,7 +419,9 @@
               "description": "",
               "price": "8",
               "currency": "$",
-              "unit": "غالون"
+              "unit": "غالون",
+              "image": "./images/orig_1791305589998_259.jpg",
+              "thumb": "./images/thumb_1791305589998_259.jpg"
             }
           ],
           "name": "قسم الباربكيو ",
