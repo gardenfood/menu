@@ -1188,6 +1188,14 @@
           "unit": "تنكة",
           "image": "./images/orig_1787046534519_883.jpg",
           "thumb": "./images/thumb_1787046534520_883.jpg"
+        },
+        {
+          "id": "i_1791283104619",
+          "name": "بندورة مقشرة ايطالي غرانورو ",
+          "description": "",
+          "price": "7.5",
+          "currency": "$",
+          "unit": "$"
         }
       ],
       "name": "مواد جافة (dry store)",
