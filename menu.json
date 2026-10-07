@@ -1093,7 +1093,9 @@
           "description": "",
           "price": "33",
           "currency": "$",
-          "unit": "كغ"
+          "unit": "كغ",
+          "image": "./images/orig_1791388587651_177.jpg",
+          "thumb": "./images/thumb_1791388587651_177.jpg"
         },
         {
           "id": "i_1791282749972",
