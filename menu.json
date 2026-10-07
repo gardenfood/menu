@@ -1097,7 +1097,9 @@
           "description": "",
           "price": "12",
           "currency": "$",
-          "unit": "Kg"
+          "unit": "Kg",
+          "image": "./images/orig_1791387965730_717.jpg",
+          "thumb": "./images/thumb_1791387965730_717.jpg"
         },
         {
           "id": "i_1791282818798",
