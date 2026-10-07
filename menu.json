@@ -1113,7 +1113,9 @@
           "description": "",
           "price": "32",
           "currency": "$",
-          "unit": "كغ"
+          "unit": "كغ",
+          "image": "./images/orig_1791387702891_112.jpg",
+          "thumb": "./images/thumb_1791387702891_112.jpg"
         }
       ],
       "name": "مفرزات",
