@@ -1682,6 +1682,30 @@
           "name": "سيروبات+ صوصات+بيوريه",
           "image": "./images/orig_1791636927723_634.jpg",
           "thumb": "./images/thumb_1791636927723_634.jpg"
+        },
+        {
+          "id": "sub_1791636959753",
+          "items": [
+            {
+              "id": "i_1791636973804",
+              "name": "هوت شوكلت مونين ٢ كغ ",
+              "description": "",
+              "price": "30",
+              "currency": "$",
+              "unit": "كيس "
+            },
+            {
+              "id": "i_1791637005382",
+              "name": "هوت شوكلت مومبانا ١كغ",
+              "description": "",
+              "price": "24",
+              "currency": "$",
+              "unit": "قطعه"
+            }
+          ],
+          "name": "هوت شوكلت ",
+          "image": "./images/orig_1791637010423_853.jpg",
+          "thumb": "./images/thumb_1791637010423_853.jpg"
         }
       ]
     },
