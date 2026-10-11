@@ -1790,7 +1790,9 @@
               "description": "",
               "price": "24",
               "currency": "$",
-              "unit": "قطعه"
+              "unit": "قطعه",
+              "image": "./images/orig_1791729961557_424.jpg",
+              "thumb": "./images/thumb_1791729961557_424.jpg"
             }
           ],
           "name": "هوت شوكلت ",
