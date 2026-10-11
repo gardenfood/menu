@@ -1780,7 +1780,9 @@
               "description": "",
               "price": "30",
               "currency": "$",
-              "unit": "كيس "
+              "unit": "كيس ",
+              "image": "./images/orig_1791729713089_750.jpg",
+              "thumb": "./images/thumb_1791729713089_750.jpg"
             },
             {
               "id": "i_1791637005382",
