@@ -1762,7 +1762,9 @@
               "description": "",
               "price": "35",
               "currency": "$",
-              "unit": "طرد"
+              "unit": "طرد",
+              "image": "./images/orig_1791729681700_41.jpg",
+              "thumb": "./images/thumb_1791729681700_41.jpg"
             }
           ],
           "name": "كريمة حلويات خفق",
