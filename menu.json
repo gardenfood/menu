@@ -1161,7 +1161,9 @@
           "description": "",
           "price": "6",
           "currency": "$",
-          "unit": "قطعه"
+          "unit": "قطعه",
+          "image": "./images/orig_1791818999626_862.jpg",
+          "thumb": "./images/thumb_1791818999626_862.jpg"
         }
       ],
       "name": "مفرزات",
