@@ -1299,7 +1299,9 @@
           "description": "سعه القطرميز ١٠ حبة ",
           "price": "19",
           "currency": "$",
-          "unit": "قطعه"
+          "unit": "قطعه",
+          "image": "./images/orig_1791819466712_825.jpg",
+          "thumb": "./images/thumb_1791819466712_825.jpg"
         }
       ],
       "name": "مواد جافة (dry store)",
