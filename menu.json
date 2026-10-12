@@ -1262,6 +1262,14 @@
           "unit": "$",
           "image": "./images/orig_1791306029949_848.jpg",
           "thumb": "./images/thumb_1791306029949_848.jpg"
+        },
+        {
+          "id": "i_1791818501792",
+          "name": "بطاطا شيبس اجنبي ",
+          "description": "",
+          "price": "9.5",
+          "currency": "$",
+          "unit": "كغ"
         }
       ],
       "name": "مواد جافة (dry store)",
