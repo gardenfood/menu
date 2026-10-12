@@ -1279,7 +1279,9 @@
           "description": "",
           "price": "9.5",
           "currency": "$",
-          "unit": "كغ"
+          "unit": "كغ",
+          "image": "./images/orig_1791819421837_895.jpg",
+          "thumb": "./images/thumb_1791819421837_895.jpg"
         },
         {
           "id": "i_1791818704917",
@@ -1287,7 +1289,9 @@
           "description": "",
           "price": "3.9",
           "currency": "$",
-          "unit": "1850 مصفى"
+          "unit": "1850 مصفى",
+          "image": "./images/orig_1791819436896_642.jpg",
+          "thumb": "./images/thumb_1791819436896_642.jpg"
         },
         {
           "id": "i_1791819422455",
