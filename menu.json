@@ -1154,6 +1154,14 @@
           "unit": "كغ",
           "image": "./images/orig_1791387702891_112.jpg",
           "thumb": "./images/thumb_1791387702891_112.jpg"
+        },
+        {
+          "id": "i_1791818562245",
+          "name": "كراب ياباني ٥٠٠ غرام",
+          "description": "",
+          "price": "6",
+          "currency": "$",
+          "unit": "قطعه"
         }
       ],
       "name": "مفرزات",
@@ -1270,6 +1278,14 @@
           "price": "9.5",
           "currency": "$",
           "unit": "كغ"
+        },
+        {
+          "id": "i_1791818704917",
+          "name": "ذرة حلوة تايلندي اوشا ",
+          "description": "",
+          "price": "3.9",
+          "currency": "$",
+          "unit": "1850 مصفى"
         }
       ],
       "name": "مواد جافة (dry store)",
