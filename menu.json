@@ -1852,7 +1852,9 @@
               "description": "",
               "price": "30",
               "currency": "$",
-              "unit": "٢ كغ "
+              "unit": "٢ كغ ",
+              "image": "./images/orig_1792506644599_312.jpg",
+              "thumb": "./images/thumb_1792506644599_312.jpg"
             },
             {
               "id": "i_1791819316439",
@@ -1860,7 +1862,9 @@
               "description": "",
               "price": "30",
               "currency": "$",
-              "unit": "٢ كغ"
+              "unit": "٢ كغ",
+              "image": "./images/orig_1792506647871_160.jpg",
+              "thumb": "./images/thumb_1792506647871_160.jpg"
             },
             {
               "id": "i_1791819347452",
@@ -1868,7 +1872,9 @@
               "description": "",
               "price": "30",
               "currency": "$",
-              "unit": "٢ كغ"
+              "unit": "٢ كغ",
+              "image": "./images/orig_1792506651519_147.jpg",
+              "thumb": "./images/thumb_1792506651519_147.jpg"
             }
           ],
           "name": "فراب مونين فرنسي ",
