@@ -12,11 +12,12 @@
     <meta name="theme-color" content="#0ca143">
     <title>إدارة Garden Food - لوحة التحكم</title>
 
-    <!-- الخطوط والمكتبات -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
+    <!-- الخطوط والمكتبات (crossorigin="anonymous" ضروري لتضمين الخط داخل الـ PDF) -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/modern-screenshot@4.7.0/dist/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="manifest" href="./manifest.json">
 
     <style>
@@ -50,9 +51,9 @@
            2. شاشة التحميل، الإشعارات، وتسجيل الدخول
            ========================================================= */
         .loader-overlay {
-            position: fixed; inset: 0; background: rgba(255,255,255,0.95); z-index: 10000;
+            position: fixed; inset: 0; background: #ffffff; z-index: 10000;
             display: none; justify-content: center; align-items: center; flex-direction: column;
-            font-weight: 900; color: var(--primary); font-size: 1.15rem; backdrop-filter: blur(5px);
+            font-weight: 900; color: var(--primary); font-size: 1.15rem;
             text-align: center; padding: 20px;
         }
         .spinner {
@@ -258,7 +259,7 @@
         .qe-sub-header { background: #f1f5f9; color: #475569; font-size: 0.92rem; font-weight: 900; padding: 8px 15px; border-bottom: 1px solid #e2e8f0; }
 
         /* =========================================================
-           6. قسم الفواتير، محفوظات الزبائن، والبحث السريع (مُطوّر)
+           6. قسم الفواتير، محفوظات الزبائن، والبحث السريع
            ========================================================= */
         .inv-segment-tabs {
             display: flex; background: #e2e8f0; padding: 5px; border-radius: 18px;
@@ -439,7 +440,7 @@
         .sticky-save-btn:active, .sticky-preview-btn:active { transform: scale(0.97); }
 
         /* =========================================================
-           7. معاينة الفاتورة A4 وتصدير PDF (بدون تقطّع حروف)
+           7. معاينة الفاتورة A4 وتصدير PDF (modern-screenshot + jsPDF)
            ========================================================= */
         .invoice-preview-container {
             background: #525659; padding: 16px 10px 40px; min-height: 100vh;
@@ -447,45 +448,65 @@
         }
         .invoice-actions {
             display: flex; justify-content: space-between; align-items: center; gap: 8px;
-            width: 100%; max-width: 210mm; margin-bottom: 16px; background: white;
+            width: 100%; max-width: 794px; margin-bottom: 16px; background: white;
             padding: 12px 14px; border-radius: 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             flex-wrap: wrap;
         }
         .invoice-actions-right { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
         .invoice-a4-wrapper { width: 100%; overflow-x: auto; display: flex; justify-content: center; }
 
-        /* ضبط الخط العربي وتفادي الصفحة الثانية الفارغة */
-        .invoice-a4, .invoice-a4 * {
-            font-family: 'Tajawal', sans-serif;
-            letter-spacing: 0 !important;
-            word-spacing: normal !important;
-        }
-
-        .invoice-a4 {
+        /* ورقة المعاينة وورقة التصدير بعرض A4 قياسي 794px */
+        .invoice-a4, .pdf-page-sheet {
             background: #ffffff;
-            width: 210mm;
-            height: auto;
-            padding: 16mm 15mm 18mm 15mm;
+            width: 794px;
+            direction: rtl;
+            color: var(--text-dark);
+            font-family: 'Tajawal', sans-serif;
+        }
+        .invoice-a4 {
+            min-height: 1123px;
+            padding: 46px 46px 52px 46px;
             box-shadow: 0 0 25px rgba(0,0,0,0.35);
             border-radius: 4px;
-            direction: rtl;
             flex-shrink: 0;
         }
-        .invoice-a4 header {
-            text-align: center; border-bottom: 4px solid var(--primary);
-            padding-bottom: 16px; margin-bottom: 22px;
+
+        /* ورقة التصدير لكل صفحة A4 */
+        .pdf-page-sheet {
+            height: 1123px;
+            padding: 46px 46px 56px 46px;
+            position: relative;
+            overflow: hidden;
         }
-        .invoice-a4 header h1 { color: var(--primary-dark); font-size: 2.2rem; margin-bottom: 6px; font-weight: 900; }
-        .invoice-a4 header p { color: #555; font-size: 1.05rem; font-weight: 700; margin: 0; }
+        .pdf-page-footer {
+            position: absolute;
+            bottom: 20px;
+            left: 46px;
+            right: 46px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #9ca3af;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 8px;
+        }
+
+        .inv-header {
+            text-align: center; border-bottom: 4px solid var(--primary);
+            padding-bottom: 16px; margin-bottom: 20px;
+        }
+        .inv-header h1 { color: var(--primary-dark); font-size: 2.15rem; margin-bottom: 6px; font-weight: 900; }
+        .inv-header p { color: #555; font-size: 1.05rem; font-weight: 700; margin: 0; }
         .inv-customer-pill {
             display: none; margin: 10px auto 0; background: var(--primary-light); color: var(--primary-dark);
-            padding: 6px 20px; border-radius: 50px; font-weight: 900; font-size: 1.05rem;
+            padding: 6px 22px; border-radius: 50px; font-weight: 900; font-size: 1.02rem;
             border: 1px solid #bbf7d0; width: fit-content;
         }
 
-        .invoice-table { width: 100%; border-collapse: collapse; font-size: 1.02rem; }
+        .invoice-table { width: 100%; border-collapse: collapse; font-size: 1rem; table-layout: fixed; }
         .invoice-table th, .invoice-table td {
-            padding: 11px 10px; text-align: right; border-bottom: 1px solid #e5e7eb; vertical-align: middle;
+            padding: 10px 9px; text-align: right; border-bottom: 1px solid #e5e7eb;
+            vertical-align: middle; word-wrap: break-word;
         }
         .invoice-table th {
             background-color: var(--primary-light); color: var(--primary-dark);
@@ -493,7 +514,7 @@
         }
         .invoice-table .section-row td {
             background-color: #f8fafc; color: var(--text-dark); font-weight: 900;
-            font-size: 1.15rem; padding-top: 16px; border-bottom: 2px solid #cbd5e1;
+            font-size: 1.12rem; padding-top: 14px; border-bottom: 2px solid #cbd5e1;
         }
         .invoice-table .price-cell {
             font-weight: 900; color: var(--primary-dark);
@@ -502,18 +523,19 @@
         .invoice-table tr { page-break-inside: avoid; break-inside: avoid; }
 
         .price-comparison { display: inline-flex; flex-direction: column; align-items: flex-end; gap: 2px; }
-        .old-price-strike { font-size: 0.85rem; color: #9ca3af; text-decoration: line-through; font-weight: 700; }
-        .new-price-highlight { font-size: 1.08rem; color: #dc2626; font-weight: 900; }
+        .old-price-strike { font-size: 0.84rem; color: #9ca3af; text-decoration: line-through; font-weight: 700; }
+        .new-price-highlight { font-size: 1.06rem; color: #dc2626; font-weight: 900; }
 
         @media print {
-            @page { size: A4; margin: 0; }
+            @page { size: A4; margin: 10mm; }
             body { background: white; padding: 0; margin: 0; overflow: visible; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .app-header, .bottom-nav, #saveAllBanner, .invoice-actions, .no-print, #adminPwaBtn, .export-sticky-bar { display: none !important; }
             .view { display: none !important; padding: 0 !important; }
             #view-invoice { display: block !important; padding: 0 !important; background: white; }
-            .invoice-preview-container { background: white; padding: 0; }
+            .invoice-preview-container { background: white; padding: 0; min-height: auto; }
             .invoice-a4-wrapper { overflow: visible; display: block; }
-            .invoice-a4 { box-shadow: none; width: 100%; margin: 0; padding: 14mm; border-radius: 0; }
+            .invoice-a4 { box-shadow: none; width: 100%; min-height: auto; margin: 0; padding: 0; border-radius: 0; }
+            .invoice-table thead { display: table-header-group; }
         }
 
         #adminPwaBtn {
@@ -572,7 +594,7 @@
     </div>
 
     <!-- =========================================================
-         3. واجهة الفواتير ومحفوظات الزبائن (مُطوّرة بالكامل)
+         3. واجهة الفواتير ومحفوظات الزبائن
          ========================================================= -->
     <div id="view-export" class="view no-print" style="padding-bottom: 185px;">
 
@@ -677,18 +699,18 @@
 
             <div class="invoice-a4-wrapper" id="invoiceA4Wrapper">
                 <div class="invoice-a4" id="printableA4">
-                    <header>
+                    <header class="inv-header" id="invHeader">
                         <h1 id="invStoreName">اسم المطعم</h1>
                         <p>قائمة الأسعار - تاريخ: <span dir="ltr" id="invDate"></span></p>
                         <div class="inv-customer-pill" id="invCustomerBadge"></div>
                     </header>
 
-                    <table class="invoice-table">
+                    <table class="invoice-table" id="invTable">
                         <thead>
                             <tr>
-                                <th style="width: 28%;">الاسم</th>
-                                <th style="width: 47%;">الوصف</th>
-                                <th style="width: 25%; text-align: left;">السعر</th>
+                                <th style="width: 26%;">الاسم</th>
+                                <th style="width: 46%;">الوصف</th>
+                                <th style="width: 28%; text-align: left;">السعر</th>
                             </tr>
                         </thead>
                         <tbody id="invTableBody"></tbody>
@@ -1444,7 +1466,6 @@
         /* =========================================================
            8. نظام الفواتير، محفوظات الزبائن، والبحث السريع
            ========================================================= */
-        // خريطة سريعة لكل منتجات المنيو الحالية بالـ ID
         function getAllMenuItemsMap() {
             const map = new Map();
             const defaultCur = appSettings.currency || 'ل.س';
@@ -1891,7 +1912,7 @@
         }
 
         /* =========================================================
-           9. بناء ورقة الفاتورة A4 وتصدير PDF الصحيح للغة العربية
+           9. بناء ورقة الفاتورة A4 وتصدير PDF (modern-screenshot + jsPDF)
            ========================================================= */
         function populateInvoiceDOM(customerName, itemIds, customPrices = {}, itemsSnapshot = {}) {
             const itemsMap = getAllMenuItemsMap();
@@ -1995,24 +2016,16 @@
             const ok = populateInvoiceDOM(inv.customerName, inv.itemIds || [], inv.customPrices || {}, inv.itemsSnapshot || {});
             if (!ok) return showToast('لم يتم العثور على منتجات هذه الفاتورة', 'error');
 
-            const invView = document.getElementById('view-invoice');
-            const exportView = document.getElementById('view-export');
             const loader = document.getElementById('loader');
             const loaderText = document.getElementById('loaderText');
-
             loaderText.innerText = `جاري تصدير فاتورة ${inv.customerName}...`;
             loader.style.display = 'flex';
 
-            // إظهار ورقة الفاتورة خلف شاشة التحميل ليقرأها html2canvas بدقة 100%
-            exportView.classList.remove('active');
-            invView.classList.add('active');
-
-            await new Promise(r => setTimeout(r, 120));
-            await exportInvoicePDF(inv.customerName, true);
-
-            invView.classList.remove('active');
-            exportView.classList.add('active');
-            loader.style.display = 'none';
+            try {
+                await exportInvoicePDF(inv.customerName, true);
+            } finally {
+                loader.style.display = 'none';
+            }
         }
 
         function saveFromPreview() {
@@ -2036,29 +2049,116 @@
 
         function printInvoice() { window.print(); }
 
-        // دالة تصدير PDF مضمونة بدون تقطّع حروف عربية وبدون صفحة بيضاء
+        // تصدير PDF احترافي بتقسيم صفحات A4 وتكرار الترويسة عبر modern-screenshot + jsPDF
         async function exportInvoicePDF(forcedName = null, keepLoaderControlled = false) {
             const loader = document.getElementById('loader');
             const loaderText = document.getElementById('loaderText');
-            const element = document.getElementById('printableA4');
-            const wrapper = document.getElementById('invoiceA4Wrapper');
 
             if (!keepLoaderControlled) {
-                loaderText.innerText = 'جاري إنشاء ملف PDF...';
+                loaderText.innerText = 'جاري تجهيز صفحات الفاتورة...';
                 loader.style.display = 'flex';
             }
 
-            // إزالة التركيز وتعطيل contenteditable مؤقتاً لمنع تقطّع الحروف العربية في html2canvas
             if (document.activeElement) document.activeElement.blur();
-            const editableEls = Array.from(element.querySelectorAll('[contenteditable="true"]'));
-            editableEls.forEach(el => el.removeAttribute('contenteditable'));
-            if (wrapper) wrapper.scrollLeft = 0;
+
+            const staging = document.createElement('div');
+            staging.style.cssText = 'position:fixed; top:0; left:0; width:794px; z-index:9990; background:#fff; pointer-events:none;';
+            document.body.appendChild(staging);
 
             try {
                 if (document.fonts && document.fonts.ready) {
                     await document.fonts.ready;
                 }
+
+                const PAGE_W = 794;
+                const PAGE_H = 1123;
+                const SAFE_BOTTOM = PAGE_H - 64;
+
+                const origHeader = document.getElementById('invHeader');
+                const origThead = document.querySelector('#invTable thead');
+                const origRows = Array.from(document.querySelectorAll('#invTableBody tr'));
+
+                const cleanClone = (node) => {
+                    const c = node.cloneNode(true);
+                    c.removeAttribute('id');
+                    c.removeAttribute('contenteditable');
+                    c.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+                    c.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+                    return c;
+                };
+
+                const pages = [];
+
+                function createPage(withMainHeader) {
+                    const page = document.createElement('div');
+                    page.className = 'pdf-page-sheet';
+                    if (withMainHeader) {
+                        page.appendChild(cleanClone(origHeader));
+                    }
+                    const table = document.createElement('table');
+                    table.className = 'invoice-table';
+                    table.appendChild(cleanClone(origThead));
+                    const tbody = document.createElement('tbody');
+                    table.appendChild(tbody);
+                    page.appendChild(table);
+                    staging.appendChild(page);
+                    pages.push(page);
+                    return { page, tbody };
+                }
+
+                let current = createPage(true);
+
+                // توزيع الصفوف على صفحات A4 بدون قص أي صف أو ترك عنوان قسم وحيداً
+                for (let i = 0; i < origRows.length; i++) {
+                    const rowClone = cleanClone(origRows[i]);
+                    current.tbody.appendChild(rowClone);
+
+                    const pageTop = current.page.getBoundingClientRect().top;
+                    const rowBottom = rowClone.getBoundingClientRect().bottom - pageTop;
+
+                    if (rowBottom > SAFE_BOTTOM && current.tbody.children.length > 1) {
+                        current.tbody.removeChild(rowClone);
+
+                        let orphanSection = null;
+                        const lastRow = current.tbody.lastElementChild;
+                        if (lastRow && lastRow.classList.contains('section-row')) {
+                            orphanSection = lastRow;
+                            current.tbody.removeChild(lastRow);
+                        }
+
+                        current = createPage(false);
+                        if (orphanSection) current.tbody.appendChild(orphanSection);
+                        current.tbody.appendChild(rowClone);
+                    }
+                }
+
+                // ترقيم الصفحات تلقائياً عند وجود أكثر من صفحة
+                if (pages.length > 1) {
+                    pages.forEach((p, idx) => {
+                        const footer = document.createElement('div');
+                        footer.className = 'pdf-page-footer';
+                        footer.innerText = `صفحة ${idx + 1} من ${pages.length}`;
+                        p.appendChild(footer);
+                    });
+                }
+
                 await new Promise(r => setTimeout(r, 80));
+
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait', compress: true });
+
+                for (let i = 0; i < pages.length; i++) {
+                    loaderText.innerText = `جاري تصدير الصفحة ${i + 1} من ${pages.length}...`;
+                    const imgData = await modernScreenshot.domToJpeg(pages[i], {
+                        scale: 2,
+                        quality: 0.95,
+                        backgroundColor: '#ffffff',
+                        width: PAGE_W,
+                        height: PAGE_H
+                    });
+                    if (i > 0) pdf.addPage();
+                    pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
+                }
 
                 const today = new Date().toISOString().slice(0, 10);
                 const rawCustomer = (forcedName || currentPreviewCustomerName || '').trim();
@@ -2067,29 +2167,12 @@
                     ? `GardenFood_${safeCustomer}_${today}.pdf`
                     : `GardenFood_Prices_${today}.pdf`;
 
-                const opt = {
-                    margin:      [6, 0, 6, 0],
-                    filename:    filename,
-                    image:       { type: 'jpeg', quality: 0.98 },
-                    html2canvas: {
-                        scale: 2,
-                        useCORS: true,
-                        scrollX: 0,
-                        scrollY: 0,
-                        windowWidth: 900,
-                        letterRendering: false
-                    },
-                    jsPDF:       { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                    pagebreak:   { mode: ['avoid-all', 'css', 'legacy'] }
-                };
-
-                await html2pdf().set(opt).from(element).save();
+                pdf.save(filename);
                 showToast("تم تحميل ملف PDF بنجاح 📥", "success");
             } catch (err) {
                 alert('حدث خطأ أثناء تصدير PDF: ' + err.message);
             } finally {
-                // إعادة خاصية التعديل السريع على الورقة
-                editableEls.forEach(el => el.setAttribute('contenteditable', 'true'));
+                staging.remove();
                 if (!keepLoaderControlled) loader.style.display = 'none';
             }
         }
