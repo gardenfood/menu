@@ -12,7 +12,7 @@
     <meta name="theme-color" content="#0ca143">
     <title>إدارة Garden Food - لوحة التحكم</title>
 
-    <!-- الخطوط والمكتبات (crossorigin="anonymous" ضروري لتضمين الخط داخل الـ PDF) -->
+    <!-- الخطوط والمكتبات -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
@@ -63,7 +63,6 @@
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* إشعار عائم سلس (Toast) */
         .toast {
             position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-120px);
             background: #111827; color: #fff; padding: 13px 22px; border-radius: 50px;
@@ -112,14 +111,20 @@
            3. الهيدر والتنقل السفلي والواجهات
            ========================================================= */
         .app-header {
-            background: var(--surface); padding: 20px; display: flex; justify-content: space-between;
+            background: var(--surface); padding: 18px 20px; display: flex; justify-content: space-between;
             align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.03); position: sticky; top: 0;
             z-index: 100; border-bottom-left-radius: var(--radius-lg); border-bottom-right-radius: var(--radius-lg);
+            gap: 10px;
         }
-        .app-header h1 { font-size: 1.35rem; font-weight: 900; }
+        .app-header h1 { font-size: 1.3rem; font-weight: 900; }
         .app-header-back {
             background: var(--primary-light); color: var(--primary); border: none; padding: 8px 15px;
             border-radius: 50px; font-weight: 900; font-size: 0.9rem; cursor: pointer; display: none;
+        }
+        .rate-pill {
+            background: #f0fdf4; border: 1.5px solid #bbf7d0; color: var(--primary-dark);
+            padding: 6px 12px; border-radius: 50px; font-size: 0.82rem; font-weight: 900;
+            display: flex; align-items: center; gap: 5px; cursor: pointer; white-space: nowrap;
         }
 
         .bottom-nav {
@@ -186,7 +191,6 @@
         .fab-btn:active { transform: scale(0.95); }
         .fab-btn.secondary { background: #111827; box-shadow: 0 10px 20px rgba(17, 24, 39, 0.2); }
 
-        /* النوافذ السفلية والقص */
         .sheet-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 999; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
         .sheet-overlay.active { opacity: 1; pointer-events: all; }
         .bottom-sheet {
@@ -205,7 +209,22 @@
             width: 100%; padding: 15px; border-radius: var(--radius-md); border: 2px solid #eee;
             font-size: 1rem; font-weight: 700; outline: none; background: var(--bg);
         }
-        .input-group input:focus, .input-group textarea:focus { border-color: var(--primary); background: var(--surface); }
+        .input-group input:focus, .input-group textarea:focus, .input-group select:focus { border-color: var(--primary); background: var(--surface); }
+
+        .toggle-setting-row {
+            display: flex; justify-content: space-between; align-items: center; gap: 12px;
+            background: var(--bg); padding: 14px 16px; border-radius: var(--radius-md);
+            margin-bottom: 15px; border: 2px solid #eee;
+        }
+        .toggle-setting-row strong { display: block; font-size: 0.96rem; color: var(--text-dark); }
+        .toggle-setting-row small { display: block; font-size: 0.8rem; color: var(--text-muted); font-weight: 700; margin-top: 2px; }
+        .switch-input { width: 22px; height: 22px; accent-color: var(--primary); cursor: pointer; flex-shrink: 0; }
+
+        .live-rate-box {
+            background: var(--primary-light); border: 1.5px solid #bbf7d0; border-radius: var(--radius-md);
+            padding: 14px 16px; margin-bottom: 15px; display: flex; justify-content: space-between;
+            align-items: center; gap: 10px; flex-wrap: wrap;
+        }
 
         .image-upload-box {
             background: var(--bg); border: 2px dashed #cbd5e1; border-radius: var(--radius-lg);
@@ -223,7 +242,7 @@
         .crop-btn.cancel { background: #444; color: white; }
 
         /* =========================================================
-           5. التعديل السريع للأسعار (أكورديون)
+           5. التعديل السريع للأسعار (أكورديون + اختيار العملة)
            ========================================================= */
         .accordion-header {
             background: var(--primary-light); color: var(--primary-dark); padding: 16px 20px;
@@ -241,25 +260,29 @@
         .accordion-content.active { display: block; animation: slideDown 0.25s ease-out; }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 
-        .qe-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; border-bottom: 1px solid #f1f5f9; }
+        .qe-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 12px 14px; border-bottom: 1px solid #f1f5f9; flex-wrap: wrap; }
         .qe-row:last-child { border-bottom: none; }
-        .qe-name { font-weight: 800; font-size: 0.98rem; color: var(--text-dark); flex: 1; padding-left: 10px; }
+        .qe-name { font-weight: 800; font-size: 0.96rem; color: var(--text-dark); flex: 1; min-width: 120px; }
         .qe-input-wrapper {
-            display: flex; align-items: center; gap: 6px; background: var(--bg);
-            border: 2px solid #e2e8f0; border-radius: 12px; padding: 5px 10px; transition: var(--transition);
+            display: flex; align-items: center; gap: 5px; background: var(--bg);
+            border: 2px solid #e2e8f0; border-radius: 12px; padding: 4px 8px; transition: var(--transition);
         }
         .qe-input-wrapper:focus-within { border-color: var(--primary); background: white; box-shadow: 0 0 0 3px var(--primary-light); }
         .qe-input-wrapper.changed { background: var(--warning-bg) !important; border-color: var(--warning-border) !important; }
         .qe-input {
-            border: none; background: transparent; font-size: 1.05rem; font-weight: 900;
-            color: var(--primary-dark); width: 80px; text-align: center; outline: none; direction: ltr;
+            border: none; background: transparent; font-size: 1.02rem; font-weight: 900;
+            color: var(--primary-dark); width: 74px; text-align: center; outline: none; direction: ltr;
         }
         .qe-input::-webkit-outer-spin-button, .qe-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        .qe-currency { font-weight: 800; color: var(--text-muted); font-size: 0.83rem; }
+        .qe-cur-select {
+            border: 1px solid #cbd5e1; background: #fff; border-radius: 8px; padding: 3px 6px;
+            font-weight: 900; font-size: 0.84rem; color: var(--text-dark); outline: none; cursor: pointer;
+        }
+        .qe-unit { font-weight: 800; color: var(--text-muted); font-size: 0.8rem; white-space: nowrap; }
         .qe-sub-header { background: #f1f5f9; color: #475569; font-size: 0.92rem; font-weight: 900; padding: 8px 15px; border-bottom: 1px solid #e2e8f0; }
 
         /* =========================================================
-           6. قسم الفواتير، محفوظات الزبائن، والبحث السريع
+           6. قسم الفواتير، محفوظات الزبائن، والمنتجات اليدوية
            ========================================================= */
         .inv-segment-tabs {
             display: flex; background: #e2e8f0; padding: 5px; border-radius: 18px;
@@ -279,7 +302,6 @@
             border-radius: 20px; font-size: 0.8rem; font-weight: 900;
         }
 
-        /* شريط البحث الموحد */
         .search-box-wrapper { position: relative; margin-bottom: 14px; }
         .search-input {
             width: 100%; padding: 14px 44px 14px 42px; border-radius: var(--radius-md);
@@ -296,7 +318,6 @@
         }
         .clear-search-btn.visible { display: flex; }
 
-        /* بطاقات محفوظات الزبائن */
         .saved-customer-card {
             background: var(--surface); border-radius: 20px; padding: 16px; margin-bottom: 14px;
             border: 1px solid #e5e7eb; box-shadow: 0 4px 14px rgba(0,0,0,0.03);
@@ -311,6 +332,7 @@
             background: #f1f5f9; color: #334155;
         }
         .sc-badge.special { background: var(--warning-bg); color: #92400e; }
+        .sc-badge.manual { background: var(--info-light); color: #1d4ed8; }
 
         .sc-actions { display: grid; grid-template-columns: 1.3fr 1fr 1fr auto; gap: 8px; }
         .sc-btn {
@@ -329,7 +351,6 @@
             text-align: center; border: 2px dashed #cbd5e1; color: var(--text-muted);
         }
 
-        /* محرر فاتورة الزبون */
         .editing-banner {
             background: #eff6ff; border: 2px solid #93c5fd; color: #1e40af; padding: 12px 15px;
             border-radius: 16px; margin-bottom: 14px; display: none; justify-content: space-between;
@@ -354,7 +375,43 @@
         }
         .customer-name-input:focus { border-color: var(--primary); background: white; }
 
-        /* فلاتر سريعة للمنتجات */
+        /* بطاقة إضافة منتج يدوي غير موجود بالمنيو */
+        .manual-item-card {
+            background: var(--surface); border-radius: 20px; padding: 14px; margin-bottom: 14px;
+            border: 2px dashed #93c5fd; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.06);
+        }
+        .manual-card-header {
+            display: flex; justify-content: space-between; align-items: center; cursor: pointer;
+            font-weight: 900; color: #1d4ed8; font-size: 0.98rem;
+        }
+        .manual-form-body { margin-top: 12px; display: none; }
+        .manual-form-body.open { display: block; animation: slideDown 0.2s ease-out; }
+        .manual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+        .manual-grid-3 { display: grid; grid-template-columns: 1.3fr 1fr 0.9fr; gap: 8px; margin-bottom: 10px; }
+        .manual-input {
+            width: 100%; padding: 10px 12px; border-radius: 12px; border: 2px solid #e2e8f0;
+            background: var(--bg); font-size: 0.92rem; font-weight: 700; outline: none;
+        }
+        .manual-input:focus { border-color: var(--info); background: #fff; }
+        .manual-actions-row { display: flex; gap: 8px; }
+        .btn-manual-add {
+            flex: 1; background: #1d4ed8; color: #fff; border: none; padding: 11px 14px;
+            border-radius: 12px; font-weight: 900; font-size: 0.92rem; cursor: pointer;
+        }
+        .btn-manual-cancel {
+            background: #f1f5f9; color: #475569; border: none; padding: 11px 14px;
+            border-radius: 12px; font-weight: 800; font-size: 0.88rem; cursor: pointer; display: none;
+        }
+        .manual-items-list { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+        .manual-chip-row {
+            background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 13px; padding: 9px 11px;
+            display: flex; justify-content: space-between; align-items: center; gap: 8px;
+        }
+        .manual-chip-info { flex: 1; min-width: 0; }
+        .manual-chip-title { font-weight: 900; font-size: 0.92rem; color: #1e3a8a; }
+        .manual-chip-sub { font-size: 0.8rem; font-weight: 700; color: #475569; margin-top: 2px; }
+        .manual-chip-btns { display: flex; gap: 5px; }
+
         .filter-chips { display: flex; gap: 8px; margin-bottom: 12px; overflow-x: auto; padding-bottom: 2px; }
         .filter-chip {
             background: var(--surface); border: 2px solid #e2e8f0; color: #475569; padding: 7px 14px;
@@ -375,7 +432,6 @@
             padding: 6px 12px; border-radius: 10px; font-weight: 800; font-size: 0.82rem; cursor: pointer;
         }
 
-        /* شجرة المنتجات داخل المحرر */
         .export-tree {
             background: var(--surface); border-radius: var(--radius-lg); padding: 12px;
             border: 1px solid #eee; box-shadow: 0 4px 15px rgba(0,0,0,0.03);
@@ -419,7 +475,6 @@
         .custom-price-input::placeholder { color: #94a3b8; font-weight: 700; font-size: 0.78rem; }
         .custom-price-cur { font-size: 0.78rem; font-weight: 800; color: var(--text-muted); white-space: nowrap; }
 
-        /* شريط أزرار الحفظ والتصدير العائم فوق القائمة السفلية */
         .export-sticky-bar {
             position: fixed; bottom: 88px; left: 14px; right: 14px;
             display: none; gap: 10px; z-index: 95; max-width: 720px; margin: 0 auto;
@@ -453,9 +508,17 @@
             flex-wrap: wrap;
         }
         .invoice-actions-right { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .inv-cur-switch {
+            display: inline-flex; background: #f1f5f9; padding: 3px; border-radius: 50px; border: 1px solid #e2e8f0;
+        }
+        .inv-cur-btn {
+            border: none; background: transparent; padding: 6px 12px; border-radius: 50px;
+            font-weight: 900; font-size: 0.82rem; color: #475569; cursor: pointer; transition: var(--transition);
+        }
+        .inv-cur-btn.active { background: var(--primary); color: #fff; }
+
         .invoice-a4-wrapper { width: 100%; overflow-x: auto; display: flex; justify-content: center; }
 
-        /* ورقة المعاينة وورقة التصدير بعرض A4 قياسي 794px */
         .invoice-a4, .pdf-page-sheet {
             background: #ffffff;
             width: 794px;
@@ -471,7 +534,6 @@
             flex-shrink: 0;
         }
 
-        /* ورقة التصدير لكل صفحة A4 */
         .pdf-page-sheet {
             height: 1123px;
             padding: 46px 46px 56px 46px;
@@ -492,8 +554,10 @@
         }
 
         .inv-header {
-            text-align: center; border-bottom: 4px solid var(--primary);
-            padding-bottom: 16px; margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--primary);
+            padding-bottom: 16px;
+            margin-bottom: 20px;
         }
         .inv-header h1 { color: var(--primary-dark); font-size: 2.15rem; margin-bottom: 6px; font-weight: 900; }
         .inv-header p { color: #555; font-size: 1.05rem; font-weight: 700; margin: 0; }
@@ -565,9 +629,13 @@
 
     <!-- الهيدر العلوي -->
     <div class="app-header no-print">
-        <div style="display:flex; align-items:center; gap:12px;">
+        <div style="display:flex; align-items:center; gap:10px; min-width:0;">
             <button class="app-header-back" id="adminBackBtn" onclick="goBackAdminLevel()">رجوع</button>
             <h1 id="headerTitle">الأقسام 🗂️</h1>
+        </div>
+        <div class="rate-pill" id="headerRatePill" onclick="refreshLiveUsdRate(true)" title="اضغط لتحديث سعر الصرف">
+            <span>💵</span>
+            <span id="headerRateVal" dir="ltr">...</span>
         </div>
     </div>
 
@@ -580,14 +648,14 @@
     </div>
 
     <!-- =========================================================
-         2. واجهة التعديل السريع للأسعار
+         2. واجهة التعديل السريع للأسعار والعملة
          ========================================================= -->
     <div id="view-quickedit" class="view no-print" style="padding-bottom: 120px;">
         <div style="background: white; padding: 15px; border-radius: var(--radius-lg); margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); display:flex; align-items:center; gap:12px; border: 1px solid #eee;">
             <div style="font-size:2rem; background: var(--primary-light); width: 50px; height: 50px; display:flex; justify-content:center; align-items:center; border-radius: 16px;">⚡</div>
             <div>
-                <h3 style="font-weight:900; color:var(--primary); font-size:1.1rem; margin-bottom:3px;">التعديل السريع للأسعار</h3>
-                <p style="font-size:0.85rem; color:var(--text-muted); font-weight:700; line-height: 1.4;">اضغط على القسم واكتب السعر مباشرة.</p>
+                <h3 style="font-weight:900; color:var(--primary); font-size:1.1rem; margin-bottom:3px;">التعديل السريع للأسعار والعملة</h3>
+                <p style="font-size:0.85rem; color:var(--text-muted); font-weight:700; line-height: 1.4;">اضغط على القسم، اكتب السعر بالدولار ($) أو الليرة (ل.س) واختر العملة مباشرة.</p>
             </div>
         </div>
         <div id="quickEditContainer"></div>
@@ -626,13 +694,11 @@
 
         <!-- ب) قسم إنشاء / تعديل فاتورة مخصصة -->
         <div id="exportSubBuilder" style="display:none;">
-            <!-- شريط تنبيه عند تعديل زبون محفوظ -->
             <div class="editing-banner" id="editingBanner">
                 <span id="editingBannerText">جاري تعديل فاتورة</span>
                 <button onclick="startNewCustomerInvoice()">✖️ فاتورة جديدة</button>
             </div>
 
-            <!-- اسم الزبون -->
             <div class="customer-name-card">
                 <label for="invCustomerName">👤 اسم الزبون / القائمة المخصصة</label>
                 <input type="text" id="invCustomerName" class="customer-name-input"
@@ -640,21 +706,50 @@
                        oninput="editorState.customerName = this.value">
             </div>
 
-            <!-- بحث سريع في المنتجات -->
+            <!-- إضافة منتج كتابي غير موجود بالمنيو -->
+            <div class="manual-item-card">
+                <div class="manual-card-header" onclick="toggleManualForm()">
+                    <span>✍️ إضافة منتج يدوي (غير موجود بالمنيو) <span class="count-pill" id="manualCountBadge">0</span></span>
+                    <span id="manualToggleArrow">➕</span>
+                </div>
+
+                <div class="manual-form-body" id="manualFormBody">
+                    <div class="manual-grid">
+                        <input type="text" id="mName" class="manual-input" placeholder="اسم المنتج *">
+                        <input type="text" id="mSection" class="manual-input" placeholder="القسم (افتراضي: أصناف إضافية)">
+                    </div>
+                    <div style="margin-bottom: 8px;">
+                        <input type="text" id="mDesc" class="manual-input" placeholder="الوصف / التفاصيل (اختياري)">
+                    </div>
+                    <div class="manual-grid-3">
+                        <input type="number" step="any" id="mPrice" class="manual-input" placeholder="السعر *" style="direction:ltr; text-align:center;">
+                        <input type="text" id="mUnit" class="manual-input" placeholder="الوحدة (كغ..)">
+                        <select id="mCurrency" class="manual-input">
+                            <option value="$">$</option>
+                            <option value="ل.س">ل.س</option>
+                        </select>
+                    </div>
+                    <div class="manual-actions-row">
+                        <button type="button" class="btn-manual-add" id="btnManualSubmit" onclick="addOrUpdateManualItem()">➕ إضافة للفاتورة</button>
+                        <button type="button" class="btn-manual-cancel" id="btnManualCancel" onclick="cancelManualEdit()">إلغاء</button>
+                    </div>
+                </div>
+
+                <div class="manual-items-list" id="manualItemsList"></div>
+            </div>
+
             <div class="search-box-wrapper">
                 <span class="search-icon">🔍</span>
                 <input type="text" id="quickSearchInput" class="search-input" placeholder="بحث سريع عن منتج أو قسم..." oninput="onBuilderSearchInput()">
                 <button class="clear-search-btn" id="clearSearchBtn" onclick="clearProductSearch()">✕</button>
             </div>
 
-            <!-- فلاتر سريعة -->
             <div class="filter-chips">
                 <button class="filter-chip active" id="chipAll" onclick="setBuilderFilter('all')">الكل</button>
                 <button class="filter-chip" id="chipSelected" onclick="setBuilderFilter('selected')">المحددة (<span id="chipSelectedNum">0</span>)</button>
                 <button class="filter-chip" id="chipModified" onclick="setBuilderFilter('modified')">أسعار خاصة (<span id="chipModifiedNum">0</span>)</button>
             </div>
 
-            <!-- أدوات التحديد -->
             <div class="export-toolbar">
                 <label class="toolbar-check">
                     <input type="checkbox" id="selectAllExport" onchange="toggleAllVisibleExport(this)">
@@ -663,7 +758,6 @@
                 <button class="btn-reset-prices" onclick="resetEditorCustomPrices()">↺ تصفير الأسعار الخاصة</button>
             </div>
 
-            <!-- شجرة المنتجات -->
             <div id="exportTreeContainer" class="export-tree"></div>
             <div id="emptyExportSearch" style="display:none; text-align:center; padding:30px; font-weight:800; color:var(--text-muted);">
                 لا توجد منتجات مطابقة حالياً 😕
@@ -671,7 +765,7 @@
         </div>
     </div>
 
-    <!-- شريط الحفظ والمعاينة العائم (يظهر فقط داخل محرر الفاتورة) -->
+    <!-- شريط الحفظ والمعاينة العائم -->
     <div id="exportStickyBar" class="export-sticky-bar no-print">
         <button class="sticky-save-btn" onclick="saveCurrentCustomerInvoice()">
             💾 حفظ للزبون
@@ -689,6 +783,10 @@
             <div class="invoice-actions no-print">
                 <button class="btn-outline" onclick="closeInvoicePreview()">🔙 رجوع</button>
                 <div class="invoice-actions-right">
+                    <div class="inv-cur-switch" title="تبديل عملة عرض الفاتورة">
+                        <button class="inv-cur-btn active" id="invCurOrigBtn" onclick="setInvoiceCurrencyMode('original')">الأصلي ($)</button>
+                        <button class="inv-cur-btn" id="invCurSypBtn" onclick="setInvoiceCurrencyMode('syp')">بالسوري (ل.س)</button>
+                    </div>
                     <button class="btn-outline" id="invQuickSaveBtn" onclick="saveFromPreview()" style="border-color:#cbd5e1;">💾 حفظ</button>
                     <button class="btn-outline" onclick="printInvoice()" title="طباعة" style="padding:10px 14px;">🖨️</button>
                     <button class="btn-primary" style="margin:0; width:auto; padding:11px 22px; border-radius:50px;" onclick="exportInvoicePDF()">
@@ -725,6 +823,50 @@
          ========================================================= -->
     <div id="view-settings" class="view no-print">
         <div class="card" style="flex-direction: column; align-items: stretch; gap: 0;">
+            <div class="section-title">💵 إعدادات العملة والتحويل التلقائي (دولار ↔ ل.س)</div>
+
+            <div class="live-rate-box">
+                <div>
+                    <div style="font-weight:900; color:var(--primary-dark); font-size:0.95rem;">سعر الصرف المباشر الآن</div>
+                    <div style="font-size:0.8rem; font-weight:700; color:#475569;" id="liveRateSourceTxt">جاري الجلب...</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-weight:900; font-size:1.25rem; color:var(--primary-dark);" dir="ltr" id="settingsLiveRateVal">...</span>
+                    <button class="btn-outline" style="padding:6px 12px; font-size:0.82rem;" onclick="refreshLiveUsdRate(true)">🔄 تحديث</button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>العملة الافتراضية للمنتجات الجديدة</label>
+                <select id="sCurrency" onchange="updateSetting('currency', this.value)">
+                    <option value="$">الدولار الأمريكي ($)</option>
+                    <option value="ل.س">الليرة السورية (ل.س)</option>
+                </select>
+            </div>
+
+            <div class="toggle-setting-row">
+                <div>
+                    <strong>إظهار زر التحويل ($ ↔ ل.س) في واجهة الزبون</strong>
+                    <small>يعرض الأسعار بالدولار افتراضياً ويتيح للزبون تحويلها للسوري بضغطة زر.</small>
+                </div>
+                <input type="checkbox" class="switch-input" id="sEnableCurToggle" onchange="updateSetting('enable_currency_toggle', this.checked)">
+            </div>
+
+            <div class="input-group">
+                <label>سعر الصرف الاحتياطي (ل.س) — يُستخدم فقط عند تعطل المصادر المباشرة</label>
+                <input type="number" step="any" id="sFallbackRate" placeholder="مثال: 152" style="direction:ltr; text-align:right;" oninput="updateSetting('fallback_usd_rate', Number(this.value) || 0)">
+            </div>
+
+            <div class="input-group">
+                <label>تقريب الأسعار عند التحويل للّيرة السورية</label>
+                <select id="sSypRound" onchange="updateSetting('syp_round_step', Number(this.value))">
+                    <option value="0">بدون تقريب (السعر الدقيق)</option>
+                    <option value="100">لأقرب 100 ل.س</option>
+                    <option value="500">لأقرب 500 ل.س</option>
+                    <option value="1000">لأقرب 1,000 ل.س</option>
+                </select>
+            </div>
+
             <div class="section-title">✨ الهوية والأرقام</div>
             <label style="font-weight:800; margin-bottom:10px; display:block;">شعار المطعم (اللوغو)</label>
             <div class="image-upload-box">
@@ -738,7 +880,6 @@
             <div class="input-group"><label>الوصف التسويقي (الاحترافي)</label><textarea id="sHero" rows="3" oninput="updateSetting('hero_subtitle', this.value)"></textarea></div>
             <div class="input-group"><label>رقم الواتساب (بدون +)</label><input type="text" id="sWhatsApp" oninput="updateSetting('whatsapp_number', this.value)"></div>
             <div class="input-group"><label>رسالة الواتساب التلقائية</label><textarea id="sMsg" rows="2" oninput="updateSetting('whatsapp_template', this.value)"></textarea></div>
-            <div class="input-group"><label>العملة الافتراضية للجميع</label><input type="text" id="sCurrency" oninput="updateSetting('currency', this.value)"></div>
 
             <div class="section-title">🎵 المؤثرات الصوتية</div>
             <div class="image-upload-box">
@@ -767,13 +908,13 @@
         <div class="input-group"><label>اسم المنتج</label><input type="text" id="pName"></div>
         <div class="input-group"><label>الوصف</label><textarea id="pDesc" rows="2"></textarea></div>
         <div style="display: flex; gap: 10px;">
-            <div class="input-group" style="flex: 2;"><label>السعر</label><input type="number" id="pPrice"></div>
+            <div class="input-group" style="flex: 2;"><label>السعر</label><input type="number" step="any" id="pPrice" style="direction:ltr; text-align:center;"></div>
             <div class="input-group" style="flex: 1;"><label>الوحدة</label><input type="text" id="pUnit" placeholder="كغ، حبة.."></div>
             <div class="input-group" style="flex: 1;">
                 <label>العملة</label>
                 <select id="pCurrency">
-                    <option value="ل.س">ل.س</option>
                     <option value="$">$</option>
+                    <option value="ل.س">ل.س</option>
                 </select>
             </div>
         </div>
@@ -824,29 +965,35 @@
         let baseMenuData = null, baseSettingsData = null;
         let initialMenuSha = null, initialSettingsSha = null;
 
-        // متغيرات سجل محفوظات الفواتير (محلي + سحابي اختياري)
+        // سعر الصرف المباشر كما هو بدون تعديل
+        let liveUsdRate = 0;
+        let liveRateSource = '';
+
         let savedInvoices = [];
         let invoicesDirty = false;
-        let currentExportSubTab = 'saved'; // 'saved' | 'builder'
+        let currentExportSubTab = 'saved';
         let currentPreviewCustomerName = '';
         let previewReturnSubTab = 'builder';
+        let invoiceCurrencyMode = 'original'; // 'original' | 'syp'
+        let currentPreviewPayload = null;
 
-        // حالة محرر فاتورة الزبون (تحفظ الاختيارات أثناء البحث والفلترة)
         let editorState = {
             invoiceId: null,
             customerName: '',
             selectedIds: new Set(),
             customPrices: {},
-            filterMode: 'all', // 'all' | 'selected' | 'modified'
+            manualItems: [],
+            filterMode: 'all',
             searchQuery: ''
         };
+        let editingManualItemId = null;
 
         let tempUploads = { product: null, category: null, settings: null, audio: null };
         let cropperInstance = null, currentCropType = null;
         let adminLevel = 'main', currentAdminCatId = null, currentAdminSubId = null, editId = null;
 
         /* =========================================================
-           2. دوال مساعدة عامة
+           2. دوال مساعدة عامة + جلب سعر الصرف المباشر
            ========================================================= */
         function utoa(str) { return btoa(unescape(encodeURIComponent(str))); }
         function atou(str) { return decodeURIComponent(escape(atob(str))); }
@@ -866,6 +1013,76 @@
                 .replace(/ة/g, 'ه')
                 .replace(/ى/g, 'ي')
                 .trim();
+        }
+
+        function parseCleanNumber(val) {
+            return Number(String(val ?? '').replace(/,/g, '').trim());
+        }
+
+        function formatNumberClean(num) {
+            const n = parseCleanNumber(num);
+            if (!isFinite(n)) return String(num);
+            const rounded = Math.round(n * 100) / 100;
+            return Number.isInteger(rounded)
+                ? rounded.toLocaleString('en-US')
+                : rounded.toLocaleString('en-US', { maximumFractionDigits: 2 });
+        }
+
+        function getEffectiveUsdRate() {
+            return liveUsdRate > 0 ? liveUsdRate : (Number(appSettings.fallback_usd_rate) || 0);
+        }
+
+        function convertUsdToSyp(usdPrice) {
+            const rate = getEffectiveUsdRate();
+            const val = parseCleanNumber(usdPrice);
+            if (!rate || !isFinite(val)) return val;
+            let syp = val * rate;
+            const step = Number(appSettings.syp_round_step) || 0;
+            if (step > 0) syp = Math.round(syp / step) * step;
+            else syp = Math.round(syp * 100) / 100;
+            return syp;
+        }
+
+        async function refreshLiveUsdRate(showFeedback = false) {
+            const headerVal = document.getElementById('headerRateVal');
+            const settingsVal = document.getElementById('settingsLiveRateVal');
+            const sourceTxt = document.getElementById('liveRateSourceTxt');
+
+            if (headerVal) headerVal.innerText = '...';
+            try {
+                // المصدر الأساسي: أخبار الليرة
+                const res = await fetch("https://liranews.info/api/public/v1/price/usdsypd", { cache: 'no-store' });
+                const data = await res.json();
+                const rate = Number(data && data.usdsypd && data.usdsypd.sell);
+                if (isFinite(rate) && rate > 0) {
+                    liveUsdRate = rate;
+                    liveRateSource = 'أخبار الليرة (مباشر)';
+                } else throw new Error('Invalid primary rate');
+            } catch (err) {
+                try {
+                    // مصدر احتياطي: ليرا سكوب
+                    const res = await fetch("https://lirascope.syria-cloud.sy/api/v1/rates/latest?currencies=USD", { cache: 'no-store' });
+                    const data = await res.json();
+                    const rate = Number(data && data.rates && data.rates[0] && data.rates[0].sell);
+                    if (isFinite(rate) && rate > 0) {
+                        liveUsdRate = rate;
+                        liveRateSource = 'ليرا سكوب (احتياطي)';
+                    } else throw new Error('Invalid backup rate');
+                } catch (e) {
+                    liveUsdRate = 0;
+                    liveRateSource = 'تعذر الاتصال (يُستخدم السعر الاحتياطي)';
+                }
+            }
+
+            const eff = getEffectiveUsdRate();
+            const displayStr = eff > 0 ? `${formatNumberClean(eff)} ل.س` : 'غير متوفر';
+            if (headerVal) headerVal.innerText = displayStr;
+            if (settingsVal) settingsVal.innerText = displayStr;
+            if (sourceTxt) sourceTxt.innerText = liveRateSource;
+
+            if (showFeedback) {
+                showToast(eff > 0 ? `سعر الصرف الحالي: ${displayStr}` : 'تعذر جلب سعر الصرف', eff > 0 ? 'success' : 'error');
+            }
         }
 
         let toastTimer = null;
@@ -924,7 +1141,6 @@
             return res.json();
         }
 
-        // دالة آمنة لملف المحفوظات (لا تسجل خروج إذا لم يكن invoices.json موجوداً بعد)
         async function ghApiOptional(path, method = 'GET', body = null) {
             const options = {
                 method,
@@ -970,9 +1186,12 @@
         async function loadData() {
             document.getElementById('loader').style.display = 'flex';
             document.getElementById('loaderText').innerText = 'جاري تحميل البيانات...';
+            refreshLiveUsdRate(false);
             try {
                 const sData = await ghApi('settings.json');
                 appSettings = JSON.parse(atou(sData.content));
+                if (typeof appSettings.enable_currency_toggle === 'undefined') appSettings.enable_currency_toggle = true;
+                if (typeof appSettings.syp_round_step === 'undefined') appSettings.syp_round_step = 0;
                 baseSettingsData = JSON.parse(JSON.stringify(appSettings));
                 initialSettingsSha = sData.sha;
                 populateSettingsUI();
@@ -983,7 +1202,6 @@
                 baseMenuData = JSON.parse(JSON.stringify(menuData));
                 initialMenuSha = mData.sha;
 
-                // تحميل سجل محفوظات الزبائن (دمج المحلي مع السحابي إن وجد)
                 savedInvoices = loadLocalInvoices();
                 try {
                     const invData = await ghApiOptional('invoices.json');
@@ -994,7 +1212,7 @@
                             persistLocalInvoices();
                         }
                     }
-                } catch (invErr) { /* تجاهل بهدوء والاعتماد على المحلي */ }
+                } catch (invErr) {}
                 updateSavedInvoicesBadge();
 
                 safeReplaceState({ view: 'structure', level: 'main', catId: null, subId: null, title: 'الأقسام 🗂️' });
@@ -1091,8 +1309,21 @@
            5. الإعدادات والصور وقص الصور
            ========================================================= */
         function populateSettingsUI() {
-            const map = { sName: 'store_name', sDesc: 'store_desc', sHero: 'hero_subtitle', sWhatsApp: 'whatsapp_number', sMsg: 'whatsapp_template', sCurrency: 'currency' };
+            const map = { sName: 'store_name', sDesc: 'store_desc', sHero: 'hero_subtitle', sWhatsApp: 'whatsapp_number', sMsg: 'whatsapp_template' };
             for (let id in map) if (document.getElementById(id)) document.getElementById(id).value = appSettings[map[id]] || '';
+
+            const curSel = document.getElementById('sCurrency');
+            if (curSel) curSel.value = (appSettings.currency === 'ل.س') ? 'ل.س' : '$';
+
+            const togEl = document.getElementById('sEnableCurToggle');
+            if (togEl) togEl.checked = appSettings.enable_currency_toggle !== false;
+
+            const fbEl = document.getElementById('sFallbackRate');
+            if (fbEl) fbEl.value = appSettings.fallback_usd_rate || '';
+
+            const rndEl = document.getElementById('sSypRound');
+            if (rndEl) rndEl.value = String(appSettings.syp_round_step || 0);
+
             if (appSettings.logo) { document.getElementById('sLogoPreview').src = getImgSrc(appSettings.logo); document.getElementById('sLogoPreview').style.display = 'inline-block'; }
             if (appSettings.click_sound) { document.getElementById('sAudioPreview').src = getImgSrc(appSettings.click_sound); document.getElementById('sAudioPreview').style.display = 'block'; }
         }
@@ -1228,7 +1459,7 @@
                 }
                 if (cat.items) {
                     cat.items.forEach(item => {
-                        let cur = item.currency || appSettings.currency || '';
+                        let cur = item.currency || appSettings.currency || '$';
                         let unitText = item.unit ? ` / ${item.unit}` : '';
                         list.innerHTML += `
                         <div class="card">
@@ -1237,7 +1468,7 @@
                                 <button class="move-btn" onclick="moveNode('item', '${cat.id}', null, '${item.id}', 1)">⬇️</button>
                             </div>
                             <img src="${getImgSrc(item.thumb || item.image)}">
-                            <div class="card-info"><h3>${escapeHtml(item.name)}</h3><p>${item.price} ${escapeHtml(cur)}${escapeHtml(unitText)}</p></div>
+                            <div class="card-info"><h3>${escapeHtml(item.name)}</h3><p><bdi>${item.price}</bdi> ${escapeHtml(cur)}${escapeHtml(unitText)}</p></div>
                             <div class="actions-group"><div class="actions-row"><button class="action-btn edit" onclick="openProductSheet('${cat.id}', null, '${item.id}')">✏️</button><button class="action-btn delete" onclick="deleteItem('${cat.id}', null, '${item.id}')">🗑️</button></div></div>
                         </div>`;
                     });
@@ -1252,7 +1483,7 @@
 
                 if (sub.items) {
                     sub.items.forEach(item => {
-                        let cur = item.currency || appSettings.currency || '';
+                        let cur = item.currency || appSettings.currency || '$';
                         let unitText = item.unit ? ` / ${item.unit}` : '';
                         list.innerHTML += `
                         <div class="card">
@@ -1261,7 +1492,7 @@
                                 <button class="move-btn" onclick="moveNode('item', '${cat.id}', '${sub.id}', '${item.id}', 1)">⬇️</button>
                             </div>
                             <img src="${getImgSrc(item.thumb || item.image)}">
-                            <div class="card-info"><h3>${escapeHtml(item.name)}</h3><p>${item.price} ${escapeHtml(cur)}${escapeHtml(unitText)}</p></div>
+                            <div class="card-info"><h3>${escapeHtml(item.name)}</h3><p><bdi>${item.price}</bdi> ${escapeHtml(cur)}${escapeHtml(unitText)}</p></div>
                             <div class="actions-group"><div class="actions-row"><button class="action-btn edit" onclick="openProductSheet('${cat.id}', '${sub.id}', '${item.id}')">✏️</button><button class="action-btn delete" onclick="deleteItem('${cat.id}', '${sub.id}', '${item.id}')">🗑️</button></div></div>
                         </div>`;
                     });
@@ -1335,7 +1566,7 @@
             document.getElementById('pName').value = ''; document.getElementById('pDesc').value = '';
             document.getElementById('pPrice').value = ''; document.getElementById('pUnit').value = '';
             document.getElementById('pPreview').style.display = 'none';
-            document.getElementById('pCurrency').value = appSettings.currency || 'ل.س';
+            document.getElementById('pCurrency').value = appSettings.currency || '$';
 
             if (itemId) {
                 const cat = menuData.categories.find(c => c.id === catId);
@@ -1344,7 +1575,7 @@
                 document.getElementById('pName').value = item.name;
                 document.getElementById('pDesc').value = item.description || '';
                 document.getElementById('pPrice').value = item.price;
-                document.getElementById('pCurrency').value = item.currency || appSettings.currency || 'ل.س';
+                document.getElementById('pCurrency').value = item.currency || appSettings.currency || '$';
                 document.getElementById('pUnit').value = item.unit || '';
                 if (item.image) { document.getElementById('pPreview').src = getImgSrc(item.thumb || item.image); document.getElementById('pPreview').style.display = 'inline-block'; }
             }
@@ -1353,9 +1584,9 @@
         }
 
         function applyProductChange() {
-            const name = document.getElementById('pName').value, desc = document.getElementById('pDesc').value,
-                  price = document.getElementById('pPrice').value, currency = document.getElementById('pCurrency').value,
-                  unit = document.getElementById('pUnit').value;
+            const name = document.getElementById('pName').value.trim(), desc = document.getElementById('pDesc').value.trim(),
+                  price = document.getElementById('pPrice').value.trim(), currency = document.getElementById('pCurrency').value,
+                  unit = document.getElementById('pUnit').value.trim();
             if (!name || !price) return alert("أكمل البيانات");
             const cat = menuData.categories.find(c => c.id === editProdCatId);
             let itemArrayObj = editProdSubId ? cat.subcategories.find(s => s.id === editProdSubId) : cat;
@@ -1390,11 +1621,28 @@
         }
 
         /* =========================================================
-           7. التعديل السريع للأسعار
+           7. التعديل السريع للأسعار والعملة
            ========================================================= */
+        function buildQuickEditRow(catId, subId, item, defaultCurrency, indent = false) {
+            const cur = item.currency || defaultCurrency;
+            const subArg = subId ? `'${subId}'` : 'null';
+            return `
+            <div class="qe-row">
+                <div class="qe-name" style="${indent ? 'padding-right: 16px; color:#475569;' : ''}">${escapeHtml(item.name)}</div>
+                <div class="qe-input-wrapper">
+                    <input type="number" step="any" class="qe-input" value="${item.price}" oninput="quickUpdatePrice('${catId}', ${subArg}, '${item.id}', this.value, this)">
+                    <select class="qe-cur-select" onchange="quickUpdateCurrency('${catId}', ${subArg}, '${item.id}', this.value, this)">
+                        <option value="$" ${cur === '$' ? 'selected' : ''}>$</option>
+                        <option value="ل.س" ${cur === 'ل.س' ? 'selected' : ''}>ل.س</option>
+                    </select>
+                    ${item.unit ? `<span class="qe-unit">/ ${escapeHtml(item.unit)}</span>` : ''}
+                </div>
+            </div>`;
+        }
+
         function renderQuickEdit() {
             const container = document.getElementById('quickEditContainer');
-            let html = '', defaultCurrency = appSettings.currency || 'ل.س';
+            let html = '', defaultCurrency = appSettings.currency || '$';
             if (!menuData.categories || menuData.categories.length === 0) {
                 container.innerHTML = '<div style="text-align:center; padding:30px; font-weight:800; color:var(--text-muted);">لا يوجد منتجات قابلة للتعديل حتى الآن.</div>';
                 return;
@@ -1403,34 +1651,14 @@
                 let hasItems = false, catContent = '';
                 if (cat.items && cat.items.length > 0) {
                     hasItems = true;
-                    cat.items.forEach(item => {
-                        let cur = item.currency || defaultCurrency;
-                        catContent += `
-                        <div class="qe-row">
-                            <div class="qe-name">${escapeHtml(item.name)}</div>
-                            <div class="qe-input-wrapper">
-                                <input type="number" class="qe-input" value="${item.price}" oninput="quickUpdatePrice('${cat.id}', null, '${item.id}', this.value, this)">
-                                <span class="qe-currency">${escapeHtml(cur)} ${item.unit ? '/ ' + escapeHtml(item.unit) : ''}</span>
-                            </div>
-                        </div>`;
-                    });
+                    cat.items.forEach(item => { catContent += buildQuickEditRow(cat.id, null, item, defaultCurrency, false); });
                 }
                 if (cat.subcategories) {
                     cat.subcategories.forEach(sub => {
                         if (sub.items && sub.items.length > 0) {
                             hasItems = true;
                             catContent += `<div class="qe-sub-header">📂 ${escapeHtml(sub.name)}</div>`;
-                            sub.items.forEach(item => {
-                                let cur = item.currency || defaultCurrency;
-                                catContent += `
-                                <div class="qe-row">
-                                    <div class="qe-name" style="padding-right: 20px; color:#475569;">${escapeHtml(item.name)}</div>
-                                    <div class="qe-input-wrapper">
-                                        <input type="number" class="qe-input" value="${item.price}" oninput="quickUpdatePrice('${cat.id}', '${sub.id}', '${item.id}', this.value, this)">
-                                        <span class="qe-currency">${escapeHtml(cur)} ${item.unit ? '/ ' + escapeHtml(item.unit) : ''}</span>
-                                    </div>
-                                </div>`;
-                            });
+                            sub.items.forEach(item => { catContent += buildQuickEditRow(cat.id, sub.id, item, defaultCurrency, true); });
                         }
                     });
                 }
@@ -1452,23 +1680,34 @@
         }
 
         function quickUpdatePrice(catId, subId, itemId, newPrice, inputEl) {
-            if (!newPrice) return;
+            if (newPrice === '') return;
             const cat = menuData.categories.find(c => c.id === catId);
             const targetArray = subId ? cat.subcategories.find(s => s.id === subId).items : cat.items;
             const item = targetArray.find(i => i.id === itemId);
-            if (item && item.price != newPrice) {
+            if (item && String(item.price) !== String(newPrice)) {
                 item.price = newPrice;
                 inputEl.parentElement.classList.add('changed');
                 markUnsaved();
             }
         }
 
+        function quickUpdateCurrency(catId, subId, itemId, newCur, selectEl) {
+            const cat = menuData.categories.find(c => c.id === catId);
+            const targetArray = subId ? cat.subcategories.find(s => s.id === subId).items : cat.items;
+            const item = targetArray.find(i => i.id === itemId);
+            if (item && item.currency !== newCur) {
+                item.currency = newCur;
+                selectEl.parentElement.classList.add('changed');
+                markUnsaved();
+            }
+        }
+
         /* =========================================================
-           8. نظام الفواتير، محفوظات الزبائن، والبحث السريع
+           8. نظام الفواتير، محفوظات الزبائن، والمنتجات اليدوية
            ========================================================= */
         function getAllMenuItemsMap() {
             const map = new Map();
-            const defaultCur = appSettings.currency || 'ل.س';
+            const defaultCur = appSettings.currency || '$';
             (menuData.categories || []).forEach(cat => {
                 if (cat.subcategories) {
                     cat.subcategories.forEach(sub => {
@@ -1515,12 +1754,14 @@
             if (isSaved) {
                 renderSavedInvoicesList();
             } else {
+                const mCur = document.getElementById('mCurrency');
+                if (mCur && !editingManualItemId) mCur.value = appSettings.currency || '$';
                 buildExportTree();
+                renderManualItemsList();
                 syncEditorHeaderUI();
             }
         }
 
-        /* --- أ) سجل محفوظات الزبائن --- */
         function clearCustomerSearch() {
             document.getElementById('savedCustomerSearch').value = '';
             renderSavedInvoicesList();
@@ -1552,7 +1793,8 @@
 
             let html = '';
             filtered.forEach(inv => {
-                const itemsCount = (inv.itemIds || []).length;
+                const manualCount = (inv.manualItems || []).length;
+                const itemsCount = (inv.itemIds || []).length + manualCount;
                 const customCount = Object.keys(inv.customPrices || {}).filter(id => (inv.itemIds || []).includes(id)).length;
                 const dateStr = inv.updatedAt ? new Date(inv.updatedAt).toLocaleDateString('en-GB') : '';
 
@@ -1566,7 +1808,9 @@
                     </div>
                     <div class="sc-badges">
                         <span class="sc-badge">📦 ${itemsCount} منتج</span>
-                        ${customCount > 0 ? `<span class="sc-badge special">🏷️ ${customCount} سعر خاص</span>` : `<span class="sc-badge">أسعار عادية</span>`}
+                        ${customCount > 0 ? `<span class="sc-badge special">🏷️ ${customCount} سعر خاص</span>` : ''}
+                        ${manualCount > 0 ? `<span class="sc-badge manual">✍️ ${manualCount} يدوي</span>` : ''}
+                        ${customCount === 0 && manualCount === 0 ? `<span class="sc-badge">أسعار عادية</span>` : ''}
                     </div>
                     <div class="sc-actions">
                         <button class="sc-btn pdf" onclick="quickExportSavedInvoice('${inv.id}')">📥 PDF سريع</button>
@@ -1585,9 +1829,11 @@
                 customerName: '',
                 selectedIds: new Set(),
                 customPrices: {},
+                manualItems: [],
                 filterMode: 'all',
                 searchQuery: ''
             };
+            cancelManualEdit();
             document.getElementById('invCustomerName').value = '';
             document.getElementById('quickSearchInput').value = '';
             switchExportSubTab('builder');
@@ -1603,9 +1849,11 @@
                 customerName: inv.customerName || '',
                 selectedIds: new Set(inv.itemIds || []),
                 customPrices: { ...(inv.customPrices || {}) },
+                manualItems: JSON.parse(JSON.stringify(inv.manualItems || [])),
                 filterMode: 'all',
                 searchQuery: ''
             };
+            cancelManualEdit();
             document.getElementById('invCustomerName').value = editorState.customerName;
             document.getElementById('quickSearchInput').value = '';
             switchExportSubTab('builder');
@@ -1624,7 +1872,112 @@
             showToast("تم حذف الفاتورة المحفوظة 🗑️");
         }
 
-        /* --- ب) محرر فاتورة الزبون والبحث السريع --- */
+        /* --- إدارة المنتجات اليدوية (خارج المنيو) --- */
+        function toggleManualForm(forceOpen = null) {
+            const body = document.getElementById('manualFormBody');
+            const arrow = document.getElementById('manualToggleArrow');
+            const shouldOpen = forceOpen !== null ? forceOpen : !body.classList.contains('open');
+            body.classList.toggle('open', shouldOpen);
+            arrow.innerText = shouldOpen ? '➖' : '➕';
+        }
+
+        function addOrUpdateManualItem() {
+            const name = document.getElementById('mName').value.trim();
+            const section = document.getElementById('mSection').value.trim() || 'أصناف إضافية';
+            const desc = document.getElementById('mDesc').value.trim();
+            const price = document.getElementById('mPrice').value.trim();
+            const unit = document.getElementById('mUnit').value.trim();
+            const cur = document.getElementById('mCurrency').value || '$';
+
+            if (!name || !price) {
+                showToast('اكتب اسم المنتج والسعر أولاً ✍️', 'error');
+                return;
+            }
+
+            if (editingManualItemId) {
+                const idx = editorState.manualItems.findIndex(m => m.id === editingManualItemId);
+                if (idx !== -1) {
+                    editorState.manualItems[idx] = { id: editingManualItemId, section, name, desc, price, cur, unit };
+                }
+                showToast('تم تعديل المنتج اليدوي ✔️', 'success');
+            } else {
+                editorState.manualItems.push({
+                    id: `manual_${Date.now()}_${Math.floor(Math.random() * 1000)}`,
+                    section, name, desc, price, cur, unit
+                });
+                showToast(`تمت إضافة «${name}» للفاتورة ➕`, 'success');
+            }
+
+            cancelManualEdit();
+            renderManualItemsList();
+            updateBuilderCounters();
+        }
+
+        function editManualItem(id) {
+            const item = editorState.manualItems.find(m => m.id === id);
+            if (!item) return;
+            editingManualItemId = id;
+            document.getElementById('mName').value = item.name;
+            document.getElementById('mSection').value = item.section;
+            document.getElementById('mDesc').value = item.desc || '';
+            document.getElementById('mPrice').value = item.price;
+            document.getElementById('mUnit').value = item.unit || '';
+            document.getElementById('mCurrency').value = item.cur || '$';
+            document.getElementById('btnManualSubmit').innerText = '✔️ حفظ التعديل';
+            document.getElementById('btnManualCancel').style.display = 'inline-block';
+            toggleManualForm(true);
+            document.getElementById('mName').focus();
+        }
+
+        function removeManualItem(id) {
+            editorState.manualItems = editorState.manualItems.filter(m => m.id !== id);
+            if (editingManualItemId === id) cancelManualEdit();
+            renderManualItemsList();
+            updateBuilderCounters();
+            showToast('تم حذف المنتج اليدوي 🗑️');
+        }
+
+        function cancelManualEdit() {
+            editingManualItemId = null;
+            if (document.getElementById('mName')) document.getElementById('mName').value = '';
+            if (document.getElementById('mSection')) document.getElementById('mSection').value = '';
+            if (document.getElementById('mDesc')) document.getElementById('mDesc').value = '';
+            if (document.getElementById('mPrice')) document.getElementById('mPrice').value = '';
+            if (document.getElementById('mUnit')) document.getElementById('mUnit').value = '';
+            if (document.getElementById('mCurrency')) document.getElementById('mCurrency').value = appSettings.currency || '$';
+            if (document.getElementById('btnManualSubmit')) document.getElementById('btnManualSubmit').innerText = '➕ إضافة للفاتورة';
+            if (document.getElementById('btnManualCancel')) document.getElementById('btnManualCancel').style.display = 'none';
+        }
+
+        function renderManualItemsList() {
+            const listEl = document.getElementById('manualItemsList');
+            const badge = document.getElementById('manualCountBadge');
+            if (badge) badge.innerText = editorState.manualItems.length;
+            if (!listEl) return;
+
+            if (!editorState.manualItems.length) {
+                listEl.innerHTML = '';
+                return;
+            }
+
+            let html = '';
+            editorState.manualItems.forEach(item => {
+                const unitTxt = item.unit ? ` / ${escapeHtml(item.unit)}` : '';
+                html += `
+                <div class="manual-chip-row">
+                    <div class="manual-chip-info">
+                        <div class="manual-chip-title">${escapeHtml(item.name)} — <bdi>${escapeHtml(item.price)}</bdi> ${escapeHtml(item.cur)}${unitTxt}</div>
+                        <div class="manual-chip-sub">📁 ${escapeHtml(item.section)}${item.desc ? ' • ' + escapeHtml(item.desc) : ''}</div>
+                    </div>
+                    <div class="manual-chip-btns">
+                        <button class="action-btn edit" onclick="editManualItem('${item.id}')">✏️</button>
+                        <button class="action-btn delete" onclick="removeManualItem('${item.id}')">🗑️</button>
+                    </div>
+                </div>`;
+            });
+            listEl.innerHTML = html;
+        }
+
         function syncEditorHeaderUI() {
             const banner = document.getElementById('editingBanner');
             const bannerTxt = document.getElementById('editingBannerText');
@@ -1647,15 +2000,18 @@
 
         function updateBuilderCounters() {
             const selCount = editorState.selectedIds.size;
+            const manualCount = editorState.manualItems.length;
             const modCount = Object.keys(editorState.customPrices).filter(id => editorState.selectedIds.has(id)).length;
             document.getElementById('chipSelectedNum').innerText = selCount;
             document.getElementById('chipModifiedNum').innerText = modCount;
-            document.getElementById('stickySelectedCount').innerText = selCount;
+            document.getElementById('stickySelectedCount').innerText = selCount + manualCount;
+            const mBadge = document.getElementById('manualCountBadge');
+            if (mBadge) mBadge.innerText = manualCount;
         }
 
         function buildExportTree() {
             const container = document.getElementById('exportTreeContainer');
-            const defaultCur = appSettings.currency || 'ل.س';
+            const defaultCur = appSettings.currency || '$';
             let html = '';
 
             (menuData.categories || []).forEach(cat => {
@@ -1712,12 +2068,12 @@
                            onchange="onExportItemToggle('${item.id}', this)">
                     <div class="item-meta">
                         <span class="item-title">${escapeHtml(item.name)}</span>
-                        <span class="item-orig-price">الأصلي: ${item.price} ${escapeHtml(cur)}${escapeHtml(unitStr)}</span>
+                        <span class="item-orig-price">الأصلي: <bdi>${item.price}</bdi> ${escapeHtml(cur)}${escapeHtml(unitStr)}</span>
                     </div>
                 </label>
 
                 <div class="custom-price-box ${isModified ? 'price-modified' : ''}" id="cpbox_${item.id}">
-                    <input type="number" class="custom-price-input" id="cpinput_${item.id}"
+                    <input type="number" step="any" class="custom-price-input" id="cpinput_${item.id}"
                            value="${escapeHtml(customVal)}" placeholder="سعر خاص"
                            oninput="onCustomPriceInput('${item.id}', '${item.price}', this)">
                     <span class="custom-price-cur">${escapeHtml(cur)}</span>
@@ -1850,7 +2206,6 @@
             document.querySelectorAll(`#${targetId} .exp-sub`).forEach(cb => cb.checked = el.checked);
         }
 
-        /* --- ج) حفظ فاتورة الزبون --- */
         function saveCurrentCustomerInvoice() {
             const nameInput = document.getElementById('invCustomerName');
             const customerName = nameInput.value.trim();
@@ -1860,8 +2215,8 @@
                 showToast("اكتب اسم الزبون أولاً لحفظ الفاتورة 👤", "error");
                 return false;
             }
-            if (editorState.selectedIds.size === 0) {
-                showToast("حدد منتجاً واحداً على الأقل أولاً 📦", "error");
+            if (editorState.selectedIds.size === 0 && editorState.manualItems.length === 0) {
+                showToast("حدد منتجاً أو أضف منتجاً يدوياً أولاً 📦", "error");
                 return false;
             }
 
@@ -1875,7 +2230,9 @@
                 if (itemsMap.has(id)) itemsSnapshot[id] = itemsMap.get(id);
             });
 
+            const manualCopy = JSON.parse(JSON.stringify(editorState.manualItems || []));
             const now = Date.now();
+
             if (editorState.invoiceId) {
                 const idx = savedInvoices.findIndex(x => x.id === editorState.invoiceId);
                 if (idx !== -1) {
@@ -1885,6 +2242,7 @@
                         itemIds,
                         customPrices: cleanCustomPrices,
                         itemsSnapshot,
+                        manualItems: manualCopy,
                         updatedAt: now
                     };
                 }
@@ -1895,6 +2253,7 @@
                     itemIds,
                     customPrices: cleanCustomPrices,
                     itemsSnapshot,
+                    manualItems: manualCopy,
                     createdAt: now,
                     updatedAt: now
                 };
@@ -1912,52 +2271,95 @@
         }
 
         /* =========================================================
-           9. بناء ورقة الفاتورة A4 وتصدير PDF (modern-screenshot + jsPDF)
+           9. بناء ورقة الفاتورة A4 وتصدير PDF الاحترافي (modern-screenshot + jsPDF)
            ========================================================= */
-        function populateInvoiceDOM(customerName, itemIds, customPrices = {}, itemsSnapshot = {}) {
+        function formatInvoicePriceValue(rawPrice, cur) {
+            if (invoiceCurrencyMode === 'syp' && cur === '$') {
+                const eff = getEffectiveUsdRate();
+                if (eff > 0) {
+                    return { priceStr: formatNumberClean(convertUsdToSyp(rawPrice)), curStr: 'ل.س' };
+                }
+            }
+            return { priceStr: formatNumberClean(rawPrice), curStr: cur };
+        }
+
+        function setInvoiceCurrencyMode(mode) {
+            if (mode === 'syp' && getEffectiveUsdRate() <= 0) {
+                showToast('لم يتوفر سعر صرف بعد، اضغط تحديث أو عيّن سعر صرف احتياطي', 'error');
+                return;
+            }
+            invoiceCurrencyMode = mode;
+            document.getElementById('invCurOrigBtn').classList.toggle('active', mode === 'original');
+            document.getElementById('invCurSypBtn').classList.toggle('active', mode === 'syp');
+            if (currentPreviewPayload) {
+                const p = currentPreviewPayload;
+                populateInvoiceDOM(p.customerName, p.itemIds, p.customPrices, p.itemsSnapshot, p.manualItems);
+            }
+        }
+
+        function populateInvoiceDOM(customerName, itemIds = [], customPrices = {}, itemsSnapshot = {}, manualItems = []) {
+            currentPreviewPayload = { customerName, itemIds, customPrices, itemsSnapshot, manualItems };
+
             const itemsMap = getAllMenuItemsMap();
             const resolvedItems = [];
 
-            // ترتيب المنتجات حسب ترتيب المنيو الرسمي
             itemsMap.forEach((itemObj, id) => {
                 if (itemIds.includes(id)) resolvedItems.push(itemObj);
             });
-            // إضافة أي منتج محذوف من المنيو سابقاً من النسخة المحفوظة
             itemIds.forEach(id => {
                 if (!itemsMap.has(id) && itemsSnapshot[id]) resolvedItems.push(itemsSnapshot[id]);
+            });
+            (manualItems || []).forEach(m => {
+                resolvedItems.push({
+                    id: m.id,
+                    name: m.name,
+                    desc: m.desc || '',
+                    price: String(m.price),
+                    cur: m.cur || appSettings.currency || '$',
+                    unit: m.unit || '',
+                    section: m.section || 'أصناف إضافية'
+                });
             });
 
             if (resolvedItems.length === 0) return false;
 
-            let tableRows = '';
-            let currentSection = '';
-
+            // تجميع العناصر حسب القسم مع الحفاظ على الترتيب
+            const groupedMap = new Map();
             resolvedItems.forEach(item => {
-                if (item.section !== currentSection) {
-                    tableRows += `<tr class="section-row"><td colspan="3" contenteditable="true">${escapeHtml(item.section)}</td></tr>`;
-                    currentSection = item.section;
-                }
+                const sec = item.section || 'أصناف إضافية';
+                if (!groupedMap.has(sec)) groupedMap.set(sec, []);
+                groupedMap.get(sec).push(item);
+            });
 
-                const unitSuffix = item.unit ? ` / ${escapeHtml(item.unit)}` : '';
-                const customPrice = customPrices[item.id];
-                let priceHTML = '';
+            let tableRows = '';
+            groupedMap.forEach((sectionItems, sectionTitle) => {
+                tableRows += `<tr class="section-row"><td colspan="3" contenteditable="true">${escapeHtml(sectionTitle)}</td></tr>`;
 
-                if (customPrice && String(customPrice) !== String(item.price)) {
-                    priceHTML = `
-                        <div class="price-comparison">
-                            <span class="old-price-strike"><bdi>${escapeHtml(item.price)}</bdi> ${escapeHtml(item.cur)}${unitSuffix}</span>
-                            <span class="new-price-highlight"><bdi>${escapeHtml(customPrice)}</bdi> ${escapeHtml(item.cur)}${unitSuffix}</span>
-                        </div>`;
-                } else {
-                    priceHTML = `<bdi>${escapeHtml(item.price)}</bdi> ${escapeHtml(item.cur)}${unitSuffix}`;
-                }
+                sectionItems.forEach(item => {
+                    const unitSuffix = item.unit ? ` / ${escapeHtml(item.unit)}` : '';
+                    const customPrice = customPrices[item.id];
+                    let priceHTML = '';
 
-                tableRows += `
-                    <tr>
-                        <td style="font-weight: 800; color: #111827;" contenteditable="true">${escapeHtml(item.name)}</td>
-                        <td style="color: #6b7280; font-size: 0.94rem;" contenteditable="true">${escapeHtml(item.desc)}</td>
-                        <td class="price-cell" contenteditable="true">${priceHTML}</td>
-                    </tr>`;
+                    if (customPrice && String(customPrice) !== String(item.price)) {
+                        const origFmt = formatInvoicePriceValue(item.price, item.cur);
+                        const custFmt = formatInvoicePriceValue(customPrice, item.cur);
+                        priceHTML = `
+                            <div class="price-comparison">
+                                <span class="old-price-strike"><bdi>${escapeHtml(origFmt.priceStr)}</bdi> ${escapeHtml(origFmt.curStr)}${unitSuffix}</span>
+                                <span class="new-price-highlight"><bdi>${escapeHtml(custFmt.priceStr)}</bdi> ${escapeHtml(custFmt.curStr)}${unitSuffix}</span>
+                            </div>`;
+                    } else {
+                        const fmt = formatInvoicePriceValue(item.price, item.cur);
+                        priceHTML = `<bdi>${escapeHtml(fmt.priceStr)}</bdi> ${escapeHtml(fmt.curStr)}${unitSuffix}`;
+                    }
+
+                    tableRows += `
+                        <tr>
+                            <td style="font-weight: 800; color: #111827;" contenteditable="true">${escapeHtml(item.name)}</td>
+                            <td style="color: #6b7280; font-size: 0.94rem;" contenteditable="true">${escapeHtml(item.desc)}</td>
+                            <td class="price-cell" contenteditable="true">${priceHTML}</td>
+                        </tr>`;
+                });
             });
 
             document.getElementById('invStoreName').innerText = appSettings.store_name || 'Garden Food';
@@ -1976,15 +2378,20 @@
             return true;
         }
 
-        // معاينة من المحرر الحالي
         function generateInvoicePreview() {
-            if (editorState.selectedIds.size === 0) {
-                return showToast('يرجى تحديد منتج واحد على الأقل 📄', 'error');
+            if (editorState.selectedIds.size === 0 && editorState.manualItems.length === 0) {
+                return showToast('يرجى تحديد منتج أو إضافة منتج يدوي أولاً 📄', 'error');
             }
+            invoiceCurrencyMode = 'original';
+            document.getElementById('invCurOrigBtn').classList.add('active');
+            document.getElementById('invCurSypBtn').classList.remove('active');
+
             const ok = populateInvoiceDOM(
                 editorState.customerName.trim(),
                 Array.from(editorState.selectedIds),
-                editorState.customPrices
+                editorState.customPrices,
+                {},
+                editorState.manualItems
             );
             if (!ok) return showToast('لا توجد منتجات صالحة للعرض', 'error');
 
@@ -1995,11 +2402,20 @@
             switchTab('invoice', '', null, false);
         }
 
-        // معاينة مباشرة من سجل محفوظات الزبائن
         function previewSavedInvoice(invId) {
             const inv = savedInvoices.find(x => x.id === invId);
             if (!inv) return;
-            const ok = populateInvoiceDOM(inv.customerName, inv.itemIds || [], inv.customPrices || {}, inv.itemsSnapshot || {});
+            invoiceCurrencyMode = 'original';
+            document.getElementById('invCurOrigBtn').classList.add('active');
+            document.getElementById('invCurSypBtn').classList.remove('active');
+
+            const ok = populateInvoiceDOM(
+                inv.customerName,
+                inv.itemIds || [],
+                inv.customPrices || {},
+                inv.itemsSnapshot || {},
+                inv.manualItems || []
+            );
             if (!ok) return showToast('لم يتم العثور على منتجات هذه الفاتورة', 'error');
 
             previewReturnSubTab = 'saved';
@@ -2009,23 +2425,20 @@
             switchTab('invoice', '', null, false);
         }
 
-        // تصدير PDF فوري بضغطة زر من سجل الزبائن
         async function quickExportSavedInvoice(invId) {
             const inv = savedInvoices.find(x => x.id === invId);
             if (!inv) return;
-            const ok = populateInvoiceDOM(inv.customerName, inv.itemIds || [], inv.customPrices || {}, inv.itemsSnapshot || {});
+            invoiceCurrencyMode = 'original';
+            const ok = populateInvoiceDOM(
+                inv.customerName,
+                inv.itemIds || [],
+                inv.customPrices || {},
+                inv.itemsSnapshot || {},
+                inv.manualItems || []
+            );
             if (!ok) return showToast('لم يتم العثور على منتجات هذه الفاتورة', 'error');
 
-            const loader = document.getElementById('loader');
-            const loaderText = document.getElementById('loaderText');
-            loaderText.innerText = `جاري تصدير فاتورة ${inv.customerName}...`;
-            loader.style.display = 'flex';
-
-            try {
-                await exportInvoicePDF(inv.customerName, true);
-            } finally {
-                loader.style.display = 'none';
-            }
+            await exportInvoicePDF(inv.customerName);
         }
 
         function saveFromPreview() {
@@ -2049,15 +2462,11 @@
 
         function printInvoice() { window.print(); }
 
-        // تصدير PDF احترافي بتقسيم صفحات A4 وتكرار الترويسة عبر modern-screenshot + jsPDF
-        async function exportInvoicePDF(forcedName = null, keepLoaderControlled = false) {
+        async function exportInvoicePDF(forcedName = null) {
             const loader = document.getElementById('loader');
             const loaderText = document.getElementById('loaderText');
-
-            if (!keepLoaderControlled) {
-                loaderText.innerText = 'جاري تجهيز صفحات الفاتورة...';
-                loader.style.display = 'flex';
-            }
+            loaderText.innerText = 'جاري تجهيز صفحات الفاتورة...';
+            loader.style.display = 'flex';
 
             if (document.activeElement) document.activeElement.blur();
 
@@ -2066,9 +2475,7 @@
             document.body.appendChild(staging);
 
             try {
-                if (document.fonts && document.fonts.ready) {
-                    await document.fonts.ready;
-                }
+                if (document.fonts && document.fonts.ready) await document.fonts.ready;
 
                 const PAGE_W = 794;
                 const PAGE_H = 1123;
@@ -2108,7 +2515,6 @@
 
                 let current = createPage(true);
 
-                // توزيع الصفوف على صفحات A4 بدون قص أي صف أو ترك عنوان قسم وحيداً
                 for (let i = 0; i < origRows.length; i++) {
                     const rowClone = cleanClone(origRows[i]);
                     current.tbody.appendChild(rowClone);
@@ -2132,7 +2538,6 @@
                     }
                 }
 
-                // ترقيم الصفحات تلقائياً عند وجود أكثر من صفحة
                 if (pages.length > 1) {
                     pages.forEach((p, idx) => {
                         const footer = document.createElement('div');
@@ -2171,9 +2576,10 @@
                 showToast("تم تحميل ملف PDF بنجاح 📥", "success");
             } catch (err) {
                 alert('حدث خطأ أثناء تصدير PDF: ' + err.message);
+                console.error(err);
             } finally {
                 staging.remove();
-                if (!keepLoaderControlled) loader.style.display = 'none';
+                loader.style.display = 'none';
             }
         }
 
@@ -2230,7 +2636,6 @@
             loaderText.innerText = 'جاري التزامن مع تعديلات شريكك...';
 
             try {
-                // 1. دمج التعديلات المتزامنة
                 const liveSettingsCheck = await ghApi('settings.json');
                 if (liveSettingsCheck.sha !== initialSettingsSha) {
                     const remoteSettings = JSON.parse(atou(liveSettingsCheck.content));
@@ -2243,7 +2648,6 @@
                     menuData.categories = mergeArraysById(baseMenuData.categories || [], remoteMenu.categories || [], menuData.categories || []);
                 }
 
-                // 2. رفع الصور والملفات الصوتية الجديدة
                 loaderText.innerText = 'جاري رفع الصور...';
                 if (tempUploads.settings) {
                     const path = `images/logo_${Date.now()}.${tempUploads.settings.ext}`;
@@ -2298,7 +2702,6 @@
                     await uploadItemsImages(cat.items);
                 }
 
-                // 3. الحفظ النهائي في المستودع
                 loaderText.innerText = 'جاري حفظ البيانات النهائية...';
                 const finalSettings = await ghApi('settings.json');
                 await ghApi('settings.json', 'PUT', { message: "Update Settings", content: utoa(JSON.stringify(appSettings, null, 2)), sha: finalSettings.sha });
@@ -2306,7 +2709,6 @@
                 const finalMenu = await ghApi('menu.json');
                 await ghApi('menu.json', 'PUT', { message: "Bulk Update", content: utoa(JSON.stringify(menuData, null, 2)), sha: finalMenu.sha });
 
-                // مزامنة سجل محفوظات فواتير الزبائن (invoices.json)
                 if (invoicesDirty) {
                     const liveInv = await ghApiOptional('invoices.json');
                     const invPayload = {
