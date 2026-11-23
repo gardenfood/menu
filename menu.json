@@ -1297,6 +1297,14 @@
           "unit": "قطعه",
           "image": "./images/orig_1791819466712_825.jpg",
           "thumb": "./images/thumb_1791819466712_825.jpg"
+        },
+        {
+          "id": "i_1795443469965",
+          "name": "نودلز البيض ٤٠٠ غرام",
+          "description": "",
+          "price": "3",
+          "currency": "$",
+          "unit": "قطعة"
         }
       ],
       "name": "مواد جافة (dry store)",
