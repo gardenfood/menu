@@ -376,16 +376,6 @@
               "image": "./images/orig_1785318532250_642.jpg",
               "thumb": "./images/thumb_1785318532250_642.jpg",
               "unit": ""
-            },
-            {
-              "id": "i_1784562975231",
-              "name": "مايونيز دوفراي",
-              "description": "مايونيز لبناني وزن 3.5 كغ ",
-              "price": "11",
-              "currency": "$",
-              "image": "./images/orig_1785318611135_890.jpg",
-              "thumb": "./images/thumb_1785318611135_890.jpg",
-              "unit": ""
             }
           ],
           "name": "قسم المايونيز ",
@@ -399,10 +389,11 @@
               "id": "i_1784563317921",
               "name": "باربكيو أميرغو",
               "description": "باربكيو لبناني وزن 4.5 كغ",
-              "price": "9.5",
+              "price": "10",
               "currency": "$",
               "image": "./images/orig_1785327866472_115.jpg",
-              "thumb": "./images/thumb_1785327866472_115.jpg"
+              "thumb": "./images/thumb_1785327866472_115.jpg",
+              "unit": ""
             },
             {
               "id": "i_1785168887360",
@@ -414,20 +405,10 @@
               "thumb": "./images/thumb_1785328084171_803.jpg"
             },
             {
-              "id": "i_1791285445569",
-              "name": "باربكيو ماستر شيف لبناني ",
-              "description": "",
-              "price": "9",
-              "currency": "$",
-              "unit": "غالون",
-              "image": "./images/orig_1791305589998_259.jpg",
-              "thumb": "./images/thumb_1791305589998_259.jpg"
-            },
-            {
               "id": "i_1791657309750",
               "name": "صوص باربكيو كينز اميركي ",
               "description": "",
-              "price": "27",
+              "price": "23",
               "currency": "$",
               "unit": "غالون"
             }
@@ -443,7 +424,7 @@
               "id": "i_1784563557612",
               "name": "خردل اميرغو",
               "description": "خردل لبناني وزن 3.8 لتر ",
-              "price": "8.75",
+              "price": "8.5",
               "currency": "$",
               "image": "./images/orig_1785330614794_432.jpg",
               "thumb": "./images/thumb_1785330614794_432.jpg",
@@ -522,6 +503,14 @@
               "unit": "غالون",
               "image": "./images/orig_1785674527248_503.jpg",
               "thumb": "./images/thumb_1785674527248_503.jpg"
+            },
+            {
+              "id": "i_1795440427809",
+              "name": "صوص صويا كيكو مان تنكة ",
+              "description": "",
+              "price": "55",
+              "currency": "$",
+              "unit": "تنكة"
             }
           ],
           "name": "قسم صوص الصويا ",
@@ -677,7 +666,7 @@
               "id": "i_1785168656483",
               "name": "خل بلسمنغ غالون",
               "description": "المنشأ ايطالي \nالوزن 5 كغ ",
-              "price": "20",
+              "price": "21",
               "currency": "$",
               "unit": "",
               "image": "./images/orig_1785620162938_61.jpg",
@@ -733,7 +722,7 @@
               "id": "i_1785169886643",
               "name": "سويت شيلي غالون ",
               "description": "المنشأ تايلند\nالوزن 4500 كغ",
-              "price": "22",
+              "price": "25",
               "currency": "$",
               "unit": "",
               "image": "./images/orig_1785673356017_404.jpg",
@@ -751,7 +740,7 @@
               "id": "i_1785272088301",
               "name": "ديمي غلاس بودرة ",
               "description": "المنشأ اسباني \nالتعبئة 1 كغ",
-              "price": "17.5",
+              "price": "17",
               "currency": "$",
               "image": "./images/orig_1785324516884_800.jpg",
               "thumb": "./images/thumb_1785324516884_800.jpg",
@@ -825,7 +814,7 @@
               "id": "i_1785673883053",
               "name": "صوص Hp غالون",
               "description": "التعبئة ٢.٣ كغ",
-              "price": "22",
+              "price": "23.5",
               "currency": "$",
               "unit": "غالون",
               "image": "./images/orig_1785673888289_508.jpg",
