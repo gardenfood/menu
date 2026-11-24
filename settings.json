@@ -14,5 +14,7 @@
   "facebook_url": "احمد محمود بيك",
   "hero_subtitle": "شركة متخصصة بتلبية احتياجات المطاعم والفنادق والكافيه بأفضل سعر  وأفضل جودة اطلب الان",
   "instagram_url": "كمان احمد محمود بيك",
-  "click_sound": "./images/sound_1784329197355.mp3"
+  "click_sound": "./images/sound_1784329197355.mp3",
+  "enable_currency_toggle": true,
+  "syp_round_step": 0
 }
